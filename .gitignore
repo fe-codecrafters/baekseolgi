@@ -1,5 +1,16 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
+.vscode
+.env
+
+# env for dev
+.env.dev
+
+# env for production
+.env.local
+.env.production
+
+
 # dependencies
 /node_modules
 /.pnp

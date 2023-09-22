@@ -1,0 +1,49 @@
+  name: deploy to main
+
+  on:
+    push:
+      branches: ["main"]
+
+  jobs:
+    build:
+      name: Build
+      runs-on: ubuntu-latest
+      strategy:
+        matrix:
+          node-version: [20.x]
+      steps:
+        - uses: pnpm/action-setup@v2
+          with:
+            version: lastest
+          
+        - uses: actions/checkout@v3
+
+        - name: Use Node.js ${{ matrix.node-version }}
+          uses: actions/setup-node@v3
+          with:
+            node-version: ${{ matrix.node-version }}
+
+        - name: Create .env file
+          uses: ozaytsev86/create-env-file@v1
+          with:
+            ENV_API_URL: ${{ vars.API_URL }}
+
+        - name: "Build project"
+          run: |
+            pnpm install
+            pnpm build
+            rm -r node_modules
+
+        - name: AWS CodeDeploy
+          uses: sourcetoad/aws-codedeploy-action@v1
+          with:
+            aws_access_key: ${{ secrets.AWS_SECRET_ID }}
+            aws_secret_key: ${{ secrets.AWS_SECRET_KEY }}
+            aws_region: ap-northeast-2
+            codedeploy_name: baekseolgi-codedeploy
+            codedeploy_group: baekseolgi-main
+            codedeploy_register_only: false
+            s3_bucket: baekseolgi-nextjs-build
+            s3_folder: main
+            max_polling_iterations: 0
+            directory: ./

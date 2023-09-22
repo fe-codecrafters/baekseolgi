@@ -1,0 +1,75 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+model User {
+  id        Int         @id @default(autoincrement())
+  createdAt DateTime    @default(now())
+  email     String      @unique
+  name      String?
+  role      Role        @default(USER)
+  Objective Objective[]
+}
+
+enum ObjectStatus {
+  COMPLETED
+  ACTIVE
+  FAILED
+}
+
+model Objective {
+  id               Int           @id @default(autoincrement())
+  createdAt        DateTime      @default(now())
+  lastModifiedDate DateTime
+  status           ObjectStatus
+  title            String
+  description      String
+  user             User          @relation(fields: [userId], references: [id])
+  userId           Int
+  Stamp            Stamp[]
+  StampStatus      StampStatus[]
+}
+
+enum ObjectHistoryType {
+  CREATED
+  MODIFIED
+  DELETED
+}
+
+model ObjectHistory {
+  id          Int               @id @default(autoincrement())
+  changedAt   DateTime
+  changedType ObjectHistoryType
+  oldValue    String
+  newValue    String
+}
+
+model StampStatus {
+  id          Int        @id @default(autoincrement())
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime
+  score       Int
+  Objective   Objective? @relation(fields: [objectiveId], references: [id])
+  objectiveId Int?
+}
+
+model Stamp {
+  id          Int        @id @default(autoincrement())
+  createdAt   DateTime   @default(now())
+  name        String?
+  Objective   Objective? @relation(fields: [objectiveId], references: [id])
+  objectiveId Int?
+}
