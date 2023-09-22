@@ -2,7 +2,7 @@
 
   on:
     push:
-      branches: ["main"]
+      branches: ["main", "test-github-action"]
 
   jobs:
     build:
@@ -14,7 +14,7 @@
       steps:
         - uses: pnpm/action-setup@v2
           with:
-            version: lastest
+            version: 8
           
         - uses: actions/checkout@v3
 
