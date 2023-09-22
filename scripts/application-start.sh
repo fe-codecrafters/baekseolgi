@@ -11,7 +11,7 @@ RUNNING=$?
 
 if [ "${RUNNING}" -ne 0 ]; then
   pnpm run build
-  pm2 start pnpm --name app -- start
+  pm2 start pnpm --name app -- start -p 8080
 else
   pm2 reload app
 fi;
