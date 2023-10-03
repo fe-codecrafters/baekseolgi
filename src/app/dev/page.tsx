@@ -8,8 +8,27 @@ export default function Dev() {
   if (!isDev) return <></>
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-between max-w-screen-md w-full mx-auto">
-      <AttendanceInput></AttendanceInput>
+    <div className="flex min-h-screen flex-col items-center max-w-screen-md w-full mx-auto">
+      <AttendanceInput
+        label="출석"
+        id="attendance"
+        name="attendance"
+        onChange={() => { }}
+        placeholder="Main 페이지 placeholder"
+        required
+        date={new Date()}
+        type="main"
+      ></AttendanceInput>
+      <AttendanceInput
+        label="출석"
+        id="attendance-2"
+        name="attendance-2"
+        onChange={() => { }}
+        placeholder="Calendar 페이지 placeholder"
+        required
+        date={new Date()}
+        type="calendar"
+      ></AttendanceInput> 
     </div>
   )
 }

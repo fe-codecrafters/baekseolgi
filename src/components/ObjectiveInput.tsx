@@ -1,5 +1,5 @@
 'use client'
-import EditIcon from "@/icons/EditIcon";
+import EditIcon from "@/icons/ObjectiveEditIcon";
 import { useState } from "react";
 
 interface Props {
@@ -43,7 +43,7 @@ export default function ObjectiveInput({
       >
         {label}
       </label>
-      <div className="absolute z-20 top-0 right-0 pt-4 pr-6" onClick={handleEdit}>
+      <div className="absolute z-20 top-0 right-0 pt-4 mr-6" onClick={handleEdit}>
         <EditIcon></EditIcon>
       </div>
       <input
