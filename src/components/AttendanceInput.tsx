@@ -70,7 +70,7 @@ export default function AttendanceInput({
       >
         <span className="text-[24px] text-center">{format(date, "eee", { locale: ko })}</span>
         <label className="text-base text-center">{format(date, "d", { locale: ko })}</label>
-        <SeolgiIcon size={isMain ? 74 : 40}></SeolgiIcon>
+        <SeolgiIcon width={isMain ? 75 : 40.5} height={isMain ? 74 : 40}></SeolgiIcon>
       </div>
       {/* TODO: 보더의 양 끝에 살짝 공백을 주기 애매, margin 노가다 하면 가능은 할 듯 .. 일단은 그냥 마진은 두지 않는거로  */}
       <div className="absolute w-40 h-[100%] border-r-[1px] border-primary-gray"></div>

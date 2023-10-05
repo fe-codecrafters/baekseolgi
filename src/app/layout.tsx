@@ -20,7 +20,6 @@ export default function RootLayout({
         <main className='flex min-h-screen flex-col items-center justify-center max-w-screen-md w-full mx-auto'>
           {children}
         </main>
-
       </body>
     </html>
   )
