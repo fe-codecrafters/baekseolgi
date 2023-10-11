@@ -2,7 +2,7 @@
 import AttendanceEditIcon from "@/icons/AttendanceEditIcon";
 import DeleteIcon from "@/icons/DeleteIcon";
 import EditIcon from "@/icons/ObjectiveEditIcon";
-import SeolgiIcon from "@/icons/SeolgiIcon";
+import SeolgiIcon from "@/icons/TabBar/SeolgiTabBarIcon";
 
 import { format } from 'date-fns';
 import { ko } from 'date-fns/locale';
