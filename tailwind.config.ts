@@ -29,6 +29,14 @@ const config: Config = {
         'gradient-conic':
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
       },
+      width: {
+        '600': '600px',
+        '150': '150px',
+      },
+      height: {
+        '80': '80px',
+        '50': '50px',
+      }
     },
   },
   plugins: [],
