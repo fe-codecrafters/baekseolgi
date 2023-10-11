@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { mockData } from './mockData'
 
 // 요일 및 현재 날짜 정보 상수로 정의
 const days = ["일", "월", "화", "수", "목", "금", "토"]
@@ -18,8 +19,13 @@ const today = {
 const Day = ({day, type}) => {
     return (
       <div className='flex flex-col items-center mx-1'>
-        <div className={`w-14 h-6 text-center${type === 'day' ? ' text-lg' : ''}${days.indexOf(day) === today.day || today.date === day? ' text-black font-semibold' : ' text-neutral-500'}`}>{day !== 0 ? day : null}</div>
-        {type === 'date' ? <div className='bg-neutral-200 w-14 h-14 rounded-lg'></div> : null}
+        <div className={`w-14 h-6 text-center${type === 'day' ? ' text-lg' : ''}${days.indexOf(day) === today.day || today.date === day? ' text-black font-semibold' : ' text-neutral-500'}`}>{day.id? day.id : day !== 0 ? day : null}</div>
+        {type === 'date' ? (
+          <div>
+            <div className={`w-14 h-14 rounded-lg bg-neutral-200`}></div>
+          </div>
+        
+        ) : null}
       </div>
     )
   }
@@ -38,13 +44,25 @@ const Day = ({day, type}) => {
     // 선택된 연도와 달을 상태로 관리
     const [selectedYear, setSelectedYear] = useState(today.year)
     const [selectedMonth, setSelectedMonth] = useState(today.month)
-    
+    const [monthData, setMonthData] = useState(filterMonthData(selectedMonth))
+
+    //리덕스 써야것는디...
+
+    function filterMonthData (selectedMonth) {
+      return mockData.data.filter(data => data.month === selectedMonth)[0]
+    }
+    // console.log(monthData)
+
     const toPrevMonth = () => {
       if (selectedMonth === 1) {
         setSelectedMonth(12)
         setSelectedYear(selectedYear - 1)
+
+        //mockData에 Year 정보가 없어서 보완이 필요함
+        setMonthData(filterMonthData(12))
       } else {
         setSelectedMonth(selectedMonth -1)
+        setMonthData(filterMonthData(selectedMonth - 1))
       }
     }
 
@@ -52,8 +70,12 @@ const Day = ({day, type}) => {
       if (selectedMonth === 12) {
         setSelectedMonth(1)
         setSelectedYear(selectedYear + 1)
+
+        //mockData에 Year 정보가 없어서 보완이 필요함
+        setMonthData(filterMonthData(1))
       } else {
         setSelectedMonth(selectedMonth + 1)
+        setMonthData(filterMonthData(selectedMonth + 1))        
       }
     }
 
@@ -73,11 +95,21 @@ const Day = ({day, type}) => {
         dates.push(0)
     }
 
+    // 날짜에 스탬프 정보 대입
+    // 일단 monthData 유무로 조건문을 짜놨지만 수정 필요..
+    if (monthData) { monthData.day.forEach(date => {
+      if (dates.findIndex(el => el === date.id)) {
+        dates[dates.findIndex(el => el === date.id)] = date
+      }
+    })}
+
     // 날짜들을 7개로 끊어 주 단위로 나누기
     let weeks = []
     while (dates.length > 0) {
       weeks.push(dates.splice(0,7))
     }
+
+    console.log(weeks)
 
     // Weekly Calendar라면 오늘 날짜가 포함된 주만 남기기
     if (type === 'week') {
