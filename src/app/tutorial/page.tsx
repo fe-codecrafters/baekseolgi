@@ -16,7 +16,7 @@ export default function TutorialPage() {
             id="objective" 
             name="objective" 
             type="text"
-            value={inputValue} 
+            defaultValue={inputValue} 
             required 
             className="block w-full h-full text-center rounded-md border-0 py-1.5 pl-5 text-gray-900 shadow-sm ring ring-inset ring-gray-200 placeholder:text-gray-400 focus:outline-none focus:ring focus:ring-gray-300 sm:text-xl sm:leading-6" 
           />
