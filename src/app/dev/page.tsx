@@ -1,5 +1,7 @@
 'use client'
 import AttendanceInput from "@/components/AttendanceInput"
+import { Calendar } from "@/components/Calendar"
+import { ProgressBar } from "@/components/ProgressBar"
 
 const DEV = process.env.NODE_ENV === 'development'
 
@@ -9,6 +11,9 @@ export default function Dev() {
   return (
     <div className="flex min-h-screen flex-col items-center max-w-screen-md w-full mx-auto">
       {DEV ? <h2>use here wisely</h2> : null}
+      <Calendar />
+      <Calendar type='week' />
+      <ProgressBar />
       <AttendanceInput
         label="출석"
         id="attendance"

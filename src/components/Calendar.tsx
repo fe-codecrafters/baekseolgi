@@ -2,6 +2,8 @@
 
 import { useState } from "react"
 import { mockData } from './mockData'
+import SeolgiIcon from "@/icons/SeolgiIcon"
+import ArrowIcon from "@/icons/ArrowIcon"
 
 // 요일 및 현재 날짜 정보 상수로 정의
 const days = ["일", "월", "화", "수", "목", "금", "토"]
@@ -18,14 +20,23 @@ const today = {
 // props-type은 day로 들어온 정보가 무엇인지 표시. day라면 요일을, date라면 날짜를 표시
 const Day = ({day, type, isThisMonth}) => {
     const isToday = (isThisMonth && type === 'date' && day === today.date) || (isThisMonth && type === 'day' && days.indexOf(day) === today.day)
+
+    let bgColor = 'bg-primary-gray'
+    if (day.id) {
+      if (day.stamp.color === 'white') bgColor = 'bg-seolgi-default'
+      if (day.stamp.color === 'pink') bgColor = 'bg-seolgi-pink'
+      if (day.stamp.color === 'green') bgColor = 'bg-seolgi-green'
+      if (day.stamp.color === 'yellow') bgColor = 'bg-seolgi-yellow'
+    }
+    
+    console.log(bgColor)
     return (
       <div className='flex flex-col items-center mx-1'>
-        <div className={`w-14 h-6 text-center${type === 'day' ? ' text-lg' : ''}${isToday? ' text-black font-semibold' : ' text-neutral-500'}`}>{day.id? day.id : day !== 0 ? day : null}</div>
+        <div className={`w-[70px] h-[29px] text-center${type === 'day' ? ' text-[24px] mt-[20px]' : ' text-[16px] mt-[14px]'}${isToday? ' text-black font-medium' : ' text-neutral-500'}`}>{day.id? day.id : day !== 0 ? day : null}</div>
         {type === 'date' ? (
-          <div>
-            <div className={`w-14 h-14 rounded-lg ${day.id? 'bg-yellow-200' :'bg-neutral-200'}`}></div>
+          <div className={`w-[70px] h-[70px] mt-[6px] rounded-[10px] ${bgColor}`}>
+            {day.id ? <SeolgiIcon bgFill="transparent" width={70} height={70}/> : null }
           </div>
-        
         ) : null}
       </div>
     )
@@ -119,17 +130,20 @@ const Day = ({day, type, isThisMonth}) => {
   
     return (
       <div className='calendar flex flex-col items-center'>
-        <div className="flex text-3xl">
-          {/* Weekly Calendar라면 현재 선택된 달을 변경하는 버튼 표시하지 않음 */}
-          {type !== 'week' ? <button onClick={toPrevMonth} >{`<`}&nbsp;</button> : null}
-          <div className="font-semibold">{`${selectedYear}년 ${selectedMonth}월`}</div>
-          {type !== 'week' ? <button onClick={toNextMonth} >&nbsp;{`>`}</button> : null}
-        </div>
+        {type !== 'week' ? <CalendarHeader toPrevMonth={toPrevMonth} toNextMonth={toNextMonth} selectedYear={selectedYear} selectedMonth={selectedMonth} /> : null}
         <Week week={days} type={'day'} isThisMonth={isThisMonth} />
         {weeks.map(week => <Week week={week} type={'date'} isThisMonth={isThisMonth}/>)}
       </div>
     )
   }
 
-  
+  function CalendarHeader ({toPrevMonth, toNextMonth, selectedYear, selectedMonth}) {
+    return (
+      <div className="flex text-[32px] font-semibold">
+        <button onClick={toPrevMonth} className="mr-[48px] fill-primary-gray active:fill-primary-black" ><ArrowIcon direction='left' /></button>
+        <div className="font-semibold">{`${selectedYear}년 ${selectedMonth}월`}</div>
+        <button onClick={toNextMonth} className="ml-[48px] fill-primary-gray active:fill-primary-black" ><ArrowIcon direction='right' /></button>
+      </div>
+    )
+  }
   

@@ -1,7 +1,4 @@
-import { mockData } from './mockData'
-
 export const ProgressBar = ({data}) => {
-
     return (
         <div className="overflow-hidden	flex rounded-full w-10/12 h-10 bg-neutral-300 m-8">
             {/* 데이터가 어떻게 들어올지에 보고 로직을 짜야할듯.. */}
