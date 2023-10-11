@@ -1,17 +1,15 @@
-import Image from 'next/image'
-import { Calendar } from '../components/Calendar'
-import { ProgressBar } from '../components/ProgressBar'
-
+'use client'
+import TabBar from "@/components/TabBar"
+import { FormEventHandler } from "react"
 
 export default function Home() {
+  const handleObjectSubmit: FormEventHandler<HTMLFormElement> = () => {
+  }
+
   return (
-    <>
-      <div className='text-4xl font-bold m-8'>Monthly Calandar</div>
-      <Calendar />
-      <div className='text-4xl font-bold m-8'>Weekly Calandar</div>
-      <Calendar type={'week'}/>
-      <div className='text-4xl font-bold m-8'>Progress Bar</div>
-      <ProgressBar />
-    </>
+    <div className="flex min-h-screen flex-col items-center justify-between max-w-screen-md w-full mx-auto">
+      <h2>목표를 정해주세요</h2>
+      <TabBar></TabBar>
+    </div>
   )
 }
