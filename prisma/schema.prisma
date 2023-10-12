@@ -18,15 +18,16 @@ enum Role {
 
 /// 애플리케이션 사용자
 model User {
-  id        Int         @id @default(autoincrement())
-  createdAt DateTime    @default(now())
-  email     String      @unique
-  name      String?
-  role      Role        @default(USER)
-  Objective Objective[]
+  id              Int               @id @default(autoincrement())
+  createdAt       DateTime          @default(now())
+  email           String            @unique
+  name            String?
+  role            Role              @default(USER)
+  Objective       Objective[]
+  DailyAttendance DailyAttendance[]
 }
 
-/// 목표의 달성 상태 (달성, 진행중, 실)
+/// 목표의 달성 상태 (달성, 진행중, 실패)
 enum ObjectiveStatus {
   COMPLETED
   ACTIVE
@@ -67,6 +68,7 @@ model ObjectiveHistory {
   objectiveId Int
 }
 
+/// 출석 상태 타입
 enum DailyAttendanceType {
   PRESENT // true
   ABSENT // false
@@ -74,6 +76,7 @@ enum DailyAttendanceType {
 
 /// 사용자의 목표에 대한 출석 상태
 /// ex) 사용자 김개발의 목표 "100설기 매일 출석"의 2023년 10월 12일 출석 상태는 PRESENT
+/// 사용자나 목표가 없을 수 있어 사용자나 목표는 일단 nullable
 model DailyAttendance {
   id          Int                 @id @default(autoincrement())
   title       String // 100일 설기 들어옴!
@@ -82,13 +85,15 @@ model DailyAttendance {
   type        DailyAttendanceType
   Objective   Objective?          @relation(fields: [objectiveId], references: [id])
   objectiveId Int?
+  User        User?               @relation(fields: [userId], references: [id])
+  userId      Int?
   seolgiId    Int
 }
 
 /// 목표 출석을 표시하기 위한 설기 아이콘
 model Seolgi {
-  id                Int              @id @default(autoincrement())
-  createdAt         DateTime         @default(now())
-  name              String
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  name      String
   // TODO: 설기 아이콘 이미지 URL이나 컬러 정보가 필요는 없을까?
 }
