@@ -69,7 +69,7 @@ model ObjectiveHistory {
 }
 
 /// 출석 상태 타입
-enum DailyAttendanceType {
+enum DailyAttendanceStatus {
   PRESENT // true
   ABSENT // false
 }
@@ -78,16 +78,16 @@ enum DailyAttendanceType {
 /// ex) 사용자 김개발의 목표 "100설기 매일 출석"의 2023년 10월 12일 출석 상태는 PRESENT, 설기는 백설기
 /// 사용자나 목표가 없을 수 있어 사용자나 목표는 일단 nullable
 model DailyAttendance {
-  id          Int                 @id @default(autoincrement())
+  id          Int                   @id @default(autoincrement())
   title       String // 100일 설기 들어옴!
-  createdAt   DateTime            @default(now())
-  updatedAt   DateTime            @updatedAt
-  type        DailyAttendanceType
-  Objective   Objective?          @relation(fields: [objectiveId], references: [id])
+  createdAt   DateTime              @default(now())
+  updatedAt   DateTime              @updatedAt
+  status      DailyAttendanceStatus
+  Objective   Objective?            @relation(fields: [objectiveId], references: [id])
   objectiveId Int?
-  User        User?               @relation(fields: [userId], references: [id])
+  User        User?                 @relation(fields: [userId], references: [id])
   userId      Int?
-  Seolgi      Seolgi              @relation(fields: [seolgiId], references: [id])
+  Seolgi      Seolgi                @relation(fields: [seolgiId], references: [id])
   seolgiId    Int
 }
 
@@ -96,6 +96,7 @@ model Seolgi {
   id              Int               @id @default(autoincrement())
   createdAt       DateTime          @default(now())
   name            String
+  color           String?
   DailyAttendance DailyAttendance[]
   // TODO: 설기 아이콘 이미지 URL이나 컬러 정보가 필요는 없을까?
 }
