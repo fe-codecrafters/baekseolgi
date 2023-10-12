@@ -10,6 +10,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+/// 사용자 역할 (사용자, 어드민)
 enum Role {
   USER
   ADMIN
@@ -45,7 +46,6 @@ model Objective {
   User             User               @relation(fields: [userId], references: [id])
   userId           Int
   ObjectiveHistory ObjectiveHistory[]
-  Seolgi           Seolgi[]
   DailyAttendance  DailyAttendance[]
 }
 
@@ -68,8 +68,8 @@ model ObjectiveHistory {
 }
 
 enum DailyAttendanceType {
-  PRESENT /// true
-  ABSENT /// false
+  PRESENT // true
+  ABSENT // false
 }
 
 /// 사용자의 목표에 대한 출석 상태
@@ -86,9 +86,8 @@ model DailyAttendance {
 
 /// 목표 출석을 표시하기 위한 설기 아이콘
 model Seolgi {
-  id          Int        @id @default(autoincrement())
-  createdAt   DateTime   @default(now())
-  name        String?
-  Objective   Objective? @relation(fields: [objectiveId], references: [id])
-  objectiveId Int?
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  name      String
+  // TODO: 설기 아이콘 이미지 URL이나 컬러 정보가 필요는 없을까?
 }
