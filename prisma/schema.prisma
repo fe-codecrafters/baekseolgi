@@ -15,6 +15,7 @@ enum Role {
   ADMIN
 }
 
+/// 애플리케이션 사용자
 model User {
   id        Int         @id @default(autoincrement())
   createdAt DateTime    @default(now())
@@ -24,51 +25,67 @@ model User {
   Objective Objective[]
 }
 
-enum ObjectStatus {
+/// 목표의 달성 상태 (달성, 진행중, 실)
+enum ObjectiveStatus {
   COMPLETED
   ACTIVE
   FAILED
 }
 
+/// 목표
 model Objective {
-  id               Int           @id @default(autoincrement())
-  createdAt        DateTime      @default(now())
-  lastModifiedDate DateTime
-  finishedAt       DateTime
-  status           ObjectStatus
+  id               Int                @id @default(autoincrement())
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt
+  finishedAt       DateTime?
+  failedAt         DateTime?
+  status           ObjectiveStatus    @default(ACTIVE)
   title            String // 100설기 매일 들어오기
   description      String
-  user             User          @relation(fields: [userId], references: [id])
+  User             User               @relation(fields: [userId], references: [id])
   userId           Int
-  Stamp            Stamp[]
-  StampStatus      StampStatus[]
+  ObjectiveHistory ObjectiveHistory[]
+  Seolgi           Seolgi[]
+  DailyAttendance  DailyAttendance[]
 }
 
-enum ObjectHistoryType {
+/// 목표 변경 히스토리 상태
+enum ObjectiveHistoryType {
   CREATED
   MODIFIED
   DELETED
 }
 
-model ObjectHistory {
-  id          Int               @id @default(autoincrement())
-  changedAt   DateTime
-  changedType ObjectHistoryType
+/// 목표 변경 히스토리
+model ObjectiveHistory {
+  id          Int                  @id @default(autoincrement())
+  updatedAt   DateTime             @updatedAt
+  changedType ObjectiveHistoryType
   oldValue    String
   newValue    String
+  Objective   Objective            @relation(fields: [objectiveId], references: [id])
+  objectiveId Int
 }
 
-model StampStatus {
-  id          Int        @id @default(autoincrement())
+enum DailyAttendanceType {
+  PRESENT /// true
+  ABSENT /// false
+}
+
+/// 사용자의 목표에 대한 출석 상태
+/// ex) 사용자 김개발의 목표 "100설기 매일 출석"의 2023년 10월 12일 출석 상태는 PRESENT
+model DailyAttendance {
+  id          Int                 @id @default(autoincrement())
   title       String // 100일 설기 들어옴!
-  createdAt   DateTime   @default(now())
-  updatedAt   DateTime
-  score       Int
-  Objective   Objective? @relation(fields: [objectiveId], references: [id])
+  createdAt   DateTime            @default(now())
+  updatedAt   DateTime            @updatedAt
+  type        DailyAttendanceType
+  Objective   Objective?          @relation(fields: [objectiveId], references: [id])
   objectiveId Int?
 }
 
-model Stamp {
+/// 목표 출석을 표시하기 위한 설기 아이콘
+model Seolgi {
   id          Int        @id @default(autoincrement())
   createdAt   DateTime   @default(now())
   name        String?
