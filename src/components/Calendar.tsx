@@ -4,6 +4,7 @@ import { useState } from "react"
 import { mockData } from './mockData'
 import SeolgiIcon from "@/icons/SeolgiIcon"
 import ArrowIcon from "@/icons/ArrowIcon"
+import { ProgressBar } from "./ProgressBar"
 
 // 요일 및 현재 날짜 정보 상수로 정의
 const days = ["일", "월", "화", "수", "목", "금", "토"]
@@ -29,7 +30,6 @@ const Day = ({day, type, isThisMonth}) => {
       if (day.stamp.color === 'yellow') bgColor = 'bg-seolgi-yellow'
     }
     
-    console.log(bgColor)
     return (
       <div className='flex flex-col items-center mx-1'>
         <div className={`w-[70px] h-[29px] text-center${type === 'day' ? ' text-[24px] mt-[20px]' : ' text-[16px] mt-[14px]'}${isToday? ' text-black font-medium' : ' text-neutral-500'}`}>{day.id? day.id : day !== 0 ? day : null}</div>
@@ -46,7 +46,7 @@ const Day = ({day, type, isThisMonth}) => {
   const Week = ({week, type, isThisMonth}) => {
     return (
       <div className='weekly-row flex flex-row w-auto justify-start mt-1'>
-        {week.map(day => <Day day={day} type={type} isThisMonth={isThisMonth}/>)}
+        {week.map((day) => <Day day={day} type={type} isThisMonth={isThisMonth}/>)}
       </div>
     )
   }
@@ -63,7 +63,6 @@ const Day = ({day, type, isThisMonth}) => {
     function filterMonthData (selectedMonth) {
       return mockData.data.filter(data => data.month === selectedMonth)[0]
     }
-    // console.log(monthData)
 
     const toPrevMonth = () => {
       if (selectedMonth === 1) {
@@ -117,22 +116,24 @@ const Day = ({day, type, isThisMonth}) => {
 
     // 날짜들을 7개로 끊어 주 단위로 나누기
     let weeks = []
-    while (dates.length > 0) {
-      weeks.push(dates.splice(0,7))
+    const datesCopy = [...dates]
+    while (datesCopy.length > 0) {
+      weeks.push(datesCopy.splice(0,7))
     }
 
-    console.log(weeks)
 
     // Weekly Calendar라면 오늘 날짜가 포함된 주만 남기기
     if (type === 'week') {
       weeks = weeks.filter(week => week.includes(today.date))
     }
   
+    console.log(weeks)
     return (
       <div className='calendar flex flex-col items-center'>
         {type !== 'week' ? <CalendarHeader toPrevMonth={toPrevMonth} toNextMonth={toNextMonth} selectedYear={selectedYear} selectedMonth={selectedMonth} /> : null}
         <Week week={days} type={'day'} isThisMonth={isThisMonth} />
-        {weeks.map(week => <Week week={week} type={'date'} isThisMonth={isThisMonth}/>)}
+        {weeks.map((week, idx) => <Week key={`${selectedYear}Y-${selectedMonth}M-${idx}W`} week={week} type={'date'} isThisMonth={isThisMonth}/>)}
+        {type !== 'week' ? <ProgressBar data={dates}/> : null}
       </div>
     )
   }

@@ -1,11 +1,24 @@
 export const ProgressBar = ({data}) => {
+    let colors
+    const bgColors = {
+        white: 'bg-seolgi-default',
+        yellow: 'bg-seolgi-yellow',
+        green: 'bg-seolgi-green',
+        pink: 'bg-seolgi-pink',
+        transparent: 'bg-[transparent]'
+    }
+    
+    if (data) {
+        data = data.filter(el => el !== 0)
+        colors = data.filter(el => typeof el === 'object').map(el => el.stamp.color).sort()
+        for (let i = 0; i < data.length - colors.length; i++) {
+            colors.push('transparent')
+        }
+    }
+
     return (
-        <div className="overflow-hidden	flex rounded-full w-10/12 h-10 bg-neutral-300 m-8">
-            {/* 데이터가 어떻게 들어올지에 보고 로직을 짜야할듯.. */}
-            <div className="bg-rose-200 w-3/12"></div>
-            <div className="bg-green-200 w-2/12"></div>
-            <div className="bg-yellow-100 w-1/12"></div>
-            <div className="bg-neutral-50 w-4/12"></div>
+        <div className="overflow-hidden	flex rounded-full w-[100%] h-[28px] bg-primary-gray m-[24px]">
+            {data? colors.map((color, idx) => <div key={idx} className={bgColors[color] + ' grow'}></div>) : null}
         </div>
     )
 }
