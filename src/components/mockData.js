@@ -50,7 +50,7 @@ export const mockData = {
                 "status": "done",
                 "stamp" : {
                     "name": "SeolgiIcon",
-                    "color": "blue"
+                    "color": "green"
                 },
                 "createdAt": "2023-10-05T14:01:56"
             },
@@ -104,7 +104,7 @@ export const mockData = {
                     "status": "done",
                     "stamp" : {
                         "name": "SeolgiIcon",
-                        "color": "blue"
+                        "color": "green"
                     },
                     "createdAt": "2023-10-05T14:01:56"
                 },
