@@ -33,9 +33,12 @@ import { NextRequest, NextResponse } from "next/server";
  *       '404':
  *         description: Not found
  */
-export async function GET(request: NextRequest, { params }: { params: { year: string, month: string } }) {
-  console.log(params)
-  console.log(params.year, params.month)
+export async function GET(
+  request: NextRequest,
+  { params }: { params: { year: string; month: string } },
+) {
+  console.log(params);
+  console.log(params.year, params.month);
   // TODO
   return NextResponse.json("TODO");
 }
