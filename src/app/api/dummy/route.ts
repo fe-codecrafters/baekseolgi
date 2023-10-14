@@ -1,15 +1,15 @@
 import { AttendanceWithSeolgi } from "@/types/response";
 import { NextResponse } from "next/server";
 
-type dummyResponse = { 
-  year: number, 
-  month: number, 
-  objective: string,
-  attendance: AttendanceWithSeolgi[] }
+type dummyResponse = {
+  year: number;
+  month: number;
+  objective: string;
+  attendance: AttendanceWithSeolgi[];
+};
 
 export async function GET() {
-  return NextResponse.json<{ data: dummyResponse[]
-  }>({
+  return NextResponse.json<{ data: dummyResponse[] }>({
     data: [
       {
         year: 2023,
@@ -48,7 +48,7 @@ export async function GET() {
               color: "white",
             },
             userId: 1,
-            seolgiId: 1
+            seolgiId: 1,
           },
           {
             id: 4,
@@ -64,7 +64,7 @@ export async function GET() {
               color: "white",
             },
             userId: 1,
-            seolgiId: 1
+            seolgiId: 1,
           },
           {
             id: 7,
@@ -80,7 +80,7 @@ export async function GET() {
               color: "pink",
             },
             userId: 1,
-            seolgiId: 2
+            seolgiId: 2,
           },
           {
             id: 20,
@@ -96,7 +96,7 @@ export async function GET() {
               color: "blue",
             },
             userId: 1,
-            seolgiId: 3
+            seolgiId: 3,
           },
           {
             id: 25,
@@ -112,7 +112,7 @@ export async function GET() {
               color: "yellow",
             },
             userId: 1,
-            seolgiId: 4
+            seolgiId: 4,
           },
         ],
       },

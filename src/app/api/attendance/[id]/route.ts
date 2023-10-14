@@ -34,45 +34,46 @@ const { dailyAttendance } = new PrismaClient();
  */
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: { id: string } },
 ) {
-  console.log(params)
-  const id = Number(params.id)
-  if (!id)
+  console.log(params);
+  const id = Number(params.id);
+  if (!id) {
     return NextResponse.json(
       { error: "Bad request: check your path param" },
-      { status: 400 }
+      { status: 400 },
     );
-    
+  }
 
   let attendance: AttendanceWithSeolgi | null;
 
   try {
     attendance = await dailyAttendance.findUnique({
       where: {
-        id
+        id,
       },
       include: { Seolgi: true },
     });
-    
-    if (!attendance) return NextResponse.json({ error: "Not Found" }, { status: 404 });
+
+    if (!attendance) {
+      return NextResponse.json({ error: "Not Found" }, { status: 404 });
+    }
   } catch (e) {
-    console.error('/attendance/{id} Error: ', e);
+    console.error("/attendance/{id} Error: ", e);
     return NextResponse.json({ error: "Not Found" }, { status: 404 });
   }
 
   return NextResponse.json({ data: attendance });
 }
 
-
 export async function POST() {
-  return NextResponse.json({ data: "Health Check" })
+  return NextResponse.json({ data: "Health Check" });
 }
 
 export async function PUT() {
-  return NextResponse.json({ data: "Health Check" })
+  return NextResponse.json({ data: "Health Check" });
 }
 
 export async function DELETE() {
-  return NextResponse.json({ data: "Health Check" })
+  return NextResponse.json({ data: "Health Check" });
 }

@@ -48,17 +48,23 @@ const { dailyAttendance } = new PrismaClient();
  */
 export async function GET(
   request: NextRequest,
-  { params }: { params: { date: string } }
+  { params }: { params: { date: string } },
 ) {
-  if (!isValidDateString(params.date))
+  if (!isValidDateString(params.date)) {
     return NextResponse.json(
       { error: "Bad request: check your query param" },
-      { status: 400 }
+      { status: 400 },
     );
+  }
 
   const searchParams = request.nextUrl.searchParams;
-  const userId = searchParams.get("userId") !== null ? Number(searchParams.get("userId")) : undefined;
-  const objectiveId = searchParams.get("objectiveId") ? Number(searchParams.get("objectiveId"))  : undefined;
+  const userId =
+    searchParams.get("userId") !== null
+      ? Number(searchParams.get("userId"))
+      : undefined;
+  const objectiveId = searchParams.get("objectiveId")
+    ? Number(searchParams.get("objectiveId"))
+    : undefined;
   const date = parse(params.date, "yyyy-MM-dd", new Date());
   const startDate = startOfDay(date);
   const endDate = endOfDay(date);
@@ -77,11 +83,12 @@ export async function GET(
       },
     });
   } catch (e) {
-    console.error('/attendance/day/{date} Error: ', e);
+    console.error("/attendance/day/{date} Error: ", e);
     return NextResponse.json({ error: "Not Found" }, { status: 404 });
   }
 
-  if (attendances.length === 0)
+  if (attendances.length === 0) {
     return NextResponse.json({ error: "Not Found" }, { status: 404 });
+  }
   return NextResponse.json({ data: attendances });
 }
