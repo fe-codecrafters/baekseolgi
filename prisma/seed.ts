@@ -29,6 +29,7 @@ async function main() {
       name: "테스트설기",
       Objective: {
         create: {
+          id: 1,
           title: "100설기 매일 들어오기",
           description: "",
         },
@@ -44,7 +45,8 @@ async function main() {
         createdAt: new Date("2023-10-05T14:01:56"),
         updatedAt: new Date("2023-10-05T14:01:56"),
         seolgiId: 1,
-        objectiveId: testSeolgi.id,
+        objectiveId: 1,
+        userId: testSeolgi.id,
       },
       {
         title: "100설기 들어옴 - 2",
@@ -52,7 +54,8 @@ async function main() {
         createdAt: new Date("2023-10-06T15:01:56"),
         updatedAt: new Date("2023-10-07T14:01:56"),
         seolgiId: 1,
-        objectiveId: testSeolgi.id,
+        objectiveId: 1,
+        userId: testSeolgi.id,
       },
       {
         title: "100설기 들어옴 - 3",
@@ -60,7 +63,8 @@ async function main() {
         createdAt: new Date("2023-10-07T15:01:56"),
         updatedAt: new Date("2023-10-08T14:01:56"),
         seolgiId: 3,
-        objectiveId: testSeolgi.id,
+        objectiveId: 1,
+        userId: testSeolgi.id,
       },
       {
         title: "100설기 들어옴 - 4",
@@ -68,7 +72,8 @@ async function main() {
         createdAt: new Date("2023-10-08T15:01:56"),
         updatedAt: new Date("2023-10-09T14:01:56"),
         seolgiId: 2,
-        objectiveId: testSeolgi.id,
+        objectiveId: 1,
+        userId: testSeolgi.id,
       },
       {
         title: "100설기 들어옴 - 5",
@@ -76,7 +81,8 @@ async function main() {
         createdAt: new Date("2023-10-10T15:01:56"),
         updatedAt: new Date("2023-10-11T14:01:56"),
         seolgiId: 2,
-        objectiveId: testSeolgi.id,
+        objectiveId: 1,
+        userId: testSeolgi.id,
       },
     ],
   });

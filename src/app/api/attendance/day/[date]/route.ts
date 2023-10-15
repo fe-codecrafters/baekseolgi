@@ -50,6 +50,8 @@ export async function GET(
   request: NextRequest,
   { params }: { params: { date: string } },
 ) {
+  const searchParams = request.nextUrl.searchParams;
+  console.log(params, searchParams);
   if (!isValidDateString(params.date)) {
     return NextResponse.json(
       { error: "Bad request: check your query param" },
@@ -57,7 +59,6 @@ export async function GET(
     );
   }
 
-  const searchParams = request.nextUrl.searchParams;
   const userId =
     searchParams.get("userId") !== null
       ? Number(searchParams.get("userId"))
@@ -68,6 +69,7 @@ export async function GET(
   const date = parse(params.date, "yyyy-MM-dd", new Date());
   const startDate = startOfDay(date);
   const endDate = endOfDay(date);
+  console.log(date, startDate, endDate);
 
   let attendances: DailyAttendance[];
 
@@ -86,6 +88,8 @@ export async function GET(
     console.error("/attendance/day/{date} Error: ", e);
     return NextResponse.json({ error: "Not Found" }, { status: 404 });
   }
+
+  console.log(attendances);
 
   if (attendances.length === 0) {
     return NextResponse.json({ error: "Not Found" }, { status: 404 });
