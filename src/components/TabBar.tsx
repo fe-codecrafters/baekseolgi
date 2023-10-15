@@ -20,7 +20,7 @@ export default function TabBar({ type = 'desktop' }: Props) {
   const textCN = type === 'desktop' ? desktopTextCN : mobileTextCN
 
   return <>
-    <div className="flex flex-row w-full py-1.5 border-t-[1px] border-primary-darkGray">
+    <div className="flex flex-row w-full py-1.5 border-t-[1px] border-primary-darkGray mt-[68px]">
       <Link href="/calendar" className="group flex grow flex-col justify-center items-center">
         <CalendarIcon type={type}></CalendarIcon>
         <span className={textCN}>캘린더</span>
