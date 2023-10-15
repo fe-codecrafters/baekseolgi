@@ -32,8 +32,8 @@ export default function SeolgiTabBarIcon({
   const mobileCN = "text-primary-darkGray group-hover:text-primary-black";
   const cn = isDesktop ? desktopCN : mobileCN;
   const vb = `0 0 ${24} ${24}`;
-  const w = isDesktop ? 24 : 20;
-  const h = isDesktop ? 24 : 20;
+  const w = width ? width : isDesktop ? 24 : 20;
+  const h = height ? height : isDesktop ? 24 : 20;
 
   return (
     <>

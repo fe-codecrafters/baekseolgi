@@ -1,14 +1,19 @@
+import { IconType } from "@/types";
+
 interface Props {
+  type?: IconType;
   size?: number;
   stroke?: string;
 }
 
-export default function DeleteIcon({ size = 24, stroke = "#7F7F7F" }: Props) {
+export default function DeleteIcon({ type = "desktop", size = 24 }: Props) {
+  const isDesktop = type === "desktop";
   const desktopCN = "text-primary-darkGray group-hover:text-primary-black";
-  const cn = desktopCN;
-  const vb = `0 0 ${size} ${size}`;
-  const w = size;
-  const h = size;
+  const mobileCN = "text-primary-darkGray group-hover:text-primary-black";
+  const cn = isDesktop ? desktopCN : mobileCN;
+  const vb = `0 0 ${24} ${24}`;
+  const w = size ? size : isDesktop ? 24 : 20;
+  const h = size ? size : isDesktop ? 24 : 20;
 
   return (
     <>

@@ -1,5 +1,5 @@
 "use client";
-import AttendanceEditIcon from "@/icons/AttendanceEditIcon";
+import EditIcon from "@/icons/EditIcon";
 import DeleteIcon from "@/icons/DeleteIcon";
 import SeolgiIcon from "@/icons/SeolgiIcon";
 import { AttendanceInputType } from "@/types";
@@ -68,7 +68,7 @@ export default function AttendanceInput({
           className="group absolute right-0 top-0 z-20 mr-14 pt-4"
           onClick={handleEdit}
         >
-          <AttendanceEditIcon></AttendanceEditIcon>
+          <EditIcon></EditIcon>
         </button>
         <button
           className="group absolute right-0 top-0 z-20 mr-6 pt-4"
