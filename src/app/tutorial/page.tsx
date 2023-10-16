@@ -4,7 +4,7 @@ import { useState } from "react";
 const DEV = process.env.NODE_ENV === "development";
 
 export default function TutorialPage() {
-  const [inputValue, _] = useState(DEV ? "tutorial page" : "");
+  const [inputValue] = useState(DEV ? "tutorial page" : "");
 
   return (
     <div className="flex w-full flex-col items-center">
