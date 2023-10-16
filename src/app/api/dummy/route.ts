@@ -93,7 +93,7 @@ export async function GET() {
               id: 3,
               name: "SeolgiIcon",
               createdAt: new Date("2023-10-07T14:01:56"),
-              color: "blue",
+              color: "green",
             },
             userId: 1,
             seolgiId: 3,
