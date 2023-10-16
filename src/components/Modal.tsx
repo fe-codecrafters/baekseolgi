@@ -8,10 +8,10 @@ const Modal = () => {
   const date = new Date();
 
   return (
-    <div className="block flex min-h-full w-600 flex-col justify-center rounded-2xl border-[1px] p-6 lg:px-8">
+    <div className="flex min-h-full w-600 flex-col justify-center rounded-2xl border-[1px] p-6 lg:px-8">
       <div className="relative">
         <div className="flex items-center justify-center gap-3">
-          <h2 className="text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
+          <h2 className="text-center text-2xl font-bold leading-9 tracking-tight text-primary-black">
             {format(date, "M", { locale: ko })}월{" "}
             {format(date, "d", { locale: ko })}일{" "}
             {format(date, "eee", { locale: ko })}요일
@@ -31,8 +31,11 @@ const Modal = () => {
           action="#"
           method="POST"
         >
-          <div className="h-[100px] w-[500px] rounded-2xl bg-gray-100">
-            <label className="text-md mt-3 block text-center font-medium leading-6 text-gray-900">
+          <div className="h-[100px] w-[500px] rounded-2xl bg-primary-lightGray">
+            <label
+              htmlFor="seolgi-modal"
+              className="mt-3 block text-center text-base font-medium leading-6 text-primary-black"
+            >
               오늘 달성도는 어땠나요?
             </label>
             <div className="mt-2 flex justify-center gap-[28px]">
@@ -59,12 +62,15 @@ const Modal = () => {
           </div>
 
           <div className="h-[100px] w-[500px] rounded-2xl bg-gray-100">
-            <label className="text-md mt-3 block text-center font-medium leading-6 text-gray-900">
+            <label
+              htmlFor="seolgi-modal"
+              className="mt-3 block text-center text-base font-medium leading-6 text-gray-900"
+            >
               오늘 달성도 짧은 일기
             </label>
             <div className="mt-2 flex justify-center">
               <input
-                id="description"
+                id="seolgi-modal"
                 name="description"
                 type="text"
                 required

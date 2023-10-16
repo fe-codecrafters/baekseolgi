@@ -1,7 +1,7 @@
 import { IconType } from "@/types";
 
 interface Props {
-  type: IconType;
+  type?: IconType;
   width?: number;
   height?: number;
   bgFill?: string;
