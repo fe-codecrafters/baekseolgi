@@ -123,8 +123,6 @@ export default function Home() {
       });
   }, [selectedMonth, selectedYear]);
 
-  console.log(monthData)
-
   return (
     <div className="mx-auto flex min-h-screen w-full max-w-screen-md flex-col items-center justify-between">
       <Header />
