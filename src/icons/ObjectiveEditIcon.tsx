@@ -2,7 +2,10 @@ interface Props {
   stroke?: string;
 }
 
-export default function EditIcon({ stroke = "#000000" }: Props) {
+/**
+ * deprecated (EditIcon 사용 권장)
+ */
+export default function deprecated_EditIcon({ stroke = "#000000" }: Props) {
   return (
     <>
       <svg
