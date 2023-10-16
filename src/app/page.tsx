@@ -123,6 +123,8 @@ export default function Home() {
       });
   }, [selectedMonth, selectedYear]);
 
+  console.log(monthData)
+
   return (
     <div className="mx-auto flex min-h-screen w-full max-w-screen-md flex-col items-center justify-between">
       <Header />
@@ -144,7 +146,11 @@ export default function Home() {
       />
       <div className="flex items-center justify-center p-4 w-[400px] h-[120px] shadow-lg bg-primary-white border-[1px] text-primary-black rounded-2xl relative">
         <div className="absolute bottom-[-9px] w-4 h-4 bg-primary-white transform border-l-[1px] border-b-[1px] -rotate-45 left-1/2 -translate-x-1/2"></div>
-        <p className="text-2xl font-bold">{monthData.month}월의 설기 개수는 {monthData.attendance.length}개입니다!</p>
+        {monthData &&
+          monthData.attendance.length > 0 ? 
+          <p className="text-2xl font-bold">{monthData.month}월의 설기 개수는 {monthData.attendance.length}개입니다!</p>:
+          <p className="text-2xl font-bold">이 달에는 설기가 없어요!</p>
+        }
       </div>
       <SeolgiIcon width={250} height={250} />
       <TabBar type="desktop"></TabBar>
