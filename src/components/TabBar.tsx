@@ -23,7 +23,7 @@ export default function TabBar({ type = "desktop" }: Props) {
 
   return (
     <>
-      <div className="flex w-full flex-row border-t-[1px] border-primary-darkGray py-1.5">
+      <div className="mt-[68px] flex w-full flex-row border-t-[1px] border-primary-darkGray py-1.5">
         <Link
           href="/calendar"
           className="group flex grow flex-col items-center justify-center"
