@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "author": "FE-codecrafters",
   "license": "MIT",
+  "prisma": {
+    "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -11,12 +14,13 @@
     "db-dev-migrate": "dotenv -e .env.dev prisma migrate dev",
     "db-dev-seed": "dotenv -e .env.dev prisma db seed",
     "db-dev-reset": "dotenv -e .env.dev prisma migrate reset",
+    "db-dev-client": "dotenv -e .env.dev prisma studio",
     "db-prod-migrate": "prisma migrate dev",
     "db-prod-seed": "dotenv -e .env.local prisma db seed",
     "db-prod-reset": "dotenv -e .env.local prisma migrate reset",
     "db-prod-deploy": "dotenv -e .env.local prisma migrate deploy",
-    "db-generate": "prisma generate",
-    "db-client": "prisma studio"
+    "db-prod-client": "dotenv -e .env.local prisma studio",
+    "db-generate": "prisma generate"
   },
   "dependencies": {
     "@prisma/client": "^5.3.1",
