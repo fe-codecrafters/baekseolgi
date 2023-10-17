@@ -8,8 +8,9 @@ import {
   startOfWeek,
   startOfYear,
 } from "date-fns";
-import { NextRequest, NextResponse } from "next/server";
-const { dailyAttendance } = new PrismaClient();
+import { NextRequest } from "next/server";
+import prisma from "@/app/api/_base";
+const { dailyAttendance } = prisma;
 
 /**
  * @swagger

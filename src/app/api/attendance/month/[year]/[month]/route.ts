@@ -1,7 +1,8 @@
 import { DailyAttendance, PrismaClient } from "@prisma/client";
 import { endOfMonth, isValid, parse, startOfMonth } from "date-fns";
 import { NextRequest, NextResponse } from "next/server";
-const { dailyAttendance } = new PrismaClient();
+import prisma from "@/app/api/_base";
+const { dailyAttendance } = prisma;
 
 /**
  * @swagger
