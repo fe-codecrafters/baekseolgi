@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { DailyAttendanceStatus, PrismaClient } from "@prisma/client";
 import { AttendanceWithSeolgi } from "@/types/response";
-const { dailyAttendance } = new PrismaClient();
+import prisma from "@/app/api/_base";
+const { dailyAttendance } = prisma;
 
 /**
  * @swagger
@@ -66,37 +67,6 @@ export async function GET(
   return NextResponse.json({ data: attendance });
 }
 
-export async function POST(request: NextRequest) {
-  // userId, objectiveId, seogiId, title, createdAt
-  // TODO: need type
-  const { userId, objectiveId, seolgiId, title, createdAt } =
-    (await request.json()) as {
-      userId: number;
-      objectiveId: number;
-      seolgiId: number;
-      title: string;
-      createdAt: string;
-    };
-
-  try {
-    await dailyAttendance.create({
-      data: {
-        userId,
-        objectiveId,
-        seolgiId,
-        status: "PRESENT",
-        title,
-        createdAt: new Date(createdAt),
-      },
-    });
-  } catch (e) {
-    console.error("POST /attendance/{id} Error: ", e);
-    return NextResponse.json({ error: "Not Found" }, { status: 404 });
-  }
-
-  return NextResponse.json({ data: "Health Check" });
-}
-
 export async function PUT(
   request: NextRequest,
   { params }: { params: { id: string } },
@@ -119,8 +89,10 @@ export async function PUT(
       createdAt: string;
     };
 
+  let updated;
+
   try {
-    await dailyAttendance.update({
+    updated = await dailyAttendance.update({
       where: { id },
       data: {
         userId,
@@ -128,14 +100,14 @@ export async function PUT(
         seolgiId,
         status,
         title,
-        createdAt: new Date(createdAt),
+        createdAt: createdAt ? new Date(createdAt) : undefined,
       },
     });
   } catch (e) {
     console.error("PUT /attendance/{id} Error: ", e);
     return NextResponse.json({ error: "Not Found" }, { status: 404 });
   }
-  return NextResponse.json({ data: "Health Check" });
+  return NextResponse.json({ data: updated });
 }
 
 export async function DELETE(
@@ -159,5 +131,5 @@ export async function DELETE(
     return NextResponse.json({ error: "Not Found" }, { status: 404 });
   }
 
-  return NextResponse.json({ data: "Health Check" });
+  return new Response(null, { status: 204 });
 }
