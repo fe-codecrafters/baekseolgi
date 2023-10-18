@@ -1,8 +1,9 @@
 import isValidDateString from "@/util/isValidDateString";
 import { endOfDay, parse, startOfDay } from "date-fns";
 import { NextRequest, NextResponse } from "next/server";
-import { DailyAttendance, PrismaClient } from "@prisma/client";
-const { dailyAttendance } = new PrismaClient();
+import { DailyAttendance } from "@prisma/client";
+import prisma from "@/app/api/_base";
+const { dailyAttendance } = prisma;
 
 /**
  * @swagger
