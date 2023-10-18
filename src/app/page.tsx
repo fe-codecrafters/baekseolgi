@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import TabBar from "@/components/TabBar";
 import { Header } from "@/components/Header";
 import { CalendarHeader } from "@/components/CalendarHeader";
@@ -8,33 +8,10 @@ import { Calendar } from "@/components/Calendar";
 import SeolgiIcon from "@/icons/SeolgiIcon";
 const DEV = process.env.NODE_ENV === "development";
 
-interface dateProps {
-  id: number;
-  title: string;
-  status: string,
-  createdAt: Date;
-  updatedAt: Date;
-  objectiveId: number;
-  Seolgi: {
-    id: number;
-    name: string;
-    createdAt: Date;
-    color: string;
-  };
-  userId: number;
-  seolgiId: number;
-}
-
-interface dummyProps {
-  year: number;
-  month: number;
-  objective: string;
-  attendance: dateProps[]
-}
+import { AttendanceWithSeolgi, DummyResponse } from "@/types/response";
 
 export default function Home() {
-
-  //이 부분은 calendar.tsx 로직과 동일. 
+  //이 부분은 calendar.tsx 로직과 동일.
   //따로 빼내서 customhook으로 만들거나 help 함수로 만들어도 괜찮을 것 같습니다.
   const date = new Date();
   const today = {
@@ -50,7 +27,7 @@ export default function Home() {
     year: "",
     month: "",
     objective: "",
-    attendance: []
+    attendance: [],
   });
 
   const toPrevMonth = () => {
@@ -59,7 +36,7 @@ export default function Home() {
       year: "",
       month: "",
       objective: "",
-      attendance: []
+      attendance: [],
     });
 
     if (selectedMonth === 1) {
@@ -76,7 +53,7 @@ export default function Home() {
       year: "",
       month: "",
       objective: "",
-      attendance: []
+      attendance: [],
     });
 
     if (selectedMonth === 12) {
@@ -90,7 +67,7 @@ export default function Home() {
   const monthStart = new Date(selectedYear, selectedMonth - 1, 1);
   const monthEnd = new Date(selectedYear, selectedMonth, 0);
 
-  const dates: (number | dateProps)[] = [];
+  const dates: (number | AttendanceWithSeolgi)[] = [];
 
   for (let i = 0; i < monthStart.getDay(); i++) {
     dates.push(0);
@@ -103,8 +80,8 @@ export default function Home() {
   }
 
   if (monthData && monthData.attendance) {
-    monthData.attendance.forEach((date: dateProps) => {
-      const {id} = date;
+    monthData.attendance.forEach((date: AttendanceWithSeolgi) => {
+      const { id } = date;
       if (dates.findIndex((el) => el === id)) {
         dates[dates.findIndex((el) => el === id)] = date;
       }
@@ -117,9 +94,10 @@ export default function Home() {
       .then((res) => {
         setMonthData(
           res.data.find(
-            (el: dummyProps) => el.year === selectedYear && el.month === selectedMonth,
+            (el: DummyResponse) =>
+              el.year === selectedYear && el.month === selectedMonth,
           ),
-        )
+        );
       });
   }, [selectedMonth, selectedYear]);
 
@@ -142,13 +120,16 @@ export default function Home() {
         toNextMonth={toNextMonth}
         type={"week"}
       />
-      <div className="flex items-center justify-center p-4 w-[400px] h-[120px] shadow-lg bg-primary-white border-[1px] text-primary-black rounded-2xl relative">
-        <div className="absolute bottom-[-9px] w-4 h-4 bg-primary-white transform border-l-[1px] border-b-[1px] -rotate-45 left-1/2 -translate-x-1/2"></div>
-        {monthData &&
-          monthData.attendance.length > 0 ? 
-          <p className="text-2xl font-bold">{monthData.month}월의 설기 개수는 {monthData.attendance.length}개입니다!</p>:
+      <div className="relative flex h-[120px] w-[400px] items-center justify-center rounded-2xl border-[1px] bg-primary-white p-4 text-primary-black shadow-lg">
+        <div className="absolute bottom-[-9px] left-1/2 h-4 w-4 -translate-x-1/2 -rotate-45 border-b-[1px] border-l-[1px] bg-primary-white"></div>
+        {monthData && monthData.attendance.length > 0 ? (
+          <p className="text-2xl font-bold">
+            {monthData.month}월의 설기 개수는 {monthData.attendance.length}
+            개입니다!
+          </p>
+        ) : (
           <p className="text-2xl font-bold">이 달에는 설기가 없어요!</p>
-        }
+        )}
       </div>
       <SeolgiIcon width={250} height={250} />
       <TabBar type="desktop"></TabBar>

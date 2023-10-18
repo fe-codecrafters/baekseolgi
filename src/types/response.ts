@@ -11,3 +11,10 @@ const attendanceWithSeolgi =
 export type AttendanceWithSeolgi = Prisma.DailyAttendanceGetPayload<
   typeof attendanceWithSeolgi
 >;
+
+export type DummyResponse = {
+  year: number;
+  month: number;
+  objective: string;
+  attendance: AttendanceWithSeolgi[];
+};

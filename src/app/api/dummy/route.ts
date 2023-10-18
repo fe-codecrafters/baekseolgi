@@ -1,15 +1,8 @@
-import { AttendanceWithSeolgi } from "@/types/response";
+import { AttendanceWithSeolgi, DummyResponse } from "@/types/response";
 import { NextResponse } from "next/server";
 
-type dummyResponse = {
-  year: number;
-  month: number;
-  objective: string;
-  attendance: AttendanceWithSeolgi[];
-};
-
 export async function GET() {
-  return NextResponse.json<{ data: dummyResponse[] }>({
+  return NextResponse.json<{ data: DummyResponse[] }>({
     data: [
       {
         year: 2023,
