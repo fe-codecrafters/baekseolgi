@@ -11,16 +11,8 @@ import { Objective } from "@/components/Objective";
 const DEV = process.env.NODE_ENV === "development";
 
 export default function CalendarPage() {
-  const date = new Date();
-  const today = {
-    year: date.getFullYear(),
-    month: date.getMonth() + 1,
-    date: date.getDate(),
-    day: date.getDay(),
-  };
-
-  const [selectedYear, setSelectedYear] = useState(today.year);
-  const [selectedMonth, setSelectedMonth] = useState(today.month);
+  const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
+  const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth() + 1);
   const [monthData, setMonthData] = useState([]);
 
   const toPrevMonth = () => {
@@ -51,7 +43,6 @@ export default function CalendarPage() {
     fetch(`/api/attendance/month/${selectedYear}/${selectedMonth}`)
       .then((res) => res.json())
       .then((res) => setMonthData(res.data));
-
   }, [selectedMonth, selectedYear]);
 
   return (
@@ -68,6 +59,7 @@ export default function CalendarPage() {
         selectedYear={selectedYear}
         selectedMonth={selectedMonth}
         monthData={monthData}
+        type={'month'}
       />
       <ObjectiveProgressBar count={30} />
       <TabBar type={"desktop"}></TabBar>
