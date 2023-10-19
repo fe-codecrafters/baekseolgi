@@ -22,10 +22,10 @@ const Day = ({ day, type, isThisMonth }) => {
 
   let bgColor = "bg-primary-gray";
   if (day.id) {
-    if (day.Seolgi.color === "white") bgColor = "bg-seolgi-default";
-    if (day.Seolgi.color === "pink") bgColor = "bg-seolgi-pink";
-    if (day.Seolgi.color === "green") bgColor = "bg-seolgi-green";
-    if (day.Seolgi.color === "yellow") bgColor = "bg-seolgi-yellow";
+    if (day.seolgiId === 1) bgColor = "bg-seolgi-default";
+    if (day.seolgiId === 2) bgColor = "bg-seolgi-green";
+    if (day.seolgiId === 3) bgColor = "bg-seolgi-pink";
+    if (day.seolgiId === "yellow") bgColor = "bg-seolgi-yellow";
   }
 
   return (
@@ -37,7 +37,7 @@ const Day = ({ day, type, isThisMonth }) => {
             : " mb-[6px] h-[20px] text-[16px]"
         }${isToday ? " font-medium text-black" : " text-primary-darkGray"}`}
       >
-        {day.id ? day.id : day !== 0 ? day : null}
+        {day.id ? new Date(day.createdAt).getDate() : day !== 0 ? day : null}
       </div>
       {type === "date" ? (
         <div className={`h-[70px] w-[70px] rounded-[10px] ${bgColor}`}>
@@ -71,13 +71,35 @@ export const Calendar = ({
   selectedYear,
   selectedMonth,
   monthData,
-  dates,
-  toPrevMonth,
-  toNextMonth,
   type,
 }) => {
+
   const isThisMonth =
     selectedYear === today.year && selectedMonth === today.month;
+
+    const monthStart = new Date(selectedYear, selectedMonth - 1, 1);
+    const monthEnd = new Date(selectedYear, selectedMonth, 0);
+  
+    // 비어있는 날짜도 Day 컴포넌트로 표시해줘야하므로 0으로 채워넣기
+    const dates = [];
+    for (let i = 0; i < monthStart.getDay(); i++) {
+      dates.push(0);
+    }
+    for (let i = 1; i <= monthEnd.getDate(); i++) {
+      dates.push(i);
+    }
+    while (dates.length % 7 !== 0) {
+      dates.push(0);
+    }
+  
+    if (monthData && monthData[0]) {
+      monthData.forEach((attendance) => {
+        const attendanceDate = new Date(attendance.createdAt).getDate()
+        if (dates.findIndex((el) => el === attendanceDate)) {
+          dates[dates.findIndex((el) => el === attendanceDate)] = attendance;
+        }
+      });
+    }
 
   // 날짜들을 7개로 끊어 주 단위로 나누기
   let weeks = [];
