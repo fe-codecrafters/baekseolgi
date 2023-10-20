@@ -31,18 +31,18 @@ const Day = ({ day, type, isThisMonth }) => {
   return (
     <div className="flex flex-col items-center">
       <div
-        className={`w-[70px] text-center ${
+        className={`w-[40px] md:w-[70px] text-center ${
           type === "day"
-            ? " mb-[-6px] text-[24px]"
-            : " mb-[6px] h-[20px] text-[16px]"
+            ? " mb-[-6px] text-[16px] md:text-[24px]"
+            : " mb-[6px] h-[20px] text-[14px] md:text-[16px]"
         }${isToday ? " font-medium text-black" : " text-primary-darkGray"}`}
       >
         {day.id ? new Date(day.createdAt).getDate() : day !== 0 ? day : null}
       </div>
       {type === "date" ? (
-        <div className={`h-[70px] w-[70px] rounded-[10px] ${bgColor}`}>
+        <div className={`h-[40px] w-[100%] rounded-[10px] md:h-[70px] ${bgColor}`}>
           {day.id ? (
-            <SeolgiIcon bgFill="transparent" width={70} height={70} />
+            <SeolgiIcon bgFill="transparent" width={'auto'} height={'auto'} />
           ) : null}
         </div>
       ) : null}
@@ -50,10 +50,16 @@ const Day = ({ day, type, isThisMonth }) => {
   );
 };
 
+interface WeekProps {
+  week: [number, {id: number, createdAt: string, seolgiId: number}];
+  type: string;
+  isThisMonth: boolean;
+}
+
 // 달력에서 한 주를 표시하는 컴포넌트 - 7개의 Day 컴포넌트를 묶어주는 역할
-const Week = ({ week, type, isThisMonth }) => {
+const Week = ({ week, type, isThisMonth }:WeekProps) => {
   return (
-    <div className="mt-1 flex w-auto flex-row justify-start gap-[16px]">
+    <div className="mt-1 flex w-auto flex-row justify-start gap-[10px] md:gap-[16px]">
       {week.map((day, idx) => (
         <Day
           key={`day-${idx + 1}`}
@@ -66,13 +72,20 @@ const Week = ({ week, type, isThisMonth }) => {
   );
 };
 
+interface CalendarProps {
+  selectedYear: number;
+  selectedMonth: number;
+  monthData: [{id: number, createdAt: string, seolgiId: number}];
+  type: string;
+}
+
 // 한 달을 표시하는 컴포넌트 - type에 따라 weekly, monthly로 구분
 export const Calendar = ({
   selectedYear,
   selectedMonth,
   monthData,
   type,
-}) => {
+}:CalendarProps) => {
 
   const isThisMonth =
     selectedYear === today.year && selectedMonth === today.month;
@@ -114,7 +127,7 @@ export const Calendar = ({
   }
 
   return (
-    <div className="mb-[40px] flex flex-col items-center justify-start gap-[20px]">
+    <div className="flex flex-col items-center justify-start gap-[18px] md:gap-[20px]">
       <Week week={days} type={"day"} isThisMonth={isThisMonth} />
       {weeks.map((week, idx) => (
         <Week

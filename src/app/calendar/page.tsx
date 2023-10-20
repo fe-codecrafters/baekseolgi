@@ -46,7 +46,7 @@ export default function CalendarPage() {
   }, [selectedMonth, selectedYear]);
 
   return (
-    <div className="mx-auto flex min-h-screen w-full flex-col items-center justify-between">
+    <div className="mx-auto flex gap-[20px] md:gap-[40px] w-full flex-col items-center justify-between">
       <Header />
       <CalendarHeader
         toPrevMonth={toPrevMonth}
