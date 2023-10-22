@@ -43,7 +43,7 @@ model Objective {
   failedAt         DateTime?
   status           ObjectiveStatus    @default(ACTIVE)
   title            String // 100설기 매일 들어오기
-  description      String
+  description      String?
   User             User               @relation(fields: [userId], references: [id])
   userId           Int
   ObjectiveHistory ObjectiveHistory[]
