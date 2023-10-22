@@ -2,7 +2,7 @@ import Link from "next/link";
 
 import CalendarIcon from "@/icons/TabBar/CalendarIcon";
 import HomeIcon from "@/icons/TabBar/HomeIcon";
-import SeolgiTabBarIcon from "@/icons/TabBar/SeolgiTabBarIcon";
+import FeedIcon from "@/icons/TabBar/FeedIcon";
 
 /**
  * 페이지 전환을 위한 Tab Bar 컴포넌트
@@ -36,7 +36,7 @@ export default function TabBar() {
           href="/my-page"
           className="group flex grow flex-col items-center justify-center"
         >
-          <SeolgiTabBarIcon></SeolgiTabBarIcon>
+          <FeedIcon></FeedIcon>
           <span className="text-sm text-primary-darkGray group-active:text-primary-black md:text-base">
             피드
           </span>

@@ -15,7 +15,7 @@ interface Props {
  * - background primary-white
  * - group-active:color primary-black
  */
-export default function SeolgiTabBarIcon({
+export default function FeedIcon({
   width,
   height,
   bgFill = "#FFFFFF",
