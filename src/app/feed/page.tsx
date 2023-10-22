@@ -102,7 +102,8 @@ export default function FeedPage() {
             {monthData && monthData.attendance.length > 0 ?
                 monthData.attendance.map((el) => {
                     return (
-                        <div className="mb-[24px]">
+                        <div className="mb-[24px]" key={el.id}>
+                            {/* onchange 추가해서 데이터 변경하는 기능 추가 예정 */}
                             <AttendanceInput
                             label="출석"
                             id={`attendance-${el.id}`}
