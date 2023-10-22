@@ -16,9 +16,9 @@ interface Props {
  */
 export default function TabBar({ type = "desktop" }: Props) {
   const desktopTextCN =
-    "text-base text-primary-darkGray group-hover:text-primary-black";
+    "text-base text-primary-darkGray group-active:text-primary-black";
   const mobileTextCN =
-    "text-sm text-primary-darkGray group-hover:text-primary-black";
+    "text-sm text-primary-darkGray group-active:text-primary-black";
   const textCN = type === "desktop" ? desktopTextCN : mobileTextCN;
 
   return (
@@ -45,7 +45,7 @@ export default function TabBar({ type = "desktop" }: Props) {
           className="group flex grow flex-col items-center justify-center"
         >
           <SeolgiTabBarIcon type={type}></SeolgiTabBarIcon>
-          <span className={textCN}>펫</span>
+          <span className={textCN}>피드</span>
         </Link>
       </div>
     </>

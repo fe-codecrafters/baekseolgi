@@ -10,14 +10,14 @@ interface Props {
 }
 
 /**
- * 설기 텝바 아이콘 컴포넌트
+ * 피드 텝바 아이콘 컴포넌트
  * @param {IconType} type 'desktop' | 'mobile'
  * - desktop 24px
  * - mobile 20px
  * - color primary-darkGray
- * - group-hover:color primary-black
+ * - group-active:color primary-black
  * - background primary-white
- * - group-hover:color primary-black
+ * - group-active:color primary-black
  */
 export default function SeolgiTabBarIcon({
   type = "desktop",
@@ -28,8 +28,8 @@ export default function SeolgiTabBarIcon({
 }: Props) {
   const svgProps = width && height ? { width, height } : null;
   const isDesktop = type === "desktop";
-  const desktopCN = "text-primary-darkGray group-hover:text-primary-black";
-  const mobileCN = "text-primary-darkGray group-hover:text-primary-black";
+  const desktopCN = "text-primary-darkGray group-active:text-primary-black";
+  const mobileCN = "text-primary-darkGray group-active:text-primary-black";
   const cn = isDesktop ? desktopCN : mobileCN;
   const vb = `0 0 ${24} ${24}`;
   const w = width ? width : isDesktop ? 24 : 20;
@@ -47,7 +47,7 @@ export default function SeolgiTabBarIcon({
         xmlns="http://www.w3.org/2000/svg"
       >
         <path
-          className="fill-current text-primary-white group-hover:text-primary-lightGray"
+          className="fill-current text-primary-white group-active:text-primary-lightGray"
           d="M0.583984 23.2531V0.647339H23.4643V23.2531H0.583984Z"
           fill={bgFill}
         />

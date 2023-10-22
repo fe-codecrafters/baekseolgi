@@ -10,12 +10,12 @@ interface Props {
  * - desktop 24px
  * - mobile 20px
  * - color primary-darkGray
- * - group-hover:color primary-black
+ * - group-active:color primary-black
  */
 export default function HomeIcon({ type = "desktop" }: Props) {
   const isDesktop = type === "desktop";
-  const desktopCN = "text-primary-darkGray group-hover:text-primary-black";
-  const mobileCN = "text-primary-darkGray group-hover:text-primary-black";
+  const desktopCN = "text-primary-darkGray group-active:text-primary-black";
+  const mobileCN = "text-primary-darkGray group-active:text-primary-black";
   const cn = isDesktop ? desktopCN : mobileCN;
   const vb = `0 0 ${24} ${24}`;
   const w = isDesktop ? 24 : 20;
