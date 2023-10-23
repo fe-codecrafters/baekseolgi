@@ -11,7 +11,7 @@ import FeedIcon from "@/icons/TabBar/FeedIcon";
 export default function TabBar() {
   return (
     <>
-      <nav className="mt-[68px] flex w-full flex-row border-t-[1px] border-primary-darkGray py-1.5">
+      <nav className="sticky bottom-0 bg-primary-white mt-[68px] flex w-full flex-row border-t-[1px] border-primary-darkGray py-1.5">
         <Link
           href="/calendar"
           className="group flex grow flex-col items-center justify-center"
