@@ -8,6 +8,8 @@ import { format } from "date-fns";
 import { ko } from "date-fns/locale";
 
 import { useState } from "react";
+import SeolgiIconL from "@/icons/AttendanceInput/SeolgiIconL";
+import SeolgiIconS from "@/icons/AttendanceInput/SeolgiIconS";
 
 interface Props {
   type?: AttendanceInputType;
@@ -23,6 +25,8 @@ interface Props {
   date: Date;
   height?: number;
 }
+
+// TODO: Props 정리 필요
 
 /**
  * 일일 출석 기록을 위한 Input 컴포넌트
@@ -50,13 +54,15 @@ export default function AttendanceInput({
   };
 
   const isMain = type === "main";
-  const defaultWrapperCN = `relative border-0 text-2xl max-w-[665px] w-full mx-auto`;
-  const mainWrapperCN = defaultWrapperCN + " h-[300px]";
-  const calendarWrapperCN = defaultWrapperCN + " h-[150px]";
+  const defaultWrapperCN = `relative border-0 max-w-[340px] md:max-w-[600px] w-full mx-auto`;
+  const mainWrapperCN =
+    defaultWrapperCN + " h-[150px] md:h-[300px] text-base md:text-2xl";
+  const calendarWrapperCN =
+    defaultWrapperCN + " h-[100px] md:h-[150px] text-sm md:text-base";
 
   // left padding: 160px + 40px => pl-[200px]
   const defaultCN =
-    "block w-full pl-[200px] pt-4 h-full border-[1px] rounded-lg border-TPrimary appearance-none bg-transparent";
+    "block w-full pl-[102px] md:pl-[200px] pt-4 h-full border-[1px] rounded-[20px] border-primary-gray appearance-none bg-transparent";
   const normalCN = defaultCN + " text-primary-black";
   const readOnlyCN = defaultCN + " text-primary-gray";
 
@@ -65,33 +71,29 @@ export default function AttendanceInput({
       <div className={isMain ? mainWrapperCN : calendarWrapperCN}>
         {/* 출석 입력 및 수정 */}
         <button
-          className="group absolute right-0 top-0 z-20 mr-14 pt-4"
+          className="group absolute right-0 top-0 z-20 mr-12 pt-4 md:mr-[68px]"
           onClick={handleEdit}
         >
           <EditIcon></EditIcon>
         </button>
         <button
-          className="group absolute right-0 top-0 z-20 mr-6 pt-4"
+          className="group absolute right-0 top-0 z-20 mr-3 pt-4 md:mr-6"
           onClick={handleDelete}
         >
           <DeleteIcon></DeleteIcon>
         </button>
         {/* 날짜, Date, 설기 로고 */}
-        <div className="absolute z-10 flex h-full w-40 flex-col items-center justify-center gap-1">
-          <span className="text-center text-[24px]">
+        <div className="absolute z-10 flex h-full w-[90px] flex-col items-center justify-center gap-1 md:w-40">
+          <span className="text-center text-base md:text-2xl">
             {format(date, "eee", { locale: ko })}
           </span>
-          <label className="text-center text-base">
+          <label className="text-center text-sm md:text-base">
             {format(date, "d", { locale: ko })}
           </label>
-          <SeolgiIcon
-            type="desktop"
-            width={isMain ? 70 : 40}
-            height={isMain ? 70 : 40}
-          ></SeolgiIcon>
+          {isMain ? <SeolgiIconL></SeolgiIconL> : <SeolgiIconS></SeolgiIconS>}
         </div>
         {/* TODO: 보더의 양 끝에 살짝 공백을 주기 애매, margin 노가다 하면 가능은 할 듯 .. 일단은 그냥 마진은 두지 않는거로  */}
-        <div className="absolute h-[100%] w-40 border-r-[1px] border-primary-gray"></div>
+        <div className="absolute h-[100%] w-[90px] border-r-[1px] border-primary-gray md:w-40"></div>
         <input
           className={canEdit ? normalCN : readOnlyCN}
           type={"text"}
