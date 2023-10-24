@@ -90,40 +90,42 @@ export default function FeedPage() {
 
 
   return (
-    <div className="mx-auto flex min-h-screen w-full max-w-screen-md flex-col items-center justify-between">
-        <Header></Header>
-        <CalendarHeader
-            toPrevMonth={toPrevMonth}
-            toNextMonth={toNextMonth}
-            selectedYear={selectedYear}
-            selectedMonth={selectedMonth}
-        />
-        <div className="mt-[40px] w-[600px]">
-            {monthData && monthData.attendance.length > 0 ?
-                monthData.attendance.map((el) => {
-                    return (
-                        <div className="mb-[24px]" key={el.id}>
-                            {/* onchange 추가해서 데이터 변경하는 기능 추가 예정 */}
-                            <AttendanceInput
-                            label="출석"
-                            id={`attendance-${el.id}`}
-                            name={`attendance-${el.id}`}
-                            onChange={() => {}}
-                            placeholder="Calendar 페이지 placeholder"
-                            required
-                            date={new Date(monthData.year, monthData.month -1, el.id)}
-                            defaultValue={el.title}
-                            type="calendar"
-                            ></AttendanceInput>
-                        </div>
-                    )
-                }):
-                <div className="mt-[40px] w-[600px] h-[800px] flex justify-center items-center">
-                    <p className="text-2xl">이 달에는 기록이 없어요!</p>
-                </div>
-            }
+    <div className="mx-auto flex gap-[20px] md:gap-[40px] w-full h-screen flex-col items-center justify-between">
+        <Header />
+        <div className="flex flex-col items-center justify-center" >
+            <CalendarHeader
+                toPrevMonth={toPrevMonth}
+                toNextMonth={toNextMonth}
+                selectedYear={selectedYear}
+                selectedMonth={selectedMonth}
+            />
+            <div className="mt-[40px] w-[600px]">
+                {monthData && monthData.attendance.length > 0 ?
+                    monthData.attendance.map((el) => {
+                        return (
+                            <div className="mb-[24px]" key={el.id}>
+                                {/* onchange 추가해서 데이터 변경하는 기능 추가 예정 */}
+                                <AttendanceInput
+                                label="출석"
+                                id={`attendance-${el.id}`}
+                                name={`attendance-${el.id}`}
+                                onChange={() => {}}
+                                placeholder="Calendar 페이지 placeholder"
+                                required
+                                date={new Date(monthData.year, monthData.month -1, el.id)}
+                                defaultValue={el.title}
+                                type="calendar"
+                                ></AttendanceInput>
+                            </div>
+                        )
+                    }):
+                    <div className="mt-[40px] w-[600px] h-[800px] flex justify-center items-center">
+                        <p className="text-2xl">이 달에는 기록이 없어요!</p>
+                    </div>
+                }
+            </div>
         </div>
-        <TabBar type="desktop"></TabBar>
+        <TabBar />
     </div>
   );
 }
