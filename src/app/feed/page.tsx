@@ -7,8 +7,6 @@ import { AttendanceWithSeolgi, DummyResponse } from "@/types/response";
 import { useEffect, useState } from "react";
 const DEV = process.env.NODE_ENV === "development";
 
-//TODO : map 메소드 사용하기 위해서는 타입 지정 되어 있어야 함
-
 export default function FeedPage() {
   const date = new Date();
 
