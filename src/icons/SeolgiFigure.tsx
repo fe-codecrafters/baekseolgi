@@ -1,3 +1,4 @@
+
 interface Props {
   width?: number;
   height?: number;
@@ -8,8 +9,6 @@ interface Props {
 }
 
 export default function SeolgiFigure({
-  width = 200,
-  height = 200,
   bgFill = "#F3F3F3",
   strokeFill = "#000000",
   blushFill = "#FFE3E3",
@@ -17,8 +16,7 @@ export default function SeolgiFigure({
   return (
     <>
       <svg
-        width={width}
-        height={height}
+        className="w-[100px] h-[100px] md:w-[200px] md:h-[200px]"
         viewBox="0 0 200 200"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
