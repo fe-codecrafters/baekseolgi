@@ -102,7 +102,7 @@ export default function Home() {
   }, [selectedMonth, selectedYear]);
 
   return (
-    <div className="mx-auto flex min-h-screen w-full max-w-screen-md flex-col items-center justify-between">
+    <div className="mx-auto flex gap-[20px] md:gap-[40px] w-full h-screen flex-col items-center justify-between">
       <Header />
       <CalendarHeader
         toPrevMonth={toPrevMonth}
@@ -132,7 +132,7 @@ export default function Home() {
         )}
       </div>
       <SeolgiIcon width={250} height={250} />
-      <TabBar type="desktop"></TabBar>
+      <TabBar />
     </div>
   );
 }
