@@ -18,3 +18,10 @@ export type DummyResponse = {
   objective: string;
   attendance: AttendanceWithSeolgi[];
 };
+
+export type YearlyAttendanceStat = {
+  year: number;
+  month: number;
+  objective: string;
+  counts: number[];
+};
