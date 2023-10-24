@@ -33,7 +33,7 @@ export default function TabBar() {
         </Link>
 
         <Link
-          href="/my-page"
+          href="/feed"
           className="group flex grow flex-col items-center justify-center"
         >
           <FeedIcon></FeedIcon>
