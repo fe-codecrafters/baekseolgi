@@ -1,13 +1,17 @@
 "use client";
 import EditIcon from "@/icons/EditIcon";
 import DeleteIcon from "@/icons/DeleteIcon";
-import SeolgiIcon from "@/icons/SeolgiIcon";
 import { AttendanceInputType } from "@/types";
 
 import { format } from "date-fns";
 import { ko } from "date-fns/locale";
 
-import { useState } from "react";
+import {
+  ChangeEventHandler,
+  FormEventHandler,
+  MouseEventHandler,
+  useState,
+} from "react";
 import SeolgiIconL from "@/icons/AttendanceInput/SeolgiIconL";
 import SeolgiIconS from "@/icons/AttendanceInput/SeolgiIconS";
 
@@ -16,41 +20,65 @@ interface Props {
   name: string;
   label: string;
   id: string;
+  attendanceId: number;
   value?: string;
-  defaultValue?: string | number | readonly string[] | undefined;
+  defaultValue?: string;
   placeholder: string;
   required: boolean;
   disabled?: boolean;
-  onChange: React.ChangeEventHandler<HTMLInputElement> | undefined;
+  editAttendance?: (id: number, title: string) => void;
+  deleteAttendance?: (id: number) => void;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  onChange?: (...args: any[]) => void;
   date: Date;
-  height?: number;
 }
-
-// TODO: Props 정리 필요
 
 /**
  * 일일 출석 기록을 위한 Input 컴포넌트
  * @param {IconType} type 'calendar' | 'main'
  *
+ * edit 버튼 클릭 -> update
+ * HTMLFormElement -> update (Enter)
+ * delete 버튼 클릭 -> delete
  */
 export default function AttendanceInput({
+  type = "main",
   name,
   id,
-  type = "main",
-  required = false,
+  attendanceId,
   defaultValue = "",
   placeholder = "",
+  required = false,
   disabled = false,
+  editAttendance,
+  deleteAttendance,
   onChange,
   date = new Date(),
 }: Props) {
-  const [canEdit, setEdit] = useState(true);
-  const handleEdit = () => {
+  const [canEdit, setEdit] = useState(false);
+  const [title, setTitle] = useState(defaultValue);
+
+  const handleSubmit: FormEventHandler = (e) => {
+    e.preventDefault();
+    editAttendance ? editAttendance(attendanceId, title) : undefined;
+  };
+
+  const handleChange: ChangeEventHandler<HTMLInputElement> = (e) => {
+    setTitle(e.target.value);
+    onChange ? onChange() : undefined;
+  };
+
+  const handleEdit: MouseEventHandler = (e) => {
+    e.preventDefault();
+    if (canEdit && editAttendance) {
+      editAttendance(attendanceId, title);
+    }
     setEdit(!canEdit);
   };
 
-  const handleDelete = () => {
-    // TODO
+  const handleDelete: MouseEventHandler = (e) => {
+    e.preventDefault();
+    deleteAttendance ? deleteAttendance(attendanceId) : undefined;
   };
 
   const isMain = type === "main";
@@ -63,12 +91,15 @@ export default function AttendanceInput({
   // left padding: 160px + 40px => pl-[200px]
   const defaultCN =
     "block w-full pl-[102px] md:pl-[200px] pt-4 h-full border-[1px] rounded-[20px] border-primary-gray appearance-none bg-transparent";
-  const normalCN = defaultCN + " text-primary-black";
-  const readOnlyCN = defaultCN + " text-primary-gray";
+  const normalCN = defaultCN + " text-primary-gray";
+  const readOnlyCN = defaultCN + " text-primary-black";
 
   return (
     <>
-      <div className={isMain ? mainWrapperCN : calendarWrapperCN}>
+      <form
+        onSubmit={handleSubmit}
+        className={isMain ? mainWrapperCN : calendarWrapperCN}
+      >
         {/* 출석 입력 및 수정 */}
         <button
           className="group absolute right-0 top-0 z-20 mr-12 pt-4 md:mr-[68px]"
@@ -99,8 +130,8 @@ export default function AttendanceInput({
           type={"text"}
           name={name}
           id={id}
-          onChange={onChange}
-          defaultValue={defaultValue}
+          onChange={handleChange}
+          value={title}
           placeholder={
             canEdit ? placeholder : "변경 아이콘을 누르고 목표를 수정하세요"
           }
@@ -108,7 +139,7 @@ export default function AttendanceInput({
           disabled={disabled}
           readOnly={!canEdit}
         />
-      </div>
+      </form>
     </>
   );
 }

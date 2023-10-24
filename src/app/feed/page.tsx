@@ -3,9 +3,8 @@ import AttendanceInput from "@/components/AttendanceInput";
 import { CalendarHeader } from "@/components/CalendarHeader";
 import { Header } from "@/components/Header";
 import TabBar from "@/components/TabBar";
-import { AttendanceWithSeolgi, DummyResponse } from "@/types/response";
+import { MonthlyAttendanceResponse } from "@/types/response";
 import { useEffect, useState } from "react";
-const DEV = process.env.NODE_ENV === "development";
 
 export default function FeedPage() {
   const date = new Date();
@@ -17,7 +16,7 @@ export default function FeedPage() {
     day: date.getDay(),
   };
 
-  const initialMonthData: DummyResponse = {
+  const initialMonthData: MonthlyAttendanceResponse = {
     year: 2000,
     month: 1,
     objective: "",
@@ -27,6 +26,9 @@ export default function FeedPage() {
   const [selectedYear, setSelectedYear] = useState(today.year);
   const [selectedMonth, setSelectedMonth] = useState(today.month);
   const [monthData, setMonthData] = useState(initialMonthData);
+  // TODO: userId, objectiveId도 데이터 확인할 수 있어야
+  const userId = 1;
+  const objectiveId = 1;
 
   const toPrevMonth = () => {
     // 달이 바뀔 때마다 설기 잔상이 남아서 초기화해주기 위한 코드
@@ -52,17 +54,51 @@ export default function FeedPage() {
     }
   };
 
-  useEffect(() => {
-    fetch("/api/dummy")
+  const getAttendance = (
+    year: number,
+    month: number,
+    userId: number,
+    objectiveId: number,
+  ) => {
+    fetch(
+      `/api/attendance/month/${year}/${month}?userId=${userId}&objectiveId=${objectiveId}`,
+    )
       .then((res) => res.json())
       .then((res) => {
-        setMonthData(
-          res.data.find(
-            (el: DummyResponse) =>
-              el.year === selectedYear && el.month === selectedMonth,
-          ),
-        );
+        console.log(res);
+        setMonthData(res.data);
       });
+  };
+
+  const editAttendance = (id: number, title: string) => {
+    fetch(`/api/attendance/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        title,
+      }),
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        getAttendance(selectedYear, selectedMonth, userId, objectiveId);
+      })
+      .catch((e) => console.log("TODO: 에러 헨들링", e));
+  };
+
+  const deleteAttendance = (id: number) => {
+    fetch(`/api/attendance/${id}`, {
+      method: "DELETE",
+    })
+      .then((res) => {
+        getAttendance(selectedYear, selectedMonth, userId, objectiveId);
+      })
+      .catch((e) => console.log("TODO: 에러 헨들링", e));
+  };
+
+  useEffect(() => {
+    getAttendance(selectedYear, selectedMonth, userId, objectiveId);
   }, [selectedMonth, selectedYear]);
 
   return (
@@ -84,11 +120,14 @@ export default function FeedPage() {
                   label="출석"
                   id={`attendance-${el.id}`}
                   name={`attendance-${el.id}`}
+                  attendanceId={el.id}
                   onChange={() => {}}
                   placeholder="Calendar 페이지 placeholder"
                   required
                   date={new Date(monthData.year, monthData.month - 1, el.id)}
                   defaultValue={el.title}
+                  editAttendance={editAttendance}
+                  deleteAttendance={deleteAttendance}
                   type="calendar"
                 ></AttendanceInput>
               </div>
