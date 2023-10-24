@@ -79,15 +79,12 @@ export async function PUT(
     );
   }
 
-  const { userId, objectiveId, seolgiId, title, createdAt, status } =
-    (await request.json()) as {
-      userId: number;
-      objectiveId: number;
-      seolgiId: number;
-      title: string;
-      status: DailyAttendanceStatus;
-      createdAt: string;
-    };
+  const { seolgiId, title, createdAt, status } = (await request.json()) as {
+    seolgiId?: number;
+    title: string;
+    status?: DailyAttendanceStatus;
+    createdAt?: string;
+  };
 
   let updated;
 
@@ -95,8 +92,6 @@ export async function PUT(
     updated = await dailyAttendance.update({
       where: { id },
       data: {
-        userId,
-        objectiveId,
         seolgiId,
         status,
         title,

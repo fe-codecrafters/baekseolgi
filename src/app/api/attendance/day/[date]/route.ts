@@ -84,6 +84,9 @@ export async function GET(
         userId,
         objectiveId,
       },
+      orderBy: {
+        id: "asc",
+      },
     });
   } catch (e) {
     console.error("/attendance/day/{date} Error: ", e);
