@@ -119,8 +119,8 @@ export default function FeedPage() {
                             </div>
                         )
                     }):
-                    <div className="mt-[40px] w-[600px] h-[800px] flex justify-center items-center">
-                        <p className="text-2xl">이 달에는 기록이 없어요!</p>
+                    <div className="mt-[40px] h-[600px] md:h-[800px] flex justify-center items-center">
+                        <p className="text-xl md:text-2xl">이 달에는 기록이 없어요!</p>
                     </div>
                 }
             </div>
