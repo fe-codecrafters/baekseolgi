@@ -14,6 +14,8 @@ export default function CalendarPage() {
   const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
   const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth() + 1);
   const [monthData, setMonthData] = useState([]);
+  const userId = 1;
+  const objectiveId = 1;
 
   const toPrevMonth = () => {
     // 달이 바뀔 때마다 설기 잔상이 남아서 초기화해주기 위한 코드
@@ -40,13 +42,18 @@ export default function CalendarPage() {
   };
 
   useEffect(() => {
-    fetch(`/api/attendance/month/${selectedYear}/${selectedMonth}`)
+    fetch(
+      `/api/attendance/month/${selectedYear}/${selectedMonth}?userId=${userId}&objectiveId=${objectiveId}`,
+    )
       .then((res) => res.json())
-      .then((res) => setMonthData(res.data));
+      .then((res) => {
+        console.log(res);
+        setMonthData(res.data.attendance);
+      });
   }, [selectedMonth, selectedYear]);
 
   return (
-    <div className="mx-auto flex gap-[20px] md:gap-[40px] w-full h-screen flex-col items-center justify-between">
+    <div className="mx-auto flex h-screen w-full flex-col items-center justify-between gap-[20px] md:gap-[40px]">
       <Header />
       <CalendarHeader
         toPrevMonth={toPrevMonth}
@@ -59,7 +66,7 @@ export default function CalendarPage() {
         selectedYear={selectedYear}
         selectedMonth={selectedMonth}
         monthData={monthData}
-        type={'month'}
+        type={"month"}
       />
       <ObjectiveProgressBar count={30} />
       <TabBar type={"desktop"}></TabBar>
