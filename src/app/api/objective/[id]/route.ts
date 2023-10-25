@@ -77,10 +77,8 @@ export async function PUT(
     );
   }
 
-  const { userId, title, createdAt, description, finishedAt, failedAt } =
+  const { title, createdAt, description, finishedAt, failedAt } =
     (await request.json()) as {
-      userId: number;
-      objectiveId: number;
       title: string;
       description?: string;
       createdAt: string;
@@ -94,7 +92,6 @@ export async function PUT(
     updated = await objective.update({
       where: { id },
       data: {
-        userId,
         title,
         description,
         createdAt: createdAt ? new Date(createdAt) : undefined,
