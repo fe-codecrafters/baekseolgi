@@ -1,8 +1,8 @@
-import { DailyAttendance, PrismaClient } from "@prisma/client";
+import { DailyAttendance, Objective, PrismaClient } from "@prisma/client";
 import { endOfMonth, isValid, parse, startOfMonth } from "date-fns";
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/app/api/_base";
-const { dailyAttendance } = prisma;
+const { dailyAttendance, objective } = prisma;
 
 /**
  * @swagger
@@ -42,7 +42,8 @@ export async function GET(
   { params }: { params: { year: string; month: string } },
 ) {
   const { year, month } = params;
-  console.log(year, month);
+  const searchParams = request.nextUrl.searchParams;
+  console.log("api/month/[year]/[month]", year, month, searchParams);
 
   if (
     !isValid(parse(year, "yyyy", new Date())) &&
@@ -54,7 +55,6 @@ export async function GET(
     );
   }
 
-  const searchParams = request.nextUrl.searchParams;
   const userId =
     searchParams.get("userId") !== null
       ? Number(searchParams.get("userId"))
@@ -67,6 +67,7 @@ export async function GET(
   const endDate = endOfMonth(date);
 
   let attendances: DailyAttendance[];
+  let uniqueObjective: Objective | null;
 
   try {
     attendances = await dailyAttendance.findMany({
@@ -78,14 +79,31 @@ export async function GET(
         userId,
         objectiveId,
       },
+      orderBy: {
+        id: "asc",
+      },
+    });
+
+    uniqueObjective = await objective.findUnique({
+      where: {
+        id: objectiveId,
+      },
     });
   } catch (e) {
     console.error("/attendance/month/{year}/{month} Error: ", e);
     return NextResponse.json({ error: "Not Found" }, { status: 404 });
   }
 
-  if (attendances.length === 0) {
+  if (!uniqueObjective || attendances.length === 0) {
     return NextResponse.json({ error: "Not Found" }, { status: 404 });
   }
-  return NextResponse.json({ data: attendances });
+
+  return NextResponse.json({
+    data: {
+      year: Number(year),
+      month: Number(month),
+      objective: uniqueObjective.title,
+      attendance: attendances,
+    },
+  });
 }
