@@ -19,7 +19,6 @@ export type DummyResponse = {
   attendance: AttendanceWithSeolgi[];
 };
 
-
 export type MonthlyAttendanceResponse = {
   year: number;
   month: number;

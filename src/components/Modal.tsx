@@ -8,7 +8,7 @@ const Modal = () => {
   const date = new Date();
 
   return (
-    <div className="flex min-h-full w-600 flex-col justify-center rounded-2xl border-[1px] p-6 lg:px-8">
+    <div className="w-600 flex min-h-full flex-col justify-center rounded-2xl border-[1px] p-6 lg:px-8">
       <div className="relative">
         <div className="flex items-center justify-center gap-3">
           <h2 className="text-center text-2xl font-bold leading-9 tracking-tight text-primary-black">
