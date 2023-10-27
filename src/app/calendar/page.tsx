@@ -68,7 +68,7 @@ export default function CalendarPage() {
         monthData={monthData}
         type={"month"}
       />
-      <ObjectiveProgressBar count={30} />
+      <ObjectiveProgressBar count={monthData.length} />
       <TabBar type={"desktop"}></TabBar>
     </div>
   );

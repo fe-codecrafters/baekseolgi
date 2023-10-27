@@ -29,6 +29,14 @@ export default function Home() {
     objective: "",
     attendance: [],
   });
+  const [seolgiSay, setSeolgiSay] = useState("objective");
+  const [effect, setEffect] = useState(false);
+
+  const seolgiSize = {
+    objective: "w-[250px] h-[250px]",
+    month: "w-[140px] h-[140px] mb-[50px]",
+    week: "w-[50px] h-[50px] mb-[100px]",
+  };
 
   const toPrevMonth = () => {
     // 달이 바뀔 때마다 설기 잔상이 남아서 초기화해주기 위한 코드
@@ -120,18 +128,43 @@ export default function Home() {
         toNextMonth={toNextMonth}
         type={"week"}
       />
-      <div className="relative flex h-[120px] w-[400px] items-center justify-center rounded-2xl border-[1px] bg-primary-white p-4 text-primary-black shadow-lg">
-        <div className="absolute bottom-[-9px] left-1/2 h-4 w-4 -translate-x-1/2 -rotate-45 border-b-[1px] border-l-[1px] bg-primary-white"></div>
-        {monthData && monthData.attendance.length > 0 ? (
-          <p className="text-2xl font-bold">
-            {monthData.month}월의 설기 개수는 {monthData.attendance.length}
-            개입니다!
-          </p>
-        ) : (
-          <p className="text-2xl font-bold">이 달에는 설기가 없어요!</p>
-        )}
+      <div className="flex h-[400px] flex-col items-center justify-between gap-[30px]">
+        <div className="relative flex h-[120px] w-[400px] items-center justify-center rounded-2xl border-[1px] bg-primary-white p-4 text-primary-black shadow-lg">
+          <div className="absolute bottom-[-9px] left-1/2 h-4 w-4 -translate-x-1/2 -rotate-45 border-b-[1px] border-l-[1px] bg-primary-white"></div>
+          {monthData && monthData.attendance.length > 0 ? (
+            <p className="text-2xl font-bold">
+              {seolgiSay === "month"
+                ? `${monthData.month}월의 설기 개수는 ${monthData.attendance.length}
+              개입니다!`
+                : seolgiSay === "week"
+                ? `이번 주의 설기 개수는 0개 입니다!`
+                : seolgiSay === "objective"
+                ? `이번 목표의 설기 개수는 10개 입니다!`
+                : null}
+            </p>
+          ) : (
+            <p className="text-2xl font-bold">이 달에는 설기가 없어요!</p>
+          )}
+        </div>
+        <button
+          className={`${seolgiSize[seolgiSay]} transition-all ${
+            effect && "animate-seolgiClick"
+          }`}
+          onClick={() => {
+            seolgiSay === "objective"
+              ? setSeolgiSay("month")
+              : seolgiSay === "month"
+              ? setSeolgiSay("week")
+              : seolgiSay === "week"
+              ? setSeolgiSay("objective")
+              : null;
+            setEffect(true);
+          }}
+          onAnimationEnd={() => setEffect(false)}
+        >
+          <SeolgiIcon width="auto" height="auto" />
+        </button>
       </div>
-      <SeolgiIcon width={250} height={250} />
       <TabBar />
     </div>
   );

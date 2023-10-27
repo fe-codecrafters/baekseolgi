@@ -30,6 +30,16 @@ const config: Config = {
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
+      keyframes: {
+        seolgiClick: {
+          "25%": { transform: "scale(0.8,1.2) rotate(-2deg)" },
+          "50%": { transform: "scale(1.1,0.9) rotate(0deg)" },
+          "75%": { transform: "scale(0.9,1.1) rotate(2deg)" },
+        },
+      },
+      animation: {
+        seolgiClick: "seolgiClick 0.3s ease-in-out",
+      },
     },
   },
   plugins: [require("@tailwindcss/typography")],
