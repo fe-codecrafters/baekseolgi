@@ -103,7 +103,6 @@ export default function FeedPage() {
 
   return (
     <div className="mx-auto flex h-screen w-full flex-col items-center justify-between gap-[20px] md:gap-[40px]">
-      <Header />
       <div className="flex flex-col items-center justify-center">
         <CalendarHeader
           toPrevMonth={toPrevMonth}
@@ -141,7 +140,6 @@ export default function FeedPage() {
           )}
         </div>
       </div>
-      <TabBar />
     </div>
   );
 }
