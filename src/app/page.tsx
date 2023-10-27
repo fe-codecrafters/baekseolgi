@@ -146,7 +146,7 @@ export default function Home() {
             <p className="text-2xl font-bold">이 달에는 설기가 없어요!</p>
           )}
         </div>
-        <div
+        <button
           className={`${seolgiSize[seolgiSay]} transition-all ${
             effect && "animate-seolgiClick"
           }`}
@@ -163,7 +163,7 @@ export default function Home() {
           onAnimationEnd={() => setEffect(false)}
         >
           <SeolgiIcon width="auto" height="auto" />
-        </div>
+        </button>
       </div>
       <TabBar />
     </div>
