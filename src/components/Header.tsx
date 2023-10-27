@@ -16,7 +16,7 @@ export const Header = () => {
           </Link>
         </div>
       </div>
-      <nav className='hidden md:flex md:justify-center md:items-center md:gap-[80px] h-[64px] w-full border-t border-primary-darkGray'>
+      <nav className="hidden h-[64px] w-full border-t border-primary-darkGray md:flex md:items-center md:justify-center md:gap-[80px]">
         <Link href="/">홈</Link>
         <Link href="/calendar">캘린더</Link>
         <Link href="/feed">피드</Link>

@@ -34,14 +34,14 @@ const config: Config = {
         seolgiClick: {
           // "0%, 100%": { transform: "rotate(-3deg)" },
           // "50%": { transform: "rotate(3deg)" }
-          "25%" : { transform: "scale(0.8,1.2) rotate(-2deg)" },
-          "50%" : { transform: "scale(1.1,0.9) rotate(0deg)" },
-          "75%" : { transform: "scale(0.9,1.1) rotate(2deg)" },
-        }
+          "25%": { transform: "scale(0.8,1.2) rotate(-2deg)" },
+          "50%": { transform: "scale(1.1,0.9) rotate(0deg)" },
+          "75%": { transform: "scale(0.9,1.1) rotate(2deg)" },
+        },
       },
       animation: {
-        seolgiClick: "seolgiClick 0.3s ease-in-out"
-      }
+        seolgiClick: "seolgiClick 0.3s ease-in-out",
+      },
     },
   },
   plugins: [],
