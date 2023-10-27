@@ -111,7 +111,7 @@ export default function Home() {
   }, [selectedMonth, selectedYear]);
 
   return (
-    <div className="mx-auto flex h-screen w-full flex-col items-center justify-center gap-[20px] md:gap-[40px]">
+    <div className="mx-auto flex h-screen w-full flex-col items-center justify-between gap-[20px] md:gap-[40px]">
       <Header />
       <CalendarHeader
         toPrevMonth={toPrevMonth}
