@@ -12,13 +12,6 @@ export type AttendanceWithSeolgi = Prisma.DailyAttendanceGetPayload<
   typeof attendanceWithSeolgi
 >;
 
-export type DummyResponse = {
-  year: number;
-  month: number;
-  objective: string;
-  attendance: AttendanceWithSeolgi[];
-};
-
 export type MonthlyAttendanceResponse = {
   year: number;
   month: number;
@@ -32,3 +25,5 @@ export type YearlyAttendanceStat = {
   objective: string;
   counts: number[];
 };
+
+export type DummyResponse = MonthlyAttendanceResponse;
