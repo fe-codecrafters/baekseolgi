@@ -14,7 +14,7 @@ export const deleteAttendance = async ({
   return await axios.delete<null>(`/api/attendance/${attendanceId}`);
 };
 
-export const useUpdateAttendance = () => {
+export const useDeleteAttendance = () => {
   // TODO: notification https://github.com/alan2207/bulletproof-react/blob/11d9149c9bb2af0def640d3b690b52db36028428/src/features/discussions/api/updateDiscussion.ts#L29
 
   return useMutation({
