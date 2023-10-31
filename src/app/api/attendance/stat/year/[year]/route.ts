@@ -1,12 +1,5 @@
-import { DailyAttendance, Objective, PrismaClient } from "@prisma/client";
-import {
-  endOfMonth,
-  endOfYear,
-  isValid,
-  parse,
-  startOfMonth,
-  startOfYear,
-} from "date-fns";
+import { Objective } from "@prisma/client";
+import { endOfMonth, isValid, parse, startOfMonth } from "date-fns";
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/app/api/_base";
 const { dailyAttendance, objective } = prisma;

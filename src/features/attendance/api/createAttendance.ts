@@ -20,7 +20,7 @@ export const createAttendance = async (
 export const useCreateAttendance = () => {
   // TODO: notification https://github.com/alan2207/bulletproof-react/blob/11d9149c9bb2af0def640d3b690b52db36028428/src/features/discussions/api/updateDiscussion.ts#L29
   return useMutation({
-    onSuccess: (_) => {
+    onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: attendanceKeys.all,
       });

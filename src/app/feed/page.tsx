@@ -4,7 +4,7 @@ import { CalendarHeader } from "@/components/CalendarHeader";
 import { useDeleteAttendance } from "@/features/attendance/api/deleteAttendance";
 import { useMonthlyAttendances } from "@/features/attendance/api/getAttendances";
 import { useUpdateAttendance } from "@/features/attendance/api/updateAttendance";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 export default function FeedPage() {
   const date = new Date();
@@ -21,15 +21,13 @@ export default function FeedPage() {
   const { isLoading, data } = useMonthlyAttendances({
     year: selectedYear,
     month: selectedMonth,
+    // TODO: userId, objectiveId도 데이터 확인할 수 있어야
     userId: 1,
     objectiveId: 1,
   });
 
   const updateAttendanceMutation = useUpdateAttendance();
   const deleteAttendanceMutation = useDeleteAttendance();
-  // TODO: userId, objectiveId도 데이터 확인할 수 있어야
-  const userId = 1;
-  const objectiveId = 1;
 
   const toPrevMonth = () => {
     if (selectedMonth === 1) {

@@ -1,4 +1,4 @@
-import { AttendanceWithSeolgi, DummyResponse } from "@/types/response";
+import { DummyResponse } from "@/types/response";
 import { NextResponse } from "next/server";
 
 export async function GET() {

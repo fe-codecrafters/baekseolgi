@@ -1,5 +1,3 @@
-import { IconType } from "@/types";
-
 /**
  * 켈린더 텝바 아이콘
  * - desktop 24px

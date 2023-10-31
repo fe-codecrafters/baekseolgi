@@ -1,4 +1,4 @@
-import { DailyAttendance, PrismaClient } from "@prisma/client";
+import { DailyAttendance } from "@prisma/client";
 import {
   endOfWeek,
   isValid,
@@ -6,7 +6,6 @@ import {
   parseISO,
   setISOWeek,
   startOfWeek,
-  startOfYear,
 } from "date-fns";
 import { NextRequest } from "next/server";
 import prisma from "@/app/api/_base";

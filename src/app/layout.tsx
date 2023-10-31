@@ -3,9 +3,6 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import TabBar from "@/components/TabBar";
-import { QueryClientProvider } from "@tanstack/react-query";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import { queryClient } from "@/lib/react-query";
 import Providers from "./providers";
 
 const inter = Inter({ subsets: ["latin"] });
