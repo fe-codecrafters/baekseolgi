@@ -1,14 +1,13 @@
 "use client";
 import AttendanceInput from "@/components/AttendanceInput";
 import { CalendarHeader } from "@/components/CalendarHeader";
-import { Header } from "@/components/Header";
-import TabBar from "@/components/TabBar";
-import { MonthlyAttendanceResponse } from "@/types/response";
-import { useEffect, useState } from "react";
+import { useDeleteAttendance } from "@/features/attendance/api/deleteAttendance";
+import { useMonthlyAttendances } from "@/features/attendance/api/getAttendances";
+import { useUpdateAttendance } from "@/features/attendance/api/updateAttendance";
+import { useState } from "react";
 
 export default function FeedPage() {
   const date = new Date();
-
   const today = {
     year: date.getFullYear(),
     month: date.getMonth() + 1,
@@ -16,36 +15,30 @@ export default function FeedPage() {
     day: date.getDay(),
   };
 
-  const initialMonthData: MonthlyAttendanceResponse = {
-    year: 2000,
-    month: 1,
-    objective: "",
-    attendance: [],
-  };
-
   const [selectedYear, setSelectedYear] = useState(today.year);
   const [selectedMonth, setSelectedMonth] = useState(today.month);
-  const [monthData, setMonthData] = useState(initialMonthData);
-  // TODO: userId, objectiveId도 데이터 확인할 수 있어야
-  const userId = 1;
-  const objectiveId = 1;
+
+  const { isLoading, data } = useMonthlyAttendances({
+    year: selectedYear,
+    month: selectedMonth,
+    // TODO: userId, objectiveId도 데이터 확인할 수 있어야
+    userId: 1,
+    objectiveId: 1,
+  });
+
+  const updateAttendanceMutation = useUpdateAttendance();
+  const deleteAttendanceMutation = useDeleteAttendance();
 
   const toPrevMonth = () => {
-    // 달이 바뀔 때마다 설기 잔상이 남아서 초기화해주기 위한 코드
-    setMonthData(initialMonthData);
-
     if (selectedMonth === 1) {
-      setSelectedMonth(12);
       setSelectedYear(selectedYear - 1);
+      setSelectedMonth(12);
     } else {
       setSelectedMonth(selectedMonth - 1);
     }
   };
 
   const toNextMonth = () => {
-    // 달이 바뀔 때마다 설기 잔상이 남아서 초기화해주기 위한 코드
-    setMonthData(initialMonthData);
-
     if (selectedMonth === 12) {
       setSelectedMonth(1);
       setSelectedYear(selectedYear + 1);
@@ -54,52 +47,38 @@ export default function FeedPage() {
     }
   };
 
-  const getAttendance = (
-    year: number,
-    month: number,
-    userId: number,
-    objectiveId: number,
-  ) => {
-    fetch(
-      `/api/attendance/month/${year}/${month}?userId=${userId}&objectiveId=${objectiveId}`,
-    )
-      .then((res) => res.json())
-      .then((res) => {
-        console.log(res);
-        setMonthData(res.data);
-      });
-  };
-
-  const editAttendance = (id: number, title: string) => {
-    fetch(`/api/attendance/${id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
+  const editAttendance = (attendanceId: number, title: string) => {
+    updateAttendanceMutation.mutate({
+      data: {
         title,
-      }),
-    })
-      .then((res) => res.json())
-      .then((res) => {
-        getAttendance(selectedYear, selectedMonth, userId, objectiveId);
-      })
-      .catch((e) => console.log("TODO: 에러 헨들링", e));
+      },
+      attendanceId,
+    });
   };
 
-  const deleteAttendance = (id: number) => {
-    fetch(`/api/attendance/${id}`, {
-      method: "DELETE",
-    })
-      .then((res) => {
-        getAttendance(selectedYear, selectedMonth, userId, objectiveId);
-      })
-      .catch((e) => console.log("TODO: 에러 헨들링", e));
+  const deleteAttendance = (attendanceId: number) => {
+    deleteAttendanceMutation.mutate({
+      attendanceId,
+    });
   };
 
-  useEffect(() => {
-    getAttendance(selectedYear, selectedMonth, userId, objectiveId);
-  }, [selectedMonth, selectedYear]);
+  if (isLoading) {
+    return (
+      <div className="mx-auto flex h-screen w-full flex-col items-center justify-between gap-[20px] md:gap-[40px]">
+        <div className="flex flex-col items-center justify-center">
+          <CalendarHeader
+            toPrevMonth={toPrevMonth}
+            toNextMonth={toNextMonth}
+            selectedYear={selectedYear}
+            selectedMonth={selectedMonth}
+          />
+          <div className="mt-[40px] flex h-[600px] items-center justify-center md:h-[800px]">
+            <p className="text-xl md:text-2xl">이 달에는 기록이 없어요!</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="mx-auto flex h-screen w-full flex-col items-center justify-between gap-[20px] md:gap-[40px]">
@@ -111,8 +90,8 @@ export default function FeedPage() {
           selectedMonth={selectedMonth}
         />
         <div className="mt-[40px] w-[600px]">
-          {monthData && monthData.attendance.length > 0 ? (
-            monthData.attendance.map((el) => {
+          {data && data?.attendance?.length > 0 ? (
+            data.attendance.map((el) => {
               return (
                 <div className="mb-[24px]" key={el.id}>
                   {/* onchange 추가해서 데이터 변경하는 기능 추가 예정 */}
@@ -124,7 +103,7 @@ export default function FeedPage() {
                     onChange={() => {}}
                     placeholder="Calendar 페이지 placeholder"
                     required
-                    date={new Date(monthData.year, monthData.month - 1, el.id)}
+                    date={new Date(data.year, data.month - 1, el.id)}
                     defaultValue={el.title}
                     editAttendance={editAttendance}
                     deleteAttendance={deleteAttendance}

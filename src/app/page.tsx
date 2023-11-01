@@ -1,12 +1,9 @@
 "use client";
-import TabBar from "@/components/TabBar";
-import { Header } from "@/components/Header";
 import { CalendarHeader } from "@/components/CalendarHeader";
 import { useEffect, useState } from "react";
 import { Objective } from "@/components/Objective";
 import { Calendar } from "@/components/Calendar";
 import SeolgiIcon from "@/icons/SeolgiIcon";
-const DEV = process.env.NODE_ENV === "development";
 
 import { AttendanceWithSeolgi, DummyResponse } from "@/types/response";
 

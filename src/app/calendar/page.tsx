@@ -2,13 +2,9 @@
 
 import { useEffect, useState } from "react";
 import { Calendar } from "@/components/Calendar";
-import TabBar from "@/components/TabBar";
 import { ObjectiveProgressBar } from "@/components/ObjectiveProgressBar";
-import { Header } from "@/components/Header";
 import { CalendarHeader } from "@/components/CalendarHeader";
 import { Objective } from "@/components/Objective";
-
-const DEV = process.env.NODE_ENV === "development";
 
 export default function CalendarPage() {
   const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());

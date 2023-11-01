@@ -3,6 +3,7 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import TabBar from "@/components/TabBar";
+import Providers from "./providers";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -24,11 +25,13 @@ export default function RootLayout({
           " mx-auto flex w-full flex-col items-center justify-center"
         }
       >
-        <Header />
-        <main className="mx-auto flex h-screen w-full flex-col items-center justify-between gap-[20px] md:gap-[40px]">
-          {children}
-        </main>
-        <TabBar />
+        <Providers>
+          <Header />
+          <main className="mx-auto flex h-screen w-full flex-col items-center justify-between gap-[20px] md:gap-[40px]">
+            {children}
+          </main>
+          <TabBar />
+        </Providers>
       </body>
     </html>
   );

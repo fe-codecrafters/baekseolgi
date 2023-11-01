@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { DailyAttendanceStatus, PrismaClient } from "@prisma/client";
+import { DailyAttendanceStatus } from "@prisma/client";
 import { AttendanceWithSeolgi } from "@/types/response";
 import prisma from "@/app/api/_base";
 const { dailyAttendance } = prisma;
