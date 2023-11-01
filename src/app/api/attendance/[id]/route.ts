@@ -126,5 +126,12 @@ export async function DELETE(
     return NextResponse.json({ error: "Not Found" }, { status: 404 });
   }
 
-  return new Response(null, { status: 204 });
+  return NextResponse.json(
+    {
+      data: {
+        id,
+      },
+    },
+    { status: 201 },
+  );
 }

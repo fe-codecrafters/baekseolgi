@@ -1,6 +1,5 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { axios } from "@/lib/axios";
-import { queryClient } from "@/lib/react-query";
 import { OneAttendance, OneAttendanceResponse } from "../types";
 import { attendanceKeys } from "../key";
 
@@ -27,6 +26,7 @@ export const updateAttendance = async ({
 };
 
 export const useUpdateAttendance = () => {
+  const queryClient = useQueryClient();
   // TODO: notification https://github.com/alan2207/bulletproof-react/blob/11d9149c9bb2af0def640d3b690b52db36028428/src/features/discussions/api/updateDiscussion.ts#L29
   // update 전 데이터를 보여줄 수 있기 떄문에 만약 GET /api/attendance/{attendanceId}가 있다면 cancel
 

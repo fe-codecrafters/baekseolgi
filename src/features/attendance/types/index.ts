@@ -5,7 +5,7 @@ export interface DefaultSuccessResponse<ActualData> {
 }
 
 export interface DefaultErrorResponse<E> {
-  Error: E;
+  error: E;
 }
 
 export type OneAttendance = AttendanceWithSeolgi;
@@ -22,3 +22,7 @@ export type MonthlyAttendance = {
 
 export type MonthlyAttendanceResponse =
   DefaultSuccessResponse<MonthlyAttendance>;
+
+export type DeleteAttendanceSuccessResponse = DefaultSuccessResponse<{
+  id: number;
+}>;
