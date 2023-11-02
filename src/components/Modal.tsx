@@ -50,10 +50,10 @@ const Modal = ({ opened, day, year, month }: ModalProps) => {
       {/* modal center fix */}
       <div className="fixed left-[50%] top-[50%] z-[999] translate-x-[-50%] translate-y-[-50%]">
         {/* modal content */}
-        <div className="w-[600px] rounded-2xl border-[1px] bg-primary-white p-6 lg:px-8">
+        <div className="w-[340px] rounded-xl border-[1px] bg-primary-white p-6 md:w-[600px] md:rounded-2xl lg:px-8">
           <div className="relative">
             <div className="flex items-center justify-center gap-3">
-              <h2 className="text-center text-2xl font-bold leading-9 tracking-tight text-primary-black">
+              <h2 className="text-center text-base leading-9 tracking-tight text-primary-black md:text-2xl md:font-bold">
                 {month}월 {day}일 {format(date, "eee", { locale: ko })}요일
               </h2>
               <button>
@@ -61,26 +61,26 @@ const Modal = ({ opened, day, year, month }: ModalProps) => {
               </button>
             </div>
             <button
-              className="absolute left-[520px] top-[6px]"
+              className="absolute left-[260px] top-[6px] md:left-[520px] md:top-[6px]"
               onClick={opened}
             >
               <CloseIcon />
             </button>
           </div>
 
-          <div className="mt-10">
+          <div className="mt-4 md:mt-10">
             <form
               className="flex flex-col items-center space-y-6"
               onSubmit={handleSubmit}
             >
-              <div className="h-[100px] w-[500px] rounded-2xl bg-primary-lightGray">
+              <div className="h-[75px] w-[320px] rounded-xl bg-primary-lightGray md:h-[100px] md:w-[500px] md:rounded-2xl">
                 <label
                   htmlFor="seolgi-modal"
-                  className="mt-3 block text-center text-base font-medium leading-6 text-primary-black"
+                  className="mt-3 block text-center text-base font-medium leading-6 text-primary-black md:text-xl"
                 >
                   오늘 달성도는 어땠나요?
                 </label>
-                <div className="mt-2 flex justify-center gap-[28px]">
+                <div className="mt-1 flex justify-center gap-[28px] md:mt-2">
                   <button
                     type="button"
                     className="focus:outline-none focus:ring focus:ring-primary-gray"
@@ -127,21 +127,21 @@ const Modal = ({ opened, day, year, month }: ModalProps) => {
                 </div>
               </div>
 
-              <div className="h-[100px] w-[500px] rounded-2xl bg-gray-100">
+              <div className="h-[75px] w-[320px] rounded-2xl bg-gray-100 md:h-[100px] md:w-[500px]">
                 <label
                   htmlFor="seolgi-modal"
-                  className="mt-3 block text-center text-base font-medium leading-6 text-gray-900"
+                  className="mt-3 block text-center text-base font-medium leading-6 text-gray-900 md:text-xl"
                 >
                   오늘 달성도 짧은 일기
                 </label>
-                <div className="mt-2 flex justify-center">
+                <div className="mt-1 flex justify-center md:mt-2">
                   <input
                     id="seolgi-modal"
                     name="description"
                     type="text"
                     onChange={handleChange}
                     required
-                    className="block h-[40px] w-[440px] rounded-md border-0 p-2 text-center text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:outline-none focus:ring focus:ring-gray-300 sm:text-sm sm:leading-6"
+                    className="block h-[30px] w-[300px] rounded-md border-0 p-2 text-center text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:outline-none focus:ring focus:ring-gray-300 sm:text-sm sm:leading-6 md:h-[40px] md:w-[440px]"
                   />
                 </div>
               </div>
@@ -149,7 +149,7 @@ const Modal = ({ opened, day, year, month }: ModalProps) => {
               <div>
                 <button
                   type="submit"
-                  className="flex h-[30px] w-[100px] items-center justify-center rounded-2xl bg-gray-200 px-3 py-1.5 text-sm font-semibold leading-6 text-black shadow-sm hover:bg-gray-300"
+                  className="flex h-[28px] w-[80px] items-center justify-center rounded-2xl bg-gray-200 px-3 py-1.5 text-sm font-semibold leading-6 text-black shadow-sm hover:bg-gray-300 md:h-[30px] md:w-[100px]"
                 >
                   확인
                 </button>
