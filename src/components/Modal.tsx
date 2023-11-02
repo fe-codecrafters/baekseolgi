@@ -3,14 +3,22 @@ import CloseIcon from "@/icons/CloseIcon";
 import SeolgiIcon from "@/icons/SeolgiIcon";
 import { format } from "date-fns";
 import { ko } from "date-fns/locale";
+import { MouseEventHandler } from "react";
 
-const Modal = () => {
+interface ModalProps {
+  opened: MouseEventHandler<HTMLButtonElement>;
+}
+
+const Modal = ({ opened }: ModalProps) => {
   const date = new Date();
 
   return (
     <>
       {/* modal background */}
-      <div className="fixed inset-0 z-[999] bg-slate-800 opacity-50"></div>
+      <button
+        className="fixed inset-0 z-[999] cursor-default bg-slate-800 opacity-50"
+        onClick={opened}
+      ></button>
       {/* modal center fix */}
       <div className="fixed left-[50%] top-[50%] z-[999] translate-x-[-50%] translate-y-[-50%]">
         {/* modal content */}
@@ -26,7 +34,10 @@ const Modal = () => {
                 <EditIcon />
               </button>
             </div>
-            <button className="absolute left-[520px] top-[6px]">
+            <button
+              className="absolute left-[520px] top-[6px]"
+              onClick={opened}
+            >
               <CloseIcon />
             </button>
           </div>

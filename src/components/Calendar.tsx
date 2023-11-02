@@ -57,7 +57,7 @@ const Day = ({ day, type, isThisMonth }) => {
           ) : null}
         </button>
       ) : null}
-      {isOpened && <Modal />}
+      {isOpened && <Modal opened={openModalHandler} />}
     </div>
   );
 };
