@@ -3,7 +3,12 @@ import CloseIcon from "@/icons/CloseIcon";
 import SeolgiIcon from "@/icons/SeolgiIcon";
 import { format } from "date-fns";
 import { ko } from "date-fns/locale";
-import { MouseEventHandler } from "react";
+import {
+  ChangeEventHandler,
+  FormEventHandler,
+  MouseEventHandler,
+  useState,
+} from "react";
 
 interface ModalProps {
   opened: MouseEventHandler<HTMLButtonElement>;
@@ -14,6 +19,25 @@ interface ModalProps {
 
 const Modal = ({ opened, day, year, month }: ModalProps) => {
   const date = new Date(year, month - 1, day);
+  const [isSelected, setIsSelected] = useState<string>("");
+  const [title, setTitle] = useState<string>("");
+
+  const handleSubmit: FormEventHandler = (e) => {
+    e.preventDefault();
+    const data = {
+      color: isSelected,
+      title: title,
+    };
+    console.log(data);
+  };
+
+  const handleChange: ChangeEventHandler<HTMLInputElement> = (e) => {
+    setTitle(e.target.value);
+  };
+
+  const handleSelectSeolgi = (color: string) => {
+    setIsSelected(color);
+  };
 
   return (
     <>
@@ -46,8 +70,7 @@ const Modal = ({ opened, day, year, month }: ModalProps) => {
           <div className="mt-10">
             <form
               className="flex flex-col items-center space-y-6"
-              action="#"
-              method="POST"
+              onSubmit={handleSubmit}
             >
               <div className="h-[100px] w-[500px] rounded-2xl bg-primary-lightGray">
                 <label
@@ -57,25 +80,49 @@ const Modal = ({ opened, day, year, month }: ModalProps) => {
                   오늘 달성도는 어땠나요?
                 </label>
                 <div className="mt-2 flex justify-center gap-[28px]">
-                  <SeolgiIcon width={40} height={40} />
-                  <SeolgiIcon
-                    width={40}
-                    height={40}
-                    bgFill={"#FFE3E3"}
-                    blushFill={"#fff"}
-                  />
-                  <SeolgiIcon
-                    width={40}
-                    height={40}
-                    bgFill={"#D5FBF3"}
-                    blushFill={"#fff"}
-                  />
-                  <SeolgiIcon
-                    width={40}
-                    height={40}
-                    bgFill={"#FEF2DA"}
-                    blushFill={"#fff"}
-                  />
+                  <button
+                    type="button"
+                    className="focus:outline-none focus:ring focus:ring-primary-gray"
+                    onClick={() => handleSelectSeolgi("white")}
+                  >
+                    <SeolgiIcon width={40} height={40} />
+                  </button>
+                  <button
+                    type="button"
+                    className="focus:outline-none focus:ring focus:ring-primary-gray"
+                    onClick={() => handleSelectSeolgi("pink")}
+                  >
+                    <SeolgiIcon
+                      width={40}
+                      height={40}
+                      bgFill={"#FFE3E3"}
+                      blushFill={"#fff"}
+                    />
+                  </button>
+                  <button
+                    type="button"
+                    className="focus:outline-none focus:ring focus:ring-primary-gray"
+                    onClick={() => handleSelectSeolgi("blue")}
+                  >
+                    <SeolgiIcon
+                      width={40}
+                      height={40}
+                      bgFill={"#D5FBF3"}
+                      blushFill={"#fff"}
+                    />
+                  </button>
+                  <button
+                    type="button"
+                    className="focus:outline-none focus:ring focus:ring-primary-gray"
+                    onClick={() => handleSelectSeolgi("yellow")}
+                  >
+                    <SeolgiIcon
+                      width={40}
+                      height={40}
+                      bgFill={"#FEF2DA"}
+                      blushFill={"#fff"}
+                    />
+                  </button>
                 </div>
               </div>
 
@@ -91,8 +138,9 @@ const Modal = ({ opened, day, year, month }: ModalProps) => {
                     id="seolgi-modal"
                     name="description"
                     type="text"
+                    onChange={handleChange}
                     required
-                    className="block h-[40px] w-[440px] rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:outline-none focus:ring focus:ring-gray-300 sm:text-sm sm:leading-6"
+                    className="block h-[40px] w-[440px] rounded-md border-0 p-2 text-center text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:outline-none focus:ring focus:ring-gray-300 sm:text-sm sm:leading-6"
                   />
                 </div>
               </div>
