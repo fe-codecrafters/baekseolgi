@@ -8,8 +8,8 @@ interface Props {
 
 export default function CloseIcon({ type = "desktop", size = 24 }: Props) {
   const isDesktop = type === "desktop";
-  const desktopCN = "text-primary-darkGray group-hover:text-primary-black";
-  const mobileCN = "text-primary-darkGray group-hover:text-primary-black";
+  const desktopCN = "text-primary-darkGray hover:text-primary-black";
+  const mobileCN = "text-primary-darkGray hover:text-primary-black";
   const cn = isDesktop ? desktopCN : mobileCN;
   const vb = `0 0 ${24} ${24}`;
   const w = size ? size : isDesktop ? 24 : 20;

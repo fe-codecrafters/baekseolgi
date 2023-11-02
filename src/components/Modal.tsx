@@ -7,10 +7,13 @@ import { MouseEventHandler } from "react";
 
 interface ModalProps {
   opened: MouseEventHandler<HTMLButtonElement>;
+  day: number;
+  month: number;
+  year: number;
 }
 
-const Modal = ({ opened }: ModalProps) => {
-  const date = new Date();
+const Modal = ({ opened, day, year, month }: ModalProps) => {
+  const date = new Date(year, month - 1, day);
 
   return (
     <>
@@ -26,9 +29,7 @@ const Modal = ({ opened }: ModalProps) => {
           <div className="relative">
             <div className="flex items-center justify-center gap-3">
               <h2 className="text-center text-2xl font-bold leading-9 tracking-tight text-primary-black">
-                {format(date, "M", { locale: ko })}월{" "}
-                {format(date, "d", { locale: ko })}일{" "}
-                {format(date, "eee", { locale: ko })}요일
+                {month}월 {day}일 {format(date, "eee", { locale: ko })}요일
               </h2>
               <button>
                 <EditIcon />
