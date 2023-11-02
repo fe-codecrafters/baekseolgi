@@ -132,6 +132,6 @@ export async function DELETE(
         id,
       },
     },
-    { status: 201 },
+    { status: 200 },
   );
 }
