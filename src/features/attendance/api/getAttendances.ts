@@ -2,9 +2,12 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { axios } from "@/lib/axios";
 import {
   attendanceKeys,
-  DailyAttendanceKeysParam,
-  MonthlyAttendanceKeysParam,
-  OneAttendanceKeysParam,
+  DailyAttendanceKey,
+  DailyAttendanceKeyParam,
+  MonthlyAttendanceKey,
+  MonthlyAttendanceKeyParam,
+  OneAttendanceKey,
+  OneAttendanceKeyParam,
 } from "../key";
 import {
   DailyAttendanceResponse,
@@ -13,11 +16,11 @@ import {
   OneAttendanceResponse,
 } from "../types";
 
-export const getOneAttendance = ({ id }: OneAttendanceKeysParam) => {
+export const getOneAttendance = ({ id }: OneAttendanceKeyParam) => {
   return axios.get<OneAttendanceResponse>(`/api/attendance/${id}`);
 };
 
-export const useOneAttendance = ({ id }: OneAttendanceKeysParam) => {
+export const useOneAttendance = ([, , { id }]: OneAttendanceKey) => {
   return useQuery({
     queryKey: attendanceKeys.id({ id }),
     queryFn: () => getOneAttendance({ id }),
@@ -28,7 +31,7 @@ export const getDailyAttendances = async ({
   date,
   userId,
   objectiveId,
-}: DailyAttendanceKeysParam) => {
+}: DailyAttendanceKeyParam) => {
   const res = await axios.get<DailyAttendanceResponse>(
     `/api/attendance/day/${date}`,
     {
@@ -41,11 +44,11 @@ export const getDailyAttendances = async ({
   return res.data.data;
 };
 
-export const useDailyAttendances = ({
-  date,
-  userId,
-  objectiveId,
-}: DailyAttendanceKeysParam) => {
+export const useDailyAttendances = ([
+  ,
+  ,
+  { date, userId, objectiveId },
+]: DailyAttendanceKey) => {
   return useQuery({
     queryKey: attendanceKeys.day({ date, userId, objectiveId }),
     queryFn: () => getDailyAttendances({ date, userId, objectiveId }),
@@ -62,7 +65,7 @@ export const getMonthlyAttendances = async ({
   month,
   userId,
   objectiveId,
-}: MonthlyAttendanceKeysParam) => {
+}: MonthlyAttendanceKeyParam) => {
   const res = await axios.get<MonthlyAttendanceResponse>(
     `/api/attendance/month/${year}/${month}`,
     {
@@ -76,7 +79,7 @@ export const getMonthlyAttendances = async ({
 };
 
 export const useMonthlyAttendances = (
-  { year, month, userId, objectiveId }: MonthlyAttendanceKeysParam,
+  [, , { year, month, userId, objectiveId }]: MonthlyAttendanceKey,
   config?: { placeholderData: MonthlyAttendance },
 ) => {
   return useQuery({

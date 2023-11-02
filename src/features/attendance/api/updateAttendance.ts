@@ -1,17 +1,17 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { axios } from "@/lib/axios";
-import { OneAttendance, OneAttendanceResponse } from "../types";
-import { attendanceKeys } from "../key";
+import {
+  MonthlyAttendance,
+  OneAttendance,
+  OneAttendanceResponse,
+} from "../types";
+import { attendanceKeys, AttendanceKeysValue } from "../key";
 
 interface UpdateAttendanceDTO {
   data: {
     title: string;
   };
   attendanceId: number;
-}
-
-interface UpdateAttendanceContext {
-  optimisticAttendance: OneAttendance;
 }
 
 export const updateAttendance = async ({
@@ -25,7 +25,7 @@ export const updateAttendance = async ({
   return res.data.data;
 };
 
-export const useUpdateAttendance = () => {
+export const useUpdateAttendance = (queryKey: AttendanceKeysValue) => {
   const queryClient = useQueryClient();
   // TODO: notification https://github.com/alan2207/bulletproof-react/blob/11d9149c9bb2af0def640d3b690b52db36028428/src/features/discussions/api/updateDiscussion.ts#L29
   // update 전 데이터를 보여줄 수 있기 떄문에 만약 GET /api/attendance/{attendanceId}가 있다면 cancel
@@ -37,37 +37,43 @@ export const useUpdateAttendance = () => {
       if (!data.title) return;
 
       await queryClient.cancelQueries({
-        queryKey: attendanceKeys.all,
+        queryKey,
       });
 
-      const optimisticAttendance = queryClient.getQueryData<OneAttendance>([
-        attendanceKeys.id({ id: attendanceId }),
+      const previousAttendance = queryClient.getQueryData<MonthlyAttendance>([
+        ...queryKey,
       ]);
 
-      if (optimisticAttendance) {
-        optimisticAttendance.title = data.title;
+      if (previousAttendance) {
+        const prevs = previousAttendance.attendance;
+        const idx = prevs.findIndex((el) => el.id === attendanceId);
+        if (idx === -1) return;
 
-        queryClient.setQueryData<OneAttendance>(
-          attendanceKeys.id({ id: attendanceId }),
-          optimisticAttendance,
-        );
+        const prevCopy = previousAttendance.attendance[idx];
+        const optimistic = { ...prevCopy, title: data.title };
+
+        queryClient.setQueryData<MonthlyAttendance>(queryKey, {
+          ...previousAttendance,
+          attendance: [
+            ...prevs.slice(0, idx),
+            optimistic,
+            ...prevs.slice(idx + 1),
+          ],
+        });
       } else {
         return;
       }
 
-      return { optimisticAttendance };
+      return { previousAttendance };
     },
-    onError: (_, __, context: UpdateAttendanceContext | undefined) => {
-      if (context?.optimisticAttendance) {
-        queryClient.setQueryData(
-          attendanceKeys.id({ id: context.optimisticAttendance.id }),
-          context.optimisticAttendance,
-        );
+    onError: (_, __, context) => {
+      if (context?.previousAttendance) {
+        queryClient.setQueryData(queryKey, context.previousAttendance);
       }
     },
     onSuccess: (updated: OneAttendance) => {
       queryClient.refetchQueries({
-        queryKey: attendanceKeys.id({ id: updated.id }),
+        queryKey,
       });
       // TODO: add notification
     },
