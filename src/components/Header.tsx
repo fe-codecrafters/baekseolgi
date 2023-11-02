@@ -7,7 +7,7 @@ export const Header = () => {
     <header className="sticky top-0 z-40 mb-5 w-full border-b border-primary-darkGray bg-primary-white">
       <div className="flex w-full justify-between px-[30px] py-[16px]">
         <SeolgiIcon width={30} height={30} bgFill="white" />
-        <div className="flex h-[28px] w-[28px] items-center justify-center overflow-hidden rounded-full bg-primary-lightGray pt-[6px] md:hidden">
+        <div className="flex h-[28px] w-[28px] items-center justify-center overflow-hidden rounded-full bg-primary-lightGray pt-[6px]">
           <Link
             href="/my-page"
             className="group flex grow flex-col items-center justify-center"
