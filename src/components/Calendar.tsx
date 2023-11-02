@@ -1,6 +1,8 @@
 "use client";
 
 import SeolgiIcon from "@/icons/SeolgiIcon";
+import { useState } from "react";
+import Modal from "./Modal";
 
 // 요일 및 현재 날짜 정보 상수로 정의
 const days = ["일", "월", "화", "수", "목", "금", "토"];
@@ -28,6 +30,12 @@ const Day = ({ day, type, isThisMonth }) => {
     if (day.seolgiId === "yellow") bgColor = "bg-seolgi-yellow";
   }
 
+  const [isOpened, setIsOpened] = useState<boolean>(false);
+
+  const openModalHandler = () => {
+    setIsOpened(!isOpened);
+  };
+
   return (
     <div className="flex flex-col items-center">
       <div
@@ -40,14 +48,16 @@ const Day = ({ day, type, isThisMonth }) => {
         {day.id ? new Date(day.createdAt).getDate() : day !== 0 ? day : null}
       </div>
       {type === "date" ? (
-        <div
+        <button
           className={`h-[40px] w-[100%] rounded-[10px] md:h-[70px] ${bgColor}`}
+          onClick={openModalHandler}
         >
           {day.id ? (
             <SeolgiIcon bgFill="transparent" width={"auto"} height={"auto"} />
           ) : null}
-        </div>
+        </button>
       ) : null}
+      {isOpened && <Modal />}
     </div>
   );
 };
