@@ -28,6 +28,7 @@ const Modal = ({ opened, day, year, month }: ModalProps) => {
       color: isSelected,
       title: title,
     };
+    //TODO : 데이터 보내는 방식에 대해 논의
     console.log(data);
   };
 
