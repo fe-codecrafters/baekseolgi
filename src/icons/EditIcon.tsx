@@ -3,7 +3,7 @@ export default function EditIcon() {
 
   return (
     <>
-      <div className="h-5 w-5 text-primary-darkGray group-active:text-primary-black md:h-6 md:w-6">
+      <div className="h-5 w-5 text-primary-darkGray hover:text-primary-black md:h-6 md:w-6">
         <svg viewBox={vb} xmlns="http://www.w3.org/2000/svg">
           <path
             d="M21.1875 12H19.875C19.7719 12 19.6875 12.0844 19.6875 12.1875V19.6875H4.3125V4.3125H11.8125C11.9156 4.3125 12 4.22812 12 4.125V2.8125C12 2.70937 11.9156 2.625 11.8125 2.625H3.375C2.96016 2.625 2.625 2.96016 2.625 3.375V20.625C2.625 21.0398 2.96016 21.375 3.375 21.375H20.625C21.0398 21.375 21.375 21.0398 21.375 20.625V12.1875C21.375 12.0844 21.2906 12 21.1875 12Z"

@@ -18,9 +18,8 @@ export default function SeolgiIcon({
 }: Props) {
   const svgProps = width && height ? { width, height } : null;
   /** color를 변경하면, 자식자손 엘리먼트 color가 currentColor인 경우 똑같이 적용되어 설기 눈, 입 컬러도 변경되는 구조 */
-  const desktopCN = "text-primary-black";
-  const mobileCN = "text-primary-black";
-  const cn = type === "desktop" ? desktopCN : mobileCN;
+
+  const cn = "text-primary-black w-[30px] h-[30px] md:w-[40px] md:h-[40px]";
   const vb = `0 0 ${24} ${24}`;
 
   return (

@@ -1,26 +1,12 @@
 import { IconType } from "@/types";
 
-interface Props {
-  type?: IconType;
-  size?: number;
-  stroke?: string;
-}
-
-export default function CloseIcon({ type = "desktop", size = 24 }: Props) {
-  const isDesktop = type === "desktop";
-  const desktopCN = "text-primary-darkGray group-hover:text-primary-black";
-  const mobileCN = "text-primary-darkGray group-hover:text-primary-black";
-  const cn = isDesktop ? desktopCN : mobileCN;
+export default function CloseIcon() {
   const vb = `0 0 ${24} ${24}`;
-  const w = size ? size : isDesktop ? 24 : 20;
-  const h = size ? size : isDesktop ? 24 : 20;
 
   return (
     <>
       <svg
-        className={cn}
-        width={w}
-        height={h}
+        className="h-5 w-5 text-primary-darkGray hover:text-primary-black md:h-6 md:w-6"
         viewBox={vb}
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
