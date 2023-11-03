@@ -1,18 +1,16 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { axios } from "@/lib/axios";
 import { AttendanceKeysValue } from "../key";
-import { DeleteAttendanceSuccessResponse } from "../types";
-
-// TVariable
-interface DeleteAttendanceDTO {
-  attendanceId: number;
-}
+import {
+  DeleteAttendanceParams,
+  DeleteAttendanceResDTO,
+} from "../types/deleteAttendance.dto";
 
 export const deleteAttendance = async ({
   attendanceId,
-}: DeleteAttendanceDTO) => {
+}: DeleteAttendanceParams) => {
   // TODO: 에러 리스폰스 타입을 정해야 ..
-  return await axios.delete<DeleteAttendanceSuccessResponse>(
+  return await axios.delete<DeleteAttendanceResDTO>(
     `/api/attendance/${attendanceId}`,
   );
 };

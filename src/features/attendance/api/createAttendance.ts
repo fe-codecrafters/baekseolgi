@@ -1,19 +1,18 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { axios } from "@/lib/axios";
-import { attendanceKeys, AttendanceKeysValue } from "../key";
-
-interface createAttendanceDTO {
-  userId: number;
-  objectiveId: number;
-  seolgiId: number;
-  title: string;
-  createdAt: string;
-}
+import { AttendanceKeysValue } from "../key";
+import {
+  CreateAttendanceParams,
+  CreateAttendanceResDTO,
+} from "../types/createAttendance.dto";
 
 export const createAttendance = async (
-  createAttendanceDTO: createAttendanceDTO,
+  createAttendanceParams: CreateAttendanceParams,
 ) => {
-  return await axios.post(`/api/attendance`, createAttendanceDTO);
+  return await axios.post<CreateAttendanceResDTO>(
+    `/api/attendance`,
+    createAttendanceParams,
+  );
 };
 
 export const useCreateAttendance = (queryKey: AttendanceKeysValue) => {

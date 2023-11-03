@@ -5,7 +5,7 @@ import { Objective } from "@/components/Objective";
 import { Calendar } from "@/components/Calendar";
 import SeolgiIcon from "@/icons/SeolgiIcon";
 
-import { AttendanceWithSeolgi } from "@/types/response";
+import { AttendanceWithSeolgi } from "@/types/dto";
 import { useMonthlyAttendances } from "@/features/attendance/api/getAttendances";
 import { attendanceKeys } from "@/features/attendance/key";
 

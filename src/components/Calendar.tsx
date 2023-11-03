@@ -2,7 +2,7 @@
 import SeolgiIcon from "@/icons/SeolgiIcon";
 import { useState } from "react";
 import Modal from "./Modal";
-import { AttendanceWithSeolgi } from "@/types/response";
+import { AttendanceWithSeolgi } from "@/types/dto";
 import { DayNameType, DayOrDate } from "@/types";
 
 const isDayNameType = (day: any): day is DayNameType =>

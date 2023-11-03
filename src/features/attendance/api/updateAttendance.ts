@@ -1,24 +1,18 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { axios } from "@/lib/axios";
+import { AttendanceKeysValue } from "../key";
 import {
-  MonthlyAttendance,
-  OneAttendance,
-  OneAttendanceResponse,
-} from "../types";
-import { attendanceKeys, AttendanceKeysValue } from "../key";
-
-interface UpdateAttendanceDTO {
-  data: {
-    title: string;
-  };
-  attendanceId: number;
-}
+  UpdateAttendanceParams,
+  UpdateAttendanceResDTO,
+} from "../types/updateAttendance.dto";
+import { DailyAttendance } from "@prisma/client";
+import { MonthlyAttendance } from "../types/getAttendance.dto";
 
 export const updateAttendance = async ({
   data,
   attendanceId,
-}: UpdateAttendanceDTO) => {
-  const res = await axios.put<OneAttendanceResponse>(
+}: UpdateAttendanceParams) => {
+  const res = await axios.put<UpdateAttendanceResDTO>(
     `/api/attendance/${attendanceId}`,
     data,
   );
@@ -71,7 +65,7 @@ export const useUpdateAttendance = (queryKey: AttendanceKeysValue) => {
         queryClient.setQueryData(queryKey, context.previousAttendance);
       }
     },
-    onSuccess: (updated: OneAttendance) => {
+    onSuccess: (_: DailyAttendance) => {
       queryClient.refetchQueries({
         queryKey,
       });
