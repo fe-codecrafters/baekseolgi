@@ -144,6 +144,15 @@ async function main() {
         userId: testSeolgi.id,
       },
       {
+        title: "100설기 들어옴 - 11월 - 0",
+        status: "PRESENT",
+        createdAt: new Date("2023-11-03T09:01:56"),
+        updatedAt: new Date("2023-11-04T14:01:56"),
+        seolgiId: 1,
+        objectiveId: 1,
+        userId: testSeolgi.id,
+      },
+      {
         title: "100설기 들어옴 - 11월 - 1",
         status: "PRESENT",
         createdAt: new Date("2023-11-05T14:01:56"),
