@@ -36,9 +36,21 @@ const config: Config = {
           "50%": { transform: "scale(1.1,0.9) rotate(0deg)" },
           "75%": { transform: "scale(0.9,1.1) rotate(2deg)" },
         },
+        seolgiJump : {
+          "50%": { transform: "scale(0.9,1.1) translate(0, -100%)" },
+          "75%": { transform: "scale(1.1,0.7) translate(0, 30%)" },
+        },
+        loadingIndicatorBar: {
+          '0%': { width: '0px'},
+          '40%': {width: '100%'},
+          '80%': { width: '0px'},
+          '100%': { width: '0px'},
+        } 
       },
       animation: {
         seolgiClick: "seolgiClick 0.3s ease-in-out",
+        loadingIndicatorBar: 'loadingIndicatorBar 2s ease-in-out infinite',
+        seolgiJump: "seolgiJump 1s infinite"
       },
     },
   },
