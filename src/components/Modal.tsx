@@ -9,6 +9,10 @@ import {
   MouseEventHandler,
   useState,
 } from "react";
+import { useCreateAttendance } from "@/features/attendance/api/createAttendance";
+import { attendanceKeys } from "@/features/attendance/key";
+import { useGetSeolgi } from "@/features/seolgi/api/getSeolgi";
+import { getStartOfDayInTimeZone } from "@/util/getStartOfDayInTimeZone";
 
 interface ModalProps {
   opened: MouseEventHandler<HTMLButtonElement>;
@@ -19,25 +23,32 @@ interface ModalProps {
 
 const Modal = ({ opened, day, year, month }: ModalProps) => {
   const date = new Date(year, month - 1, day);
-  const [isSelected, setIsSelected] = useState<string>("");
+  const seolgis = useGetSeolgi({ seolgiName: "SeolgiIcon" }).data;
+  const [seolgiId, setSeolgiId] = useState<number>(0);
   const [title, setTitle] = useState<string>("");
+  // TODO: userId, objectiveID props로 내려받아야, 아님 전역?
+  const createAttendanceMutation = useCreateAttendance(
+    attendanceKeys.month({ year, month, userId: 1, objectiveId: 1 }),
+  );
 
   const handleSubmit: FormEventHandler = (e) => {
     e.preventDefault();
-    const data = {
-      color: isSelected,
-      title: title,
-    };
-    //TODO : 데이터 보내는 방식에 대해 논의
-    console.log(data);
+    const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    createAttendanceMutation.mutate({
+      userId: 1,
+      objectiveId: 1,
+      seolgiId,
+      title,
+      createdAt: getStartOfDayInTimeZone(date, timeZone),
+    });
   };
 
   const handleChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     setTitle(e.target.value);
   };
 
-  const handleSelectSeolgi = (color: string) => {
-    setIsSelected(color);
+  const handleSelectSeolgi = (id: number) => {
+    setSeolgiId(id);
   };
 
   return (
@@ -81,49 +92,36 @@ const Modal = ({ opened, day, year, month }: ModalProps) => {
                   오늘 달성도는 어땠나요?
                 </label>
                 <div className="mt-1 flex justify-center gap-[28px] md:mt-2">
-                  <button
-                    type="button"
-                    className="focus:outline-none focus:ring focus:ring-primary-gray"
-                    onClick={() => handleSelectSeolgi("white")}
-                  >
-                    <SeolgiIcon width={40} height={40} />
-                  </button>
-                  <button
-                    type="button"
-                    className="focus:outline-none focus:ring focus:ring-primary-gray"
-                    onClick={() => handleSelectSeolgi("pink")}
-                  >
-                    <SeolgiIcon
-                      width={40}
-                      height={40}
-                      bgFill={"#FFE3E3"}
-                      blushFill={"#fff"}
-                    />
-                  </button>
-                  <button
-                    type="button"
-                    className="focus:outline-none focus:ring focus:ring-primary-gray"
-                    onClick={() => handleSelectSeolgi("blue")}
-                  >
-                    <SeolgiIcon
-                      width={40}
-                      height={40}
-                      bgFill={"#D5FBF3"}
-                      blushFill={"#fff"}
-                    />
-                  </button>
-                  <button
-                    type="button"
-                    className="focus:outline-none focus:ring focus:ring-primary-gray"
-                    onClick={() => handleSelectSeolgi("yellow")}
-                  >
-                    <SeolgiIcon
-                      width={40}
-                      height={40}
-                      bgFill={"#FEF2DA"}
-                      blushFill={"#fff"}
-                    />
-                  </button>
+                  {seolgis?.map((seolgi) => {
+                    const { bgFill, blushFill } = seolgi;
+                    const iconOptions = {
+                      bgFill: bgFill ? bgFill : undefined,
+                      blushFill: blushFill ? blushFill : undefined,
+                    };
+                    return (
+                      <button
+                        type="button"
+                        key={seolgi.id}
+                        onClick={() => handleSelectSeolgi(seolgi.id)}
+                        className="seolgi-modal-button"
+                      >
+                        <input
+                          type="radio"
+                          id={"radio" + seolgi.id}
+                          name="seolgi-modal-1"
+                          checked={seolgiId === seolgi.id}
+                          readOnly
+                          className="peer hidden"
+                        />
+                        <label
+                          htmlFor={"radio-" + seolgi.id}
+                          className="inline-block h-auto w-auto peer-checked:outline-none peer-checked:ring peer-checked:ring-primary-gray"
+                        >
+                          <SeolgiIcon width={40} height={40} {...iconOptions} />
+                        </label>
+                      </button>
+                    );
+                  })}
                 </div>
               </div>
 
