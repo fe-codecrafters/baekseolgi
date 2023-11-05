@@ -79,14 +79,14 @@ export const getMonthlyAttendances = async ({
   return res.data.data;
 };
 
-export const useMonthlyAttendances = (
-  [, , { year, month, userId, objectiveId }]: MonthlyAttendanceKey,
-  config?: { placeholderData: MonthlyAttendance },
-) => {
+export const useMonthlyAttendances = ([
+  ,
+  ,
+  { year, month, userId, objectiveId },
+]: MonthlyAttendanceKey) => {
   return useQuery({
     queryKey: attendanceKeys.month({ year, month, userId, objectiveId }),
     queryFn: () => getMonthlyAttendances({ year, month, userId, objectiveId }),
-    placeholderData: config?.placeholderData,
   });
 };
 
