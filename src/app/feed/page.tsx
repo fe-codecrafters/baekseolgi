@@ -64,7 +64,7 @@ export default function FeedPage() {
 
   if (isLoading) {
     return (
-      <div className="mx-auto flex h-screen w-full flex-col items-center justify-between gap-[20px] md:gap-[40px]">
+      <>
         <div className="flex flex-col items-center justify-center">
           <CalendarHeader
             toPrevMonth={toPrevMonth}
@@ -76,12 +76,12 @@ export default function FeedPage() {
             <p className="text-xl md:text-2xl">이 달에는 기록이 없어요!</p>
           </div>
         </div>
-      </div>
+      </>
     );
   }
 
   return (
-    <div className="mx-auto flex h-screen w-full flex-col items-center justify-between gap-[20px] md:gap-[40px]">
+    <>
       <div className="flex flex-col items-center justify-center">
         <CalendarHeader
           toPrevMonth={toPrevMonth}
@@ -119,6 +119,6 @@ export default function FeedPage() {
           )}
         </div>
       </div>
-    </div>
+    </>
   );
 }

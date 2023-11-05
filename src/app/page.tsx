@@ -107,7 +107,7 @@ export default function Home() {
   }, [selectedMonth, selectedYear]);
 
   return (
-    <div className="mx-auto flex h-screen w-full flex-col items-center gap-[20px] md:gap-[40px]">
+    <>
       <CalendarHeader
         toPrevMonth={toPrevMonth}
         toNextMonth={toNextMonth}
@@ -131,7 +131,7 @@ export default function Home() {
             <p className="text-2xl font-bold">
               {seolgiSay === "month"
                 ? `${monthData.month}월의 설기 개수는 ${monthData.attendance.length}
-              개입니다!`
+                개입니다!`
                 : seolgiSay === "week"
                 ? `이번 주의 설기 개수는 0개 입니다!`
                 : seolgiSay === "objective"
@@ -161,6 +161,6 @@ export default function Home() {
           <SeolgiIcon width="auto" height="auto" />
         </button>
       </div>
-    </div>
+    </>
   );
 }
