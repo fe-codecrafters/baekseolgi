@@ -1,8 +1,6 @@
 "use client";
 
 import SeolgiIcon from "@/icons/SeolgiIcon";
-import { useState } from "react";
-import Modal from "./Modal";
 
 // 요일 및 현재 날짜 정보 상수로 정의
 const days = ["일", "월", "화", "수", "목", "금", "토"];
@@ -17,7 +15,7 @@ const today = {
 // 달력에서 요일 및 각 날짜를 표시하는 컴포넌트
 // props-day는 일, 월 혹은 12, 13 같이 요일이나 날짜 정보가 들어옴
 // props-type은 day로 들어온 정보가 무엇인지 표시. day라면 요일을, date라면 날짜를 표시
-const Day = ({ day, type, year, month, isThisMonth }) => {
+const Day = ({ day, type, isThisMonth }) => {
   const isToday =
     (isThisMonth && type === "date" && day === today.date) ||
     (isThisMonth && type === "day" && days.indexOf(day) === today.day);
@@ -27,14 +25,7 @@ const Day = ({ day, type, year, month, isThisMonth }) => {
     if (day.seolgiId === 1) bgColor = "bg-seolgi-default";
     if (day.seolgiId === 2) bgColor = "bg-seolgi-green";
     if (day.seolgiId === 3) bgColor = "bg-seolgi-pink";
-    if (day.seolgiId === "yellow") bgColor = "bg-seolgi-yellow";
   }
-
-  const [isOpened, setIsOpened] = useState<boolean>(false);
-
-  const openModalHandler = () => {
-    setIsOpened(!isOpened);
-  };
 
   return (
     <div className="flex flex-col items-center">
@@ -48,18 +39,14 @@ const Day = ({ day, type, year, month, isThisMonth }) => {
         {day.id ? new Date(day.createdAt).getDate() : day !== 0 ? day : null}
       </div>
       {type === "date" ? (
-        <button
+        <div
           className={`h-[40px] w-[100%] rounded-[10px] md:h-[70px] ${bgColor}`}
-          onClick={openModalHandler}
         >
           {day.id ? (
             <SeolgiIcon bgFill="transparent" width={"auto"} height={"auto"} />
           ) : null}
-        </button>
+        </div>
       ) : null}
-      {isOpened && (
-        <Modal opened={openModalHandler} day={day} year={year} month={month} />
-      )}
     </div>
   );
 };
@@ -68,12 +55,10 @@ interface WeekProps {
   week: [number, { id: number; createdAt: string; seolgiId: number }];
   type: string;
   isThisMonth: boolean;
-  month: number;
-  year: number;
 }
 
 // 달력에서 한 주를 표시하는 컴포넌트 - 7개의 Day 컴포넌트를 묶어주는 역할
-const Week = ({ week, type, year, month, isThisMonth }: WeekProps) => {
+const Week = ({ week, type, isThisMonth }: WeekProps) => {
   return (
     <div className="mt-1 flex w-auto flex-row justify-start gap-[10px] md:gap-[16px]">
       {week.map((day, idx) => (
@@ -81,8 +66,6 @@ const Week = ({ week, type, year, month, isThisMonth }: WeekProps) => {
           key={`day-${idx + 1}`}
           day={day}
           type={type}
-          year={year}
-          month={month}
           isThisMonth={isThisMonth}
         />
       ))}
@@ -151,8 +134,6 @@ export const Calendar = ({
           key={`${selectedYear}Y-${selectedMonth}M-${idx}W`}
           week={week}
           type={"date"}
-          year={selectedYear}
-          month={selectedMonth}
           isThisMonth={isThisMonth}
         />
       ))}
