@@ -8,7 +8,7 @@ export interface CreateAttendanceReqDTO {
   objectiveId: number;
   seolgiId: number;
   title: string;
-  createdAt: string;
+  createdAt: Date;
 }
 
 export type CreateAttendanceResDTO = DefaultResDTO<DailyAttendance>;
