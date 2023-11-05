@@ -12,16 +12,22 @@ async function main() {
         id: 2,
         name: "SeolgiIcon-test-blue",
         color: "blue",
+        bgFill: "#D5FBF3",
+        blushFill: "#fff",
       },
       {
         id: 3,
         name: "SeolgiIcon-test-pink",
         color: "pink",
+        bgFill: "#FFE3E3",
+        blushFill: "#FFF",
       },
       {
         id: 4,
         name: "SeolgiIcon-test-yellow",
         color: "yellow",
+        bgFill: "#FEF2DA",
+        blushFill: "#FFF",
       },
     ],
   });

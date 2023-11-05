@@ -97,6 +97,8 @@ model Seolgi {
   createdAt       DateTime          @default(now())
   name            String
   color           String?
+  bgFill          String?
+  blushFill       String?
   DailyAttendance DailyAttendance[]
   // TODO: 설기 아이콘 이미지 URL이나 컬러 정보가 필요는 없을까?
 }
