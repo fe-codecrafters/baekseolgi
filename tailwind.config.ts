@@ -41,10 +41,10 @@ const config: Config = {
           "75%": { transform: "scale(1.1,0.7) translate(0, 30%)" },
         },
         loadingIndicatorBar: {
-          '0%': { width: '0px'},
+          '0%': { width: '20px'},
           '40%': {width: '100%'},
-          '80%': { width: '0px'},
-          '100%': { width: '0px'},
+          '90%': { width: '20px'},
+          '100%': { width: '18px'},
         } 
       },
       animation: {
