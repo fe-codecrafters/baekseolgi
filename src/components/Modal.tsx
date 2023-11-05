@@ -9,6 +9,7 @@ import {
   MouseEventHandler,
   useState,
 } from "react";
+import SeolgiIconS from "@/icons/AttendanceInput/SeolgiIconS";
 
 interface ModalProps {
   opened: MouseEventHandler<HTMLButtonElement>;
@@ -86,43 +87,28 @@ const Modal = ({ opened, day, year, month }: ModalProps) => {
                     className="focus:outline-none focus:ring focus:ring-primary-gray"
                     onClick={() => handleSelectSeolgi("white")}
                   >
-                    <SeolgiIcon width={40} height={40} />
+                    <SeolgiIconS />
                   </button>
                   <button
                     type="button"
                     className="focus:outline-none focus:ring focus:ring-primary-gray"
                     onClick={() => handleSelectSeolgi("pink")}
                   >
-                    <SeolgiIcon
-                      width={40}
-                      height={40}
-                      bgFill={"#FFE3E3"}
-                      blushFill={"#fff"}
-                    />
+                    <SeolgiIconS bgFill={"#FFE3E3"} blushFill={"#fff"} />
                   </button>
                   <button
                     type="button"
                     className="focus:outline-none focus:ring focus:ring-primary-gray"
                     onClick={() => handleSelectSeolgi("blue")}
                   >
-                    <SeolgiIcon
-                      width={40}
-                      height={40}
-                      bgFill={"#D5FBF3"}
-                      blushFill={"#fff"}
-                    />
+                    <SeolgiIconS bgFill={"#D5FBF3"} blushFill={"#fff"} />
                   </button>
                   <button
                     type="button"
                     className="focus:outline-none focus:ring focus:ring-primary-gray"
                     onClick={() => handleSelectSeolgi("yellow")}
                   >
-                    <SeolgiIcon
-                      width={40}
-                      height={40}
-                      bgFill={"#FEF2DA"}
-                      blushFill={"#fff"}
-                    />
+                    <SeolgiIconS bgFill={"#FEF2DA"} blushFill={"#fff"} />
                   </button>
                 </div>
               </div>
