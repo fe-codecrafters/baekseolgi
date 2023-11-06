@@ -101,6 +101,7 @@ export default function FeedPage() {
                     name={`attendance-${el.id}`}
                     attendanceId={el.id}
                     onChange={() => {}}
+                    seolgi={el.Seolgi}
                     placeholder="Calendar 페이지 placeholder"
                     required
                     date={new Date(data.year, data.month - 1, el.id)}

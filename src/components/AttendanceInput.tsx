@@ -14,6 +14,7 @@ import {
 } from "react";
 import SeolgiIconL from "@/icons/AttendanceInput/SeolgiIconL";
 import SeolgiIconS from "@/icons/AttendanceInput/SeolgiIconS";
+import { Seolgi } from "@prisma/client";
 
 interface Props {
   type?: AttendanceInputType;
@@ -26,9 +27,9 @@ interface Props {
   placeholder: string;
   required: boolean;
   disabled?: boolean;
+  seolgi: Seolgi;
   editAttendance?: (id: number, title: string) => void;
   deleteAttendance?: (id: number) => void;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   onChange?: (...args: any[]) => void;
   date: Date;
 }
@@ -50,6 +51,7 @@ export default function AttendanceInput({
   placeholder = "",
   required = false,
   disabled = false,
+  seolgi,
   editAttendance,
   deleteAttendance,
   onChange,
@@ -94,6 +96,9 @@ export default function AttendanceInput({
   const normalCN = defaultCN + " text-primary-gray";
   const readOnlyCN = defaultCN + " text-primary-black";
 
+  const bgFill = seolgi.bgFill ? seolgi.bgFill : undefined;
+  const blushFill = seolgi.blushFill ? seolgi.blushFill : undefined;
+
   return (
     <>
       <form
@@ -121,7 +126,11 @@ export default function AttendanceInput({
           <label className="text-center text-sm md:text-base">
             {format(date, "d", { locale: ko })}
           </label>
-          {isMain ? <SeolgiIconL></SeolgiIconL> : <SeolgiIconS></SeolgiIconS>}
+          {isMain ? (
+            <SeolgiIconL bgFill={bgFill} blushFill={blushFill}></SeolgiIconL>
+          ) : (
+            <SeolgiIconS bgFill={bgFill} blushFill={blushFill}></SeolgiIconS>
+          )}
         </div>
         {/* TODO: 보더의 양 끝에 살짝 공백을 주기 애매, margin 노가다 하면 가능은 할 듯 .. 일단은 그냥 마진은 두지 않는거로  */}
         <div className="absolute h-[100%] w-[90px] border-r-[1px] border-primary-gray md:w-40"></div>
