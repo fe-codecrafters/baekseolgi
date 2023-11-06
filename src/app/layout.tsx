@@ -19,15 +19,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body
-        className={
-          inter.className +
-          " mx-auto flex w-full flex-col items-center justify-center"
-        }
-      >
+      <body className={inter.className + "w-full h-screen"}>
         <Providers>
           <Header />
-          <main className="mx-auto flex h-screen w-full flex-col items-center justify-between gap-[20px] md:gap-[40px]">
+          <main className="mx-auto flex h-screen w-full flex-col items-center gap-[20px] md:gap-[40px]">
             {children}
           </main>
           <TabBar />

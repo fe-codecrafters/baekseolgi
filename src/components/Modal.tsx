@@ -13,6 +13,7 @@ import { useCreateAttendance } from "@/features/attendance/api/createAttendance"
 import { attendanceKeys } from "@/features/attendance/key";
 import { useGetSeolgi } from "@/features/seolgi/api/getSeolgi";
 import { getStartOfDayInTimeZone } from "@/util/getStartOfDayInTimeZone";
+import SeolgiIconS from "@/icons/AttendanceInput/SeolgiIconS";
 
 interface ModalProps {
   opened: MouseEventHandler<HTMLButtonElement>;
@@ -117,7 +118,7 @@ const Modal = ({ opened, day, year, month }: ModalProps) => {
                           htmlFor={"radio-" + seolgi.id}
                           className="inline-block h-auto w-auto cursor-pointer peer-checked:outline-none peer-checked:ring peer-checked:ring-primary-gray"
                         >
-                          <SeolgiIcon width={40} height={40} {...iconOptions} />
+                          <SeolgiIconS {...iconOptions} />
                         </label>
                       </button>
                     );

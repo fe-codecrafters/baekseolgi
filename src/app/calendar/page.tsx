@@ -39,7 +39,7 @@ export default function CalendarPage() {
   };
 
   return (
-    <div className="mx-auto flex h-screen w-full flex-col items-center gap-[20px] md:gap-[40px]">
+    <>
       <CalendarHeader
         toPrevMonth={toPrevMonth}
         toNextMonth={toNextMonth}
@@ -61,6 +61,6 @@ export default function CalendarPage() {
       ) : (
         "로딩중"
       )}
-    </div>
+    </>
   );
 }
