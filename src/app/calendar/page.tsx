@@ -5,18 +5,22 @@ import { Calendar } from "@/components/Calendar";
 import { ObjectiveProgressBar } from "@/components/ObjectiveProgressBar";
 import { CalendarHeader } from "@/components/CalendarHeader";
 import { Objective } from "@/components/Objective";
+import { attendanceKeys } from "@/features/attendance/key";
+import { useMonthlyAttendances } from "@/features/attendance/api/getAttendances";
 
 export default function CalendarPage() {
   const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
   const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth() + 1);
-  const [monthData, setMonthData] = useState([]);
-  const userId = 1;
-  const objectiveId = 1;
+  const RQKey = attendanceKeys.month({
+    year: selectedYear,
+    month: selectedMonth,
+    // TODO: userId, objectiveId도 데이터 확인할 수 있어야
+    userId: 1,
+    objectiveId: 1,
+  });
+  const { isLoading, data, isSuccess } = useMonthlyAttendances(RQKey);
 
   const toPrevMonth = () => {
-    // 달이 바뀔 때마다 설기 잔상이 남아서 초기화해주기 위한 코드
-    setMonthData([]);
-
     if (selectedMonth === 1) {
       setSelectedMonth(12);
       setSelectedYear(selectedYear - 1);
@@ -26,9 +30,6 @@ export default function CalendarPage() {
   };
 
   const toNextMonth = () => {
-    // 달이 바뀔 때마다 설기 잔상이 남아서 초기화해주기 위한 코드
-    setMonthData([]);
-
     if (selectedMonth === 12) {
       setSelectedMonth(1);
       setSelectedYear(selectedYear + 1);
@@ -36,17 +37,6 @@ export default function CalendarPage() {
       setSelectedMonth(selectedMonth + 1);
     }
   };
-
-  useEffect(() => {
-    fetch(
-      `/api/attendance/month/${selectedYear}/${selectedMonth}?userId=${userId}&objectiveId=${objectiveId}`,
-    )
-      .then((res) => res.json())
-      .then((res) => {
-        console.log(res);
-        setMonthData(res.data.attendance);
-      });
-  }, [selectedMonth, selectedYear]);
 
   return (
     <div className="mx-auto flex h-screen w-full flex-col items-center gap-[20px] md:gap-[40px]">
@@ -57,13 +47,20 @@ export default function CalendarPage() {
         selectedMonth={selectedMonth}
       />
       <Objective />
-      <Calendar
-        selectedYear={selectedYear}
-        selectedMonth={selectedMonth}
-        monthData={monthData}
-        type={"month"}
-      />
-      <ObjectiveProgressBar count={monthData.length} />
+      {isSuccess ? (
+        <>
+          <Calendar
+            selectedYear={selectedYear}
+            selectedMonth={selectedMonth}
+            monthData={data.attendance}
+            type={"month"}
+          />
+
+          <ObjectiveProgressBar count={data.attendance.length} />
+        </>
+      ) : (
+        "로딩중"
+      )}
     </div>
   );
 }

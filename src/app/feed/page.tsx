@@ -25,7 +25,7 @@ export default function FeedPage() {
     userId: 1,
     objectiveId: 1,
   });
-  const { isLoading, data } = useMonthlyAttendances(RQKey);
+  const { isLoading, data, isSuccess } = useMonthlyAttendances(RQKey);
   const updateAttendanceMutation = useUpdateAttendance(RQKey);
   const deleteAttendanceMutation = useDeleteAttendance(RQKey);
 
@@ -90,7 +90,7 @@ export default function FeedPage() {
           selectedMonth={selectedMonth}
         />
         <div className="mt-[40px] w-[600px]">
-          {data && data?.attendance?.length > 0 ? (
+          {isSuccess && data && data?.attendance?.length > 0 ? (
             data.attendance.map((el) => {
               return (
                 <div className="mb-[24px]" key={el.id}>

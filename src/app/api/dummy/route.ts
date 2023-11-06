@@ -1,4 +1,4 @@
-import { DummyResponse } from "@/types/response";
+import { DummyResponse } from "@/types/dto";
 import { NextResponse } from "next/server";
 
 export async function GET() {

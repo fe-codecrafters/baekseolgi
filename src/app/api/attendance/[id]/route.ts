@@ -1,7 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
-import { DailyAttendanceStatus } from "@prisma/client";
-import { AttendanceWithSeolgi } from "@/types/response";
+import { DailyAttendance } from "@prisma/client";
+import { AttendanceWithSeolgi } from "@/types/dto";
 import prisma from "@/app/api/_base";
+import {
+  UpdateAttendanceReqDTO,
+  UpdateAttendanceResDTO,
+} from "@/features/attendance/types/updateAttendance.dto";
+import { GetOneAttendanceResDTO } from "@/features/attendance/types/getAttendance.dto";
 const { dailyAttendance } = prisma;
 
 /**
@@ -33,11 +38,7 @@ const { dailyAttendance } = prisma;
  *      '404':
  *        description: Not found
  */
-export async function GET(
-  request: NextRequest,
-  { params }: { params: { id: string } },
-) {
-  console.log(params);
+export async function GET(_: never, { params }: { params: { id: string } }) {
   const id = Number(params.id);
   if (!id) {
     return NextResponse.json(
@@ -64,7 +65,7 @@ export async function GET(
     return NextResponse.json({ error: "Not Found" }, { status: 404 });
   }
 
-  return NextResponse.json({ data: attendance });
+  return NextResponse.json<GetOneAttendanceResDTO>({ data: attendance });
 }
 
 export async function PUT(
@@ -79,14 +80,10 @@ export async function PUT(
     );
   }
 
-  const { seolgiId, title, createdAt, status } = (await request.json()) as {
-    seolgiId?: number;
-    title: string;
-    status?: DailyAttendanceStatus;
-    createdAt?: string;
-  };
+  const { seolgiId, title, createdAt, status }: UpdateAttendanceReqDTO =
+    await request.json();
 
-  let updated;
+  let updated: DailyAttendance;
 
   try {
     updated = await dailyAttendance.update({
@@ -102,13 +99,10 @@ export async function PUT(
     console.error("PUT /attendance/{id} Error: ", e);
     return NextResponse.json({ error: "Not Found" }, { status: 404 });
   }
-  return NextResponse.json({ data: updated });
+  return NextResponse.json<UpdateAttendanceResDTO>({ data: updated });
 }
 
-export async function DELETE(
-  request: NextRequest,
-  { params }: { params: { id: string } },
-) {
+export async function DELETE(_: never, { params }: { params: { id: string } }) {
   const id = Number(params.id);
   if (!id) {
     return NextResponse.json(
