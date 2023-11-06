@@ -6,6 +6,7 @@ import TabBar from "@/components/TabBar";
 import Providers from "./providers";
 import Loading from "./loading";
 import { Suspense } from "react";
+import Toast from "@/components/Toast/Toast";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -29,6 +30,7 @@ export default function RootLayout({
           </main>
           <TabBar />
         </Providers>
+        <Toast></Toast>
       </body>
     </html>
   );

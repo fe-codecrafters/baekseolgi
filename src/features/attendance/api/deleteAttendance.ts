@@ -5,6 +5,7 @@ import {
   DeleteAttendanceParams,
   DeleteAttendanceResDTO,
 } from "../types/deleteAttendance.dto";
+import { toast } from "react-toastify";
 
 export const deleteAttendance = async ({
   attendanceId,
@@ -23,7 +24,7 @@ export const useDeleteAttendance = (queryKey: AttendanceKeysValue) => {
   return useMutation({
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey });
-      // TODO: add notification
+      toast.success("출석 기록을 삭제했어요.");
     },
     mutationFn: deleteAttendance,
   });

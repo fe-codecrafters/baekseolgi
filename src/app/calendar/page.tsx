@@ -7,6 +7,7 @@ import { CalendarHeader } from "@/components/CalendarHeader";
 import { Objective } from "@/components/Objective";
 import { attendanceKeys } from "@/features/attendance/key";
 import { useMonthlyAttendances } from "@/features/attendance/api/getAttendances";
+import LoadingIndicator from "@/components/LoadingIndicator";
 
 export default function CalendarPage() {
   const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
@@ -37,6 +38,8 @@ export default function CalendarPage() {
       setSelectedMonth(selectedMonth + 1);
     }
   };
+
+  if (isLoading) return <LoadingIndicator></LoadingIndicator>;
 
   return (
     <>
