@@ -2,6 +2,7 @@
 import AttendanceInput from "@/components/AttendanceInput";
 import { Calendar } from "@/components/Calendar";
 import Chart from "@/components/Chart";
+import LoadingIndicator from "@/components/LoadingIndicator";
 
 const DEV = process.env.NODE_ENV === "development";
 
@@ -11,6 +12,7 @@ export default function Dev() {
   return (
     <div className="mx-auto flex min-h-screen w-full max-w-screen-md flex-col items-center">
       {DEV ? <h2>use here wisely</h2> : null}
+      <LoadingIndicator />
       <Chart />
       <Calendar />
       <Calendar type="week" />
