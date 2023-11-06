@@ -26,7 +26,7 @@ export default function FeedIcon({
 
   return (
     <>
-      <div className="h-5 w-5 text-primary-darkGray group-active:text-primary-black md:h-6 md:w-6">
+      <div className="h-5 w-5 group-active:text-primary-black md:h-6 md:w-6">
         <svg
           viewBox={vb}
           {...svgProps}
