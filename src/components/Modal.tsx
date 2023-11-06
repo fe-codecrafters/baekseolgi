@@ -115,7 +115,7 @@ const Modal = ({ opened, day, year, month }: ModalProps) => {
                         />
                         <label
                           htmlFor={"radio-" + seolgi.id}
-                          className="inline-block h-auto w-auto peer-checked:outline-none peer-checked:ring peer-checked:ring-primary-gray"
+                          className="inline-block h-auto w-auto cursor-pointer peer-checked:outline-none peer-checked:ring peer-checked:ring-primary-gray"
                         >
                           <SeolgiIcon width={40} height={40} {...iconOptions} />
                         </label>
