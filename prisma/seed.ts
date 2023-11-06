@@ -7,6 +7,8 @@ async function main() {
         id: 1,
         name: "SeolgiIcon-test-white",
         color: "white",
+        bgFill: "#F3F3F3",
+        blushFill: "#F3F3F3",
       },
       {
         id: 2,
