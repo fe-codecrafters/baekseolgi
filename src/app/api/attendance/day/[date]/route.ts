@@ -3,6 +3,7 @@ import { endOfDay, parse, startOfDay } from "date-fns";
 import { NextRequest, NextResponse } from "next/server";
 import { DailyAttendance } from "@prisma/client";
 import prisma from "@/app/api/_base";
+import { GetDailyAttendanceResDTO } from "@/features/attendance/types/getAttendance.dto";
 const { dailyAttendance } = prisma;
 
 /**
@@ -98,5 +99,5 @@ export async function GET(
   if (attendances.length === 0) {
     return NextResponse.json({ error: "Not Found" }, { status: 404 });
   }
-  return NextResponse.json({ data: attendances });
+  return NextResponse.json<GetDailyAttendanceResDTO>({ data: attendances });
 }

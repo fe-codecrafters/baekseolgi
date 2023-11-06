@@ -1,7 +1,9 @@
-import { DailyAttendance, Objective } from "@prisma/client";
+import { Objective } from "@prisma/client";
 import { endOfMonth, isValid, parse, startOfMonth } from "date-fns";
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/app/api/_base";
+import { GetMonthlyAttendanceResDTO } from "@/features/attendance/types/getAttendance.dto";
+import { AttendanceWithSeolgi } from "@/types/dto";
 const { dailyAttendance, objective } = prisma;
 
 /**
@@ -39,9 +41,8 @@ const { dailyAttendance, objective } = prisma;
  */
 export async function GET(
   request: NextRequest,
-  { params }: { params: { year: string; month: string } },
+  { params: { year, month } }: { params: { year: string; month: string } },
 ) {
-  const { year, month } = params;
   const searchParams = request.nextUrl.searchParams;
   console.log("api/month/[year]/[month]", year, month, searchParams);
 
@@ -66,7 +67,7 @@ export async function GET(
   const startDate = startOfMonth(date);
   const endDate = endOfMonth(date);
 
-  let attendances: DailyAttendance[];
+  let attendances: AttendanceWithSeolgi[];
   let uniqueObjective: Objective | null;
 
   try {
@@ -81,6 +82,9 @@ export async function GET(
       },
       orderBy: {
         id: "asc",
+      },
+      include: {
+        Seolgi: true,
       },
     });
 
@@ -98,7 +102,7 @@ export async function GET(
     return NextResponse.json({ error: "Not Found" }, { status: 404 });
   }
 
-  return NextResponse.json({
+  return NextResponse.json<GetMonthlyAttendanceResDTO>({
     data: {
       year: Number(year),
       month: Number(month),

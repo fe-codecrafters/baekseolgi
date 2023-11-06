@@ -9,7 +9,7 @@ export interface OneAttendanceKeyParam {
 }
 
 export interface DailyAttendanceKeyParam extends AttendanceKeyParam {
-  date: number;
+  date: string; // yyyy-MM-dd
 }
 
 export interface MonthlyAttendanceKeyParam extends AttendanceKeyParam {
