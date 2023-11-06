@@ -7,6 +7,7 @@ import {
 } from "../types/updateAttendance.dto";
 import { DailyAttendance } from "@prisma/client";
 import { MonthlyAttendance } from "../types/getAttendance.dto";
+import { toast } from "react-toastify";
 
 export const updateAttendance = async ({
   data,
@@ -60,16 +61,17 @@ export const useUpdateAttendance = (queryKey: AttendanceKeysValue) => {
 
       return { previousAttendance };
     },
-    onError: (_, __, context) => {
-      if (context?.previousAttendance) {
-        queryClient.setQueryData(queryKey, context.previousAttendance);
-      }
-    },
     onSuccess: (_: DailyAttendance) => {
       queryClient.refetchQueries({
         queryKey,
       });
-      // TODO: add notification
+      toast.error("출석을 변경했어요.");
+    },
+    onError: (_, __, context) => {
+      if (context?.previousAttendance) {
+        queryClient.setQueryData(queryKey, context.previousAttendance);
+      }
+      toast.error("출석 변경이 실패했어요. 😢");
     },
     mutationFn: updateAttendance,
   });

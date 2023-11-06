@@ -17,8 +17,17 @@ export default function Toast() {
 
   return (
     <>
-      <button onClick={notify}>Notify</button>;
-      <ToastContainer />
+      {/* <button onClick={notify}>Notify</button>; */}
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        closeOnClick
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
     </>
   );
 }

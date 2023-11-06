@@ -8,6 +8,7 @@ import SeolgiIcon from "@/icons/SeolgiIcon";
 import { AttendanceWithSeolgi } from "@/types/dto";
 import { useMonthlyAttendances } from "@/features/attendance/api/getAttendances";
 import { attendanceKeys } from "@/features/attendance/key";
+import LoadingIndicator from "@/components/LoadingIndicator";
 
 export default function Home() {
   //이 부분은 calendar.tsx 로직과 동일.
@@ -83,6 +84,8 @@ export default function Home() {
       }
     });
   }
+
+  if (isLoading) return <LoadingIndicator></LoadingIndicator>;
 
   return (
     <>

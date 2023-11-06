@@ -1,6 +1,7 @@
 "use client";
 import AttendanceInput from "@/components/AttendanceInput";
 import { CalendarHeader } from "@/components/CalendarHeader";
+import LoadingIndicator from "@/components/LoadingIndicator";
 import { useDeleteAttendance } from "@/features/attendance/api/deleteAttendance";
 import { useMonthlyAttendances } from "@/features/attendance/api/getAttendances";
 import { useUpdateAttendance } from "@/features/attendance/api/updateAttendance";
@@ -79,6 +80,8 @@ export default function FeedPage() {
       </>
     );
   }
+
+  if (isLoading) return <LoadingIndicator></LoadingIndicator>;
 
   return (
     <>
