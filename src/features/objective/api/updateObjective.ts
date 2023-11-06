@@ -41,13 +41,13 @@ export const useUpdateObjective = (queryKey: ObjectiveKeysValue) => {
       queryClient.refetchQueries({
         queryKey,
       });
-      toast.error("출석을 변경했어요.");
+      toast.success("목표를 변경했어요.");
     },
     onError: (_, __, context) => {
       if (context?.prev) {
         queryClient.setQueryData(queryKey, context.prev);
       }
-      toast.error("출석 변경이 실패했어요. 😢");
+      toast.error("목표 변경이 실패했어요. 😢");
     },
     mutationFn: updateObjective,
   });

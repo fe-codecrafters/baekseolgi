@@ -49,8 +49,8 @@ export default function CalendarPage() {
         selectedYear={selectedYear}
         selectedMonth={selectedMonth}
       />
-      <Objective />
-      {isSuccess ? (
+      <Objective id={1} />
+      {isSuccess && (
         <>
           <Calendar
             selectedYear={selectedYear}
@@ -61,8 +61,6 @@ export default function CalendarPage() {
 
           <ObjectiveProgressBar count={data.attendance.length} />
         </>
-      ) : (
-        "로딩중"
       )}
     </>
   );

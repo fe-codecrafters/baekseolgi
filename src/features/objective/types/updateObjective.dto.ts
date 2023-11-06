@@ -9,7 +9,7 @@ export interface UpdateObjectiveParams {
 export interface UpdateObjectiveReqDTO {
   title: string;
   description?: string;
-  createdAt: string;
+  createdAt?: string;
   finishedAt?: string;
   failedAt?: string;
 }

@@ -1,25 +1,21 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { axios } from "@/lib/axios";
-import { ObjectiveKeysValue } from "../key";
+import { ObjectiveKeysValue, OneObjectiveKey, objectiveKeys } from "../key";
 import { toast } from "react-toastify";
 import {
   GetObjectiveParams,
   GetObjectiveReqDTO,
+  GetObjectiveResDTO,
 } from "../types/getObjective.dto";
 
 export const getObjective = async ({ id }: GetObjectiveParams) => {
-  return await axios.get<GetObjectiveReqDTO>(`/api/objective/${id}`);
+  return (await axios.get<GetObjectiveResDTO>(`/api/objective/${id}`)).data
+    .data;
 };
 
-export const useGetObjective = (queryKey: ObjectiveKeysValue) => {
-  const queryClient = useQueryClient();
-
-  return useMutation({
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey });
-      toast.success("목표를 삭제했어요.");
-    },
-    onError: () => toast.error("목표 삭제에 실패했어요."),
-    mutationFn: getObjective,
+export const useGetObjective = ([, , { id }]: OneObjectiveKey) => {
+  return useQuery({
+    queryKey: objectiveKeys.id({ id }),
+    queryFn: () => getObjective({ id }),
   });
 };
