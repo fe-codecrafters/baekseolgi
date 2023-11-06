@@ -24,7 +24,7 @@ export default function RootLayout({
       <body className={inter.className + "w-full h-screen"}>
         <Providers>
           <Header />
-          <main className="mx-auto flex h-screen w-full flex-col items-center justify-between gap-[20px] md:gap-[40px]">
+          <main className="mx-auto flex h-screen w-full flex-col items-center gap-[20px] md:gap-[40px]">
             <Suspense fallback={<Loading />}>{children}</Suspense>
           </main>
           <TabBar />
