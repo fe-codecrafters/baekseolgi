@@ -6,6 +6,7 @@ import {
   ChangeEventHandler,
   FormEventHandler,
   MouseEventHandler,
+  useEffect,
   useState,
 } from "react";
 
@@ -15,11 +16,15 @@ interface Props {
 
 export function Objective({ id }: Props) {
   const RQKey = objectiveKeys.id({ id });
-  const { isLoading, data } = useGetObjective(RQKey);
+  const { isSuccess, data } = useGetObjective(RQKey);
   const update = useUpdateObjective(RQKey);
 
-  const [title, setTitle] = useState(data ? data.title : "");
+  const [title, setTitle] = useState("");
   const [canEdit, setEdit] = useState(false);
+
+  useEffect(() => {
+    isSuccess && setTitle(data.title);
+  }, [isSuccess]);
 
   const handleSubmit: FormEventHandler = (e) => {
     e.preventDefault();
