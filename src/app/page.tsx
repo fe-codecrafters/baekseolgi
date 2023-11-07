@@ -1,8 +1,8 @@
 "use client";
-import { CalendarHeader } from "@/components/CalendarHeader";
+import { CalendarHeader } from "@/components/Calendar/CalendarHeader";
 import { useState } from "react";
 import { Objective } from "@/components/Objective";
-import { Calendar } from "@/components/Calendar";
+import { Calendar } from "@/components/Calendar/Calendar";
 import SeolgiIcon from "@/icons/SeolgiIcon";
 
 import { AttendanceWithSeolgi } from "@/types/dto";
