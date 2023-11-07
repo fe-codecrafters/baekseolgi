@@ -16,7 +16,7 @@ interface CalendarProps {
 
 // 한 달을 표시하는 컴포넌트 - type에 따라 weekly, monthly로 구분
 export const Calendar = ({ monthData, type }: CalendarProps) => {
-  const { year, month } = useSelector((state: RootState) => state.date);
+  const { year, month } = useSelector((state: RootState) => state.data);
   const modalState = useSelector((state: RootState) => state.modal.isOpen);
 
   const days: DayNameType[] = ["일", "월", "화", "수", "목", "금", "토"];
