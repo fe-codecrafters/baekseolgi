@@ -3,7 +3,6 @@ import { allDevLogs } from "contentlayer/generated";
 
 import { Metadata } from "next";
 import { Mdx } from "@/components/dev-log/mdx-components";
-import { Header } from "@/components/Header";
 
 interface PostProps {
   params: {
@@ -12,7 +11,6 @@ interface PostProps {
 }
 
 async function getPostFromParams(params: PostProps["params"]) {
-  console.log(params);
   const slug = params?.slug?.join("/");
   const post = allDevLogs.find((post) => {
     return post.slugAsParams === decodeURIComponent(slug);
@@ -55,7 +53,6 @@ export default async function PostPage({ params }: PostProps) {
 
   return (
     <div className="mx-auto flex h-screen w-full flex-col items-center">
-      <Header />
       <article className="prose py-6">
         <h1 className="mb-2">{post.title}</h1>
         {post.description && (
