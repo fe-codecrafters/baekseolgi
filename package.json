@@ -16,10 +16,10 @@
     "db-dev-reset": "dotenv -e .env.dev prisma migrate reset",
     "db-dev-client": "dotenv -e .env.dev prisma studio",
     "db-prod-migrate": "prisma migrate dev",
-    "db-prod-seed": "dotenv -e .env.local prisma db seed",
-    "db-prod-reset": "dotenv -e .env.local prisma migrate reset",
-    "db-prod-deploy": "dotenv -e .env.local prisma migrate deploy",
-    "db-prod-client": "dotenv -e .env.local prisma studio",
+    "db-prod-seed": "dotenv -e .env.production.local prisma db seed",
+    "db-prod-reset": "dotenv -e .env.production.local prisma migrate reset",
+    "db-prod-deploy": "dotenv -e .env.production.local prisma migrate deploy",
+    "db-prod-client": "dotenv -e .env.production.local prisma studio",
     "db-generate": "prisma generate"
   },
   "dependencies": {
