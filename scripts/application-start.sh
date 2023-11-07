@@ -9,9 +9,5 @@ export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || pr
 pm2 describe app > /dev/null
 RUNNING=$?
 
-if [ "${RUNNING}" -ne 0 ]; then
-  pnpm run build
-  pm2 start pnpm --name app -- start -p 8080
-else
-  pm2 reload app
-fi;
+pnpm run build
+pm2 start pnpm --name app -- start -p 8080
