@@ -2,8 +2,8 @@ import { useGetObjective } from "@/features/objective/api/getObjective";
 import { useUpdateObjective } from "@/features/objective/api/updateObjective";
 import { objectiveKeys } from "@/features/objective/key";
 import EditIcon from "@/icons/EditIcon";
-import { RootState } from "@/redux/store";
-import { useSelector } from "react-redux";
+// import { RootState } from "@/redux/store";
+// import { useSelector } from "react-redux";
 import {
   ChangeEventHandler,
   FormEventHandler,

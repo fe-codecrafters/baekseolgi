@@ -20,7 +20,7 @@ export const useUpdateObjective = (queryKey: ObjectiveKeysValue) => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    onMutate: async ({ data, id }) => {
+    onMutate: async ({ data }) => {
       // REF: https://tanstack.com/query/v5/docs/react/guides/mutations#persist-mutations
       if (!data.title) return;
       await queryClient.cancelQueries({
@@ -37,7 +37,7 @@ export const useUpdateObjective = (queryKey: ObjectiveKeysValue) => {
 
       return { prev };
     },
-    onSuccess: (_: Objective) => {
+    onSuccess: () => {
       queryClient.refetchQueries({
         queryKey,
       });
