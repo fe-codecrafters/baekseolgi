@@ -9,7 +9,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
+    "start": "next start -p 8080",
     "lint": "eslint --fix ./",
     "db-dev-migrate": "dotenv -e .env.dev prisma migrate dev",
     "db-dev-seed": "dotenv -e .env.dev prisma db seed",
