@@ -22,7 +22,8 @@ export function Objective({ id }: Props) {
   const { isSuccess, data } = useGetObjective(RQKey);
   const update = useUpdateObjective(RQKey);
 
-  const dataState = useSelector((state: RootState) => state.data);
+  // TODO: client global state가 필요한지 확인 필요
+  // const dataState = useSelector((state: RootState) => state.data);
 
   const [title, setTitle] = useState("");
   const [canEdit, setEdit] = useState(false);

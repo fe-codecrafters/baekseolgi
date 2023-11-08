@@ -1,4 +1,4 @@
-export const ProgressBar = ({ data }) => {
+export const ProgressBar = () => {
   return (
     <div className="m-8	flex h-10 w-10/12 overflow-hidden rounded-full bg-neutral-300">
       {/* 데이터가 어떻게 들어올지에 보고 로직을 짜야할듯.. */}

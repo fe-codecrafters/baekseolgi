@@ -25,7 +25,7 @@ export const useCreateObjective = (queryKey: ObjectiveKeysValue) => {
       queryClient.invalidateQueries({ queryKey });
       toast.success("목표 등록이 성공했어요!");
     },
-    onError: (e) => {
+    onError: () => {
       toast.error("목표 등록에 실패했어요 😢");
     },
     mutationFn: createObjective,

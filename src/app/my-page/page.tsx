@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import Chart from "@/components/Chart";
 import { MonthlyProgressBar } from "@/components/MonthlyProgressBar";
@@ -24,63 +24,84 @@ export default function MyPage() {
   const [selectedMonth, setSelectedMonth] = useState(today.month);
 
   return (
-    <div className="mx-auto flex min-h-screen w-full max-w-screen-md flex-col items-center gap-[24px] md:gap-[40px] py-[30px] md:py-[60px]">
+    <div className="mx-auto flex min-h-screen w-full max-w-screen-md flex-col items-center gap-[24px] py-[30px] md:gap-[40px] md:py-[60px]">
       <div>
         <SeolgiFigure />
       </div>
       <div>
-        <div className="text-[16px] md:text-[24px] mb-[16px]">내 정보</div>
-        <div className="flex flex-col justify-center border rounded-[20px] w-[340px] md:w-[600px] h-[150px] md:h-[200px] px-[20px] md:px-[40px]">
-          <div className="text-[14px] md:text-[20px] text-primary-darkGray">닉네임</div>
-          <div className="text-[16px] md:text-[24px] flex items-center gap-[16px] mb-[20px]">설기#2546
+        <div className="mb-[16px] text-[16px] md:text-[24px]">내 정보</div>
+        <div className="flex h-[150px] w-[340px] flex-col justify-center rounded-[20px] border px-[20px] md:h-[200px] md:w-[600px] md:px-[40px]">
+          <div className="text-[14px] text-primary-darkGray md:text-[20px]">
+            닉네임
+          </div>
+          <div className="mb-[20px] flex items-center gap-[16px] text-[16px] md:text-[24px]">
+            설기#2546
             <EditIcon />
           </div>
-          <div className="text-[14px] md:text-[20px] text-primary-darkGray">연결된 계정</div>
-          <div className="text-[16px] md:text-[24px] flex items-center gap-[16px]">seolgi2566@gmail.com
+          <div className="text-[14px] text-primary-darkGray md:text-[20px]">
+            연결된 계정
+          </div>
+          <div className="flex items-center gap-[16px] text-[16px] md:text-[24px]">
+            seolgi2566@gmail.com
             <EditIcon />
           </div>
         </div>
       </div>
       <div>
-        <div className="text-[16px] md:text-[24px] mb-[16px]">내 기록</div>
-        <div className="flex w-[340px] md:w-[600px] justify-between">
-          <div className="border rounded-[20px] w-[110px] md:w-[182px] h-[100px] md:h-[146px] p-[12px] md:p-[16px]">
-            <div className="text-[14px] md:text-[20px] text-primary-darkGray mb-[10px]">찍은 설기</div>
-            <div className="text-[16px] md:text-[24px] flex gap-[12px] md:gap-[30px]">15개
+        <div className="mb-[16px] text-[16px] md:text-[24px]">내 기록</div>
+        <div className="flex w-[340px] justify-between md:w-[600px]">
+          <div className="h-[100px] w-[110px] rounded-[20px] border p-[12px] md:h-[146px] md:w-[182px] md:p-[16px]">
+            <div className="mb-[10px] text-[14px] text-primary-darkGray md:text-[20px]">
+              찍은 설기
+            </div>
+            <div className="flex gap-[12px] text-[16px] md:gap-[30px] md:text-[24px]">
+              15개
               <SeolgiIconL />
             </div>
           </div>
-          <div className="border rounded-[20px] w-[110px] md:w-[182px] h-[100px] md:h-[146px] p-[16px]">
-            <div className="text-[14px] md:text-[20px] text-primary-darkGray mb-[10px]">완료한 목표</div>
+          <div className="h-[100px] w-[110px] rounded-[20px] border p-[16px] md:h-[146px] md:w-[182px]">
+            <div className="mb-[10px] text-[14px] text-primary-darkGray md:text-[20px]">
+              완료한 목표
+            </div>
             <div className="text-[16px] md:text-[24px]">0개</div>
           </div>
-          <div className="border rounded-[20px] w-[110px] md:w-[182px] h-[100px] md:h-[146px] p-[16px]">
-            <div className="text-[14px] md:text-[20px] text-primary-darkGray mb-[10px]">모은 포인트</div>
+          <div className="h-[100px] w-[110px] rounded-[20px] border p-[16px] md:h-[146px] md:w-[182px]">
+            <div className="mb-[10px] text-[14px] text-primary-darkGray md:text-[20px]">
+              모은 포인트
+            </div>
             <div className="text-[16px] md:text-[24px]">100,000</div>
           </div>
         </div>
       </div>
       <div>
-        <div className="text-[16px] md:text-[24px] mb-[16px]">{selectedMonth}월 달성 분포</div>
-        <div className="flex flex-col justify-center border rounded-[20px] w-[340px] md:w-[600px] h-[120px] md:h-[140px]">
+        <div className="mb-[16px] text-[16px] md:text-[24px]">
+          {selectedMonth}월 달성 분포
+        </div>
+        <div className="flex h-[120px] w-[340px] flex-col justify-center rounded-[20px] border md:h-[140px] md:w-[600px]">
           <MonthlyProgressBar />
         </div>
       </div>
       <Chart />
-      <div className="w-[340px] md:w-[700px] border"></div>
+      <div className="w-[340px] border md:w-[700px]"></div>
       <div className="pb-[50px]">
-        <div className="text-[16px] md:text-[24px] mb-[16px]">고객 센터</div>
-        <button className="flex items-center gap-[10px] md:gap-[18px] border rounded-[20px] w-[340px] md:w-[600px] h-[45px] md:h-[60px] px-[40px] mb-[16px]">
+        <div className="mb-[16px] text-[16px] md:text-[24px]">고객 센터</div>
+        <button className="mb-[16px] flex h-[45px] w-[340px] items-center gap-[10px] rounded-[20px] border px-[40px] md:h-[60px] md:w-[600px] md:gap-[18px]">
           <FeedbackIcon />
-          <div className="text-[16px] md:text-[24px] flex items-center">피드백 보내기</div>
+          <div className="flex items-center text-[16px] md:text-[24px]">
+            피드백 보내기
+          </div>
         </button>
-        <button className="flex items-center gap-[10px] md:gap-[18px] border rounded-[20px] w-[340px] md:w-[600px] h-[45px] md:h-[60px] px-[40px] mb-[16px]">
+        <button className="mb-[16px] flex h-[45px] w-[340px] items-center gap-[10px] rounded-[20px] border px-[40px] md:h-[60px] md:w-[600px] md:gap-[18px]">
           <DonaSeolgiIcon />
-          <div className="text-[16px] md:text-[24px] flex items-center">개발자에게 응원 보내기</div>
+          <div className="flex items-center text-[16px] md:text-[24px]">
+            개발자에게 응원 보내기
+          </div>
         </button>
-        <button className="flex items-center gap-[10px] md:gap-[18px] border rounded-[20px] w-[340px] md:w-[600px] h-[45px] md:h-[60px] px-[40px] mb-[50px] md:mb-[30px]">
+        <button className="mb-[50px] flex h-[45px] w-[340px] items-center gap-[10px] rounded-[20px] border px-[40px] md:mb-[30px] md:h-[60px] md:w-[600px] md:gap-[18px]">
           <DevBlogIcon />
-          <div className="text-[16px] md:text-[24px] flex items-center">릴리즈 노트 / 기술 블로그</div>
+          <div className="flex items-center text-[16px] md:text-[24px]">
+            릴리즈 노트 / 기술 블로그
+          </div>
         </button>
       </div>
     </div>
