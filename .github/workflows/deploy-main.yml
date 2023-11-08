@@ -26,7 +26,8 @@
         - name: Create .env file
           uses: ozaytsev86/create-env-file@v1
           with:
-            ENV_API_URL: ${{ vars.API_URL }}
+            file-name: .env.production.local
+            ENV_DATABASE_URL: ${{ secrets.DATABASE_URL }}
 
         - name: "Build project"
           run: |
@@ -41,7 +42,7 @@
             aws_secret_key: ${{ secrets.AWS_SECRET_KEY }}
             aws_region: ap-northeast-2
             codedeploy_name: baekseolgi-codedeploy
-            codedeploy_group: baekseolgi-main
+            codedeploy_group: 100seolgi-codedeploy
             codedeploy_register_only: false
             s3_bucket: baekseolgi-nextjs-build
             s3_folder: main
