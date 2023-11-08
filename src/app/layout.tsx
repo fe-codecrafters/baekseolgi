@@ -7,16 +7,18 @@ import Providers from "./providers";
 import Loading from "./loading";
 import { Suspense } from "react";
 import Toast from "@/components/Toast/Toast";
+const DEV = process.env.NODE_ENV === "development";
 
 const inter = Inter({ subsets: ["latin"] });
 
 const title = "100설기";
 const description = "100일간 목표 달성을 위해 매일매일 기록하세요!";
-const url = "https://100seolgi.click";
+const url = DEV ? "http://localhost:3000" : "https://100seolgi.click";
 
 export const metadata: Metadata = {
   title,
   description,
+  metadataBase: new URL(url),
   openGraph: {
     title,
     description,
