@@ -6,7 +6,7 @@ export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || pr
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
 
 nvm install 20
-npm install -g pnpm
+npm install -g pnpm@8.6.12
 npm install -g prisma
 npm install -g pm2
 
