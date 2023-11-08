@@ -1,5 +1,3 @@
-import { IconType } from "@/types";
-
 export default function CloseIcon() {
   const vb = `0 0 ${24} ${24}`;
 

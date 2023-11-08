@@ -1,5 +1,4 @@
 import Seolgi404 from "@/icons/Seolgi404";
-import Link from "next/link";
 
 export default function NotFound() {
   return (

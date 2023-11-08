@@ -61,7 +61,7 @@ export const useUpdateAttendance = (queryKey: AttendanceKeysValue) => {
 
       return { previousAttendance };
     },
-    onSuccess: (_: DailyAttendance) => {
+    onSuccess: () => {
       queryClient.refetchQueries({
         queryKey,
       });

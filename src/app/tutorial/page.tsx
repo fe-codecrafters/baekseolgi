@@ -18,7 +18,7 @@ export default function TutorialPage() {
           action="#"
           method="POST"
         >
-          <div className="h-50 w-600">
+          <div className="h-[50px] w-[600px]">
             <input
               id="objective"
               name="objective"

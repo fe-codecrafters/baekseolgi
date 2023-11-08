@@ -13,7 +13,6 @@ import {
   GetMonthlyAttendanceResDTO,
   GetOneAttendanceParams,
   GetOneAttendanceResDTO,
-  MonthlyAttendance,
 } from "../types/getAttendance.dto";
 
 export const getOneAttendance = async ({ id }: GetOneAttendanceParams) => {

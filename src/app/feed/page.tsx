@@ -1,27 +1,20 @@
 "use client";
 import AttendanceInput from "@/components/AttendanceInput";
-import { CalendarHeader } from "@/components/CalendarHeader";
+import { CalendarHeader } from "@/components/Calendar/CalendarHeader";
 import LoadingIndicator from "@/components/LoadingIndicator";
 import { useDeleteAttendance } from "@/features/attendance/api/deleteAttendance";
 import { useMonthlyAttendances } from "@/features/attendance/api/getAttendances";
 import { useUpdateAttendance } from "@/features/attendance/api/updateAttendance";
 import { attendanceKeys } from "@/features/attendance/key";
-import { useState } from "react";
+import { RootState } from "@/redux/store";
+import { useSelector } from "react-redux";
 
 export default function FeedPage() {
-  const date = new Date();
-  const today = {
-    year: date.getFullYear(),
-    month: date.getMonth() + 1,
-    date: date.getDate(),
-    day: date.getDay(),
-  };
+  const { year, month } = useSelector((state: RootState) => state.date);
 
-  const [selectedYear, setSelectedYear] = useState(today.year);
-  const [selectedMonth, setSelectedMonth] = useState(today.month);
   const RQKey = attendanceKeys.month({
-    year: selectedYear,
-    month: selectedMonth,
+    year: year,
+    month: month,
     // TODO: userId, objectiveId도 데이터 확인할 수 있어야
     userId: 1,
     objectiveId: 1,
@@ -29,24 +22,6 @@ export default function FeedPage() {
   const { isLoading, data, isSuccess } = useMonthlyAttendances(RQKey);
   const updateAttendanceMutation = useUpdateAttendance(RQKey);
   const deleteAttendanceMutation = useDeleteAttendance(RQKey);
-
-  const toPrevMonth = () => {
-    if (selectedMonth === 1) {
-      setSelectedYear(selectedYear - 1);
-      setSelectedMonth(12);
-    } else {
-      setSelectedMonth(selectedMonth - 1);
-    }
-  };
-
-  const toNextMonth = () => {
-    if (selectedMonth === 12) {
-      setSelectedMonth(1);
-      setSelectedYear(selectedYear + 1);
-    } else {
-      setSelectedMonth(selectedMonth + 1);
-    }
-  };
 
   const editAttendance = (attendanceId: number, title: string) => {
     updateAttendanceMutation.mutate({
@@ -67,12 +42,7 @@ export default function FeedPage() {
     return (
       <>
         <div className="flex flex-col items-center justify-center">
-          <CalendarHeader
-            toPrevMonth={toPrevMonth}
-            toNextMonth={toNextMonth}
-            selectedYear={selectedYear}
-            selectedMonth={selectedMonth}
-          />
+          <CalendarHeader />
           <div className="mt-[40px] flex h-[600px] items-center justify-center md:h-[800px]">
             <p className="text-xl md:text-2xl">이 달에는 기록이 없어요!</p>
           </div>
@@ -86,12 +56,7 @@ export default function FeedPage() {
   return (
     <>
       <div className="flex flex-col items-center justify-center">
-        <CalendarHeader
-          toPrevMonth={toPrevMonth}
-          toNextMonth={toNextMonth}
-          selectedYear={selectedYear}
-          selectedMonth={selectedMonth}
-        />
+        <CalendarHeader />
         <div className="mt-[40px] w-[600px]">
           {isSuccess && data && data?.attendance?.length > 0 ? (
             data.attendance.map((el) => {

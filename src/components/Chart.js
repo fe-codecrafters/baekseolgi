@@ -21,43 +21,47 @@ export default function Chart() {
     .map((num, idx) => `${40 * idx}, ${136 - (num / 31) * 136}`)
     .reduce((acc, cur) => acc + " " + cur);
 
-    console.log(monthDatasToChartPoints)
+  console.log(monthDatasToChartPoints);
 
   const months = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
   return (
-      <div className="w-[340px] text-left text-[16px] md:w-[600px] md:text-[24px]">
-        <div className="mb-[16px]">월별 달성 분포</div>
-        <div className="flex h-[200px] w-[340px] items-center justify-center rounded-[20px] border border-primary-gray md:h-[240px] md:w-[600px]">
-            <div className="flex h-[136px] w-[276px] justify-between md:h-[164px] md:w-[456px]">
-            {months.map((month) => (
-                <div
-                key={`month-${month}`}
-                className="flex w-[16px] flex-col items-center"
-                >
-                <div className="h-[118px] w-[4px] rounded-full bg-primary-gray md:h-[142px]">
-                    <div className="mt-[-4px] h-[112px] md:h-[136px]">
-                    <div
-                        className="relative z-10 ml-[-2px] h-[8px] w-[8px] rounded-full border-[2px] border-primary-darkGray bg-primary-white md:ml-[-3px] md:h-[10px] md:w-[10px]"
-                        style={{
-                        bottom: `${(monthDatas[month - 1] / 31) * 100 - 100}%`,
-                        }}
-                    ></div>
-                    </div>
-                </div>
-                <div className='mt-[8px]'>{month}</div>
-                </div>
-            ))}
-            </div>
-        </div>
-        <div className="mt-[-180px] ml-[-50px] md:mt-[-200px] md:ml-[80px] h-[136px] w-[440px] scale-x-[0.59] scale-y-[0.82] md:scale-100 mb-[50px] md:mb-[80px]">
-            <svg
-            className="fill-none stroke-primary-darkGray"
-            width="auto"
-            height="auto"
+    <div className="w-[340px] text-left text-[16px] md:w-[600px] md:text-[24px]">
+      <div className="mb-[16px]">월별 달성 분포</div>
+      <div className="flex h-[200px] w-[340px] items-center justify-center rounded-[20px] border border-primary-gray md:h-[240px] md:w-[600px]">
+        <div className="flex h-[136px] w-[276px] justify-between md:h-[164px] md:w-[456px]">
+          {months.map((month) => (
+            <div
+              key={`month-${month}`}
+              className="flex w-[16px] flex-col items-center"
             >
-            <polyline points={monthDatasToChartPoints} stroke-width="2" vector-effect="non-scaling-stroke"/>
-            </svg>
+              <div className="h-[118px] w-[4px] rounded-full bg-primary-gray md:h-[142px]">
+                <div className="mt-[-4px] h-[112px] md:h-[136px]">
+                  <div
+                    className="relative z-10 ml-[-2px] h-[8px] w-[8px] rounded-full border-[2px] border-primary-darkGray bg-primary-white md:ml-[-3px] md:h-[10px] md:w-[10px]"
+                    style={{
+                      bottom: `${(monthDatas[month - 1] / 31) * 100 - 100}%`,
+                    }}
+                  ></div>
+                </div>
+              </div>
+              <div className="mt-[8px]">{month}</div>
+            </div>
+          ))}
         </div>
       </div>
+      <div className="mb-[50px] ml-[-50px] mt-[-180px] h-[136px] w-[440px] scale-x-[0.59] scale-y-[0.82] md:mb-[80px] md:ml-[80px] md:mt-[-200px] md:scale-100">
+        <svg
+          className="fill-none stroke-primary-darkGray"
+          width="auto"
+          height="auto"
+        >
+          <polyline
+            points={monthDatasToChartPoints}
+            strokeWidth="2"
+            vectorEffect="non-scaling-stroke"
+          />
+        </svg>
+      </div>
+    </div>
   );
 }
