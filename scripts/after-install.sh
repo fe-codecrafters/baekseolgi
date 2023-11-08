@@ -16,4 +16,3 @@ else
 fi 
 
 pnpm install
-pnpm db-generate

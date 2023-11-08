@@ -12,6 +12,5 @@ npm install -g pm2
 
 ln -sf $(which npm) /usr/local/bin/npm
 ln -sf $(which node) /usr/local/bin/node
-ln -sf $(which yarn) /usr/local/bin/pnpm
 ln -sf $(which prisma) /usr/local/bin/prisma
 ln -sf $(which pm2) /usr/local/bin/pm2
