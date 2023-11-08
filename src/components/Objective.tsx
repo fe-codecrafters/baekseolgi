@@ -2,6 +2,8 @@ import { useGetObjective } from "@/features/objective/api/getObjective";
 import { useUpdateObjective } from "@/features/objective/api/updateObjective";
 import { objectiveKeys } from "@/features/objective/key";
 import EditIcon from "@/icons/EditIcon";
+import { RootState } from "@/redux/store";
+import { useSelector } from "react-redux";
 import {
   ChangeEventHandler,
   FormEventHandler,
@@ -16,8 +18,11 @@ interface Props {
 
 export function Objective({ id }: Props) {
   const RQKey = objectiveKeys.id({ id });
+
   const { isSuccess, data } = useGetObjective(RQKey);
   const update = useUpdateObjective(RQKey);
+
+  const dataState = useSelector((state: RootState) => state.data);
 
   const [title, setTitle] = useState("");
   const [canEdit, setEdit] = useState(false);

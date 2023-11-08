@@ -1,22 +1,22 @@
 import SeolgiIcon from "@/icons/SeolgiIcon";
 
-export default function LoadingIndicator () {
-    return (
-        <div className="h-full w-[340px] md:w-[600px] flex flex-col items-center justify-center gap-[15px] md:gap-[20px] pb-[250px]">
-            <div className="flex justify-between w-[150px] md:w-[220px] pt-[30px] md:pt-[40px]">
-                <div className="w-[30px] h-[30px] md:w-[40px] md:h-[40px] animate-[seolgiJump_1s_ease-in-out_infinite]">
-                    <SeolgiIcon width={'auto'} height={'auto'}/>
-                </div>
-                <div className="w-[30px] h-[30px] md:w-[40px] md:h-[40px] animate-[seolgiJump_1s_0.2s_ease-in-out_infinite]">
-                    <SeolgiIcon width={'auto'} height={'auto'}/>
-                </div>
-                <div className="w-[30px] h-[30px] md:w-[40px] md:h-[40px] animate-[seolgiJump_1s_0.4s_ease-in-out_infinite]">
-                    <SeolgiIcon width={'auto'} height={'auto'}/>
-                </div>
-            </div>
-            <div className="w-full h-[20px] md:h-[30px] bg-primary-gray rounded-full p-[3px] md:p-[5px]">
-                <div className="w-full h-full bg-seolgi-pink rounded-full animate-loadingIndicatorBar"></div>
-            </div>
+export default function LoadingIndicator() {
+  return (
+    <div className="flex h-full w-[340px] flex-col items-center justify-center gap-[15px] pb-[250px] md:w-[600px] md:gap-[20px]">
+      <div className="flex w-[150px] justify-between pt-[30px] md:w-[220px] md:pt-[40px]">
+        <div className="h-[30px] w-[30px] animate-[seolgiJump_1s_ease-in-out_infinite] md:h-[40px] md:w-[40px]">
+          <SeolgiIcon width={"auto"} height={"auto"} />
         </div>
-    )
+        <div className="h-[30px] w-[30px] animate-[seolgiJump_1s_0.2s_ease-in-out_infinite] md:h-[40px] md:w-[40px]">
+          <SeolgiIcon width={"auto"} height={"auto"} />
+        </div>
+        <div className="h-[30px] w-[30px] animate-[seolgiJump_1s_0.4s_ease-in-out_infinite] md:h-[40px] md:w-[40px]">
+          <SeolgiIcon width={"auto"} height={"auto"} />
+        </div>
+      </div>
+      <div className="h-[20px] w-full rounded-full bg-primary-gray p-[3px] md:h-[30px] md:p-[5px]">
+        <div className="h-full w-full animate-loadingIndicatorBar rounded-full bg-seolgi-pink"></div>
+      </div>
+    </div>
+  );
 }

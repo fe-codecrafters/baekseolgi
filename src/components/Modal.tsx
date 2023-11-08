@@ -1,29 +1,21 @@
 import EditIcon from "@/icons/EditIcon";
 import CloseIcon from "@/icons/CloseIcon";
-import SeolgiIcon from "@/icons/SeolgiIcon";
 import { format } from "date-fns";
 import { ko } from "date-fns/locale";
-import {
-  ChangeEventHandler,
-  FormEventHandler,
-  MouseEventHandler,
-  useState,
-} from "react";
+import { ChangeEventHandler, FormEventHandler, useState } from "react";
 import { useCreateAttendance } from "@/features/attendance/api/createAttendance";
 import { attendanceKeys } from "@/features/attendance/key";
 import { useGetSeolgi } from "@/features/seolgi/api/getSeolgi";
 import { getStartOfDayInTimeZone } from "@/util/getStartOfDayInTimeZone";
 import SeolgiIconS from "@/icons/AttendanceInput/SeolgiIconS";
+import { useDispatch, useSelector } from "react-redux";
+import { closeModal } from "@/redux/reducer/modalSlice";
+import { RootState } from "@/redux/store";
 
-interface ModalProps {
-  opened: MouseEventHandler<HTMLButtonElement>;
-  day: number;
-  month: number;
-  year: number;
-}
-
-const Modal = ({ opened, day, year, month }: ModalProps) => {
-  const date = new Date(year, month - 1, day);
+const Modal = () => {
+  const dispatch = useDispatch();
+  const { year, month, date } = useSelector((state: RootState) => state.date);
+  const getDate = new Date(year, month - 1, date);
   const seolgis = useGetSeolgi({ seolgiName: "SeolgiIcon" }).data;
   const [seolgiId, setSeolgiId] = useState<number>(0);
   const [title, setTitle] = useState<string>("");
@@ -40,8 +32,10 @@ const Modal = ({ opened, day, year, month }: ModalProps) => {
       objectiveId: 1,
       seolgiId,
       title,
-      createdAt: getStartOfDayInTimeZone(date, timeZone),
+      createdAt: getStartOfDayInTimeZone(getDate, timeZone),
     });
+
+    handleModalClose();
   };
 
   const handleChange: ChangeEventHandler<HTMLInputElement> = (e) => {
@@ -52,12 +46,16 @@ const Modal = ({ opened, day, year, month }: ModalProps) => {
     setSeolgiId(id);
   };
 
+  const handleModalClose = () => {
+    dispatch(closeModal());
+  };
+
   return (
     <>
       {/* modal background */}
       <button
-        className="fixed inset-0 z-[999] cursor-default bg-slate-800 opacity-50"
-        onClick={opened}
+        className="fixed inset-0 cursor-default bg-slate-800 opacity-40"
+        onClick={handleModalClose}
       ></button>
       {/* modal center fix */}
       <div className="fixed left-[50%] top-[50%] z-[999] translate-x-[-50%] translate-y-[-50%]">
@@ -66,7 +64,7 @@ const Modal = ({ opened, day, year, month }: ModalProps) => {
           <div className="relative">
             <div className="flex items-center justify-center gap-3">
               <h2 className="text-center text-base leading-9 tracking-tight text-primary-black md:text-2xl md:font-bold">
-                {month}월 {day}일 {format(date, "eee", { locale: ko })}요일
+                {month}월 {date}일 {format(date, "eee", { locale: ko })}요일
               </h2>
               <button>
                 <EditIcon />
@@ -74,7 +72,7 @@ const Modal = ({ opened, day, year, month }: ModalProps) => {
             </div>
             <button
               className="absolute left-[260px] top-[6px] md:left-[520px] md:top-[6px]"
-              onClick={opened}
+              onClick={handleModalClose}
             >
               <CloseIcon />
             </button>
@@ -104,7 +102,6 @@ const Modal = ({ opened, day, year, month }: ModalProps) => {
                         type="button"
                         key={seolgi.id}
                         onClick={() => handleSelectSeolgi(seolgi.id)}
-                        className="seolgi-modal-button"
                       >
                         <input
                           type="radio"
