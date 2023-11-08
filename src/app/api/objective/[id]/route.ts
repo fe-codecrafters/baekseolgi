@@ -1,6 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import { Objective } from "@prisma/client";
 import prisma from "@/app/api/_base";
+import {
+  UpdateObjectiveReqDTO,
+  UpdateObjectiveResDTO,
+} from "@/features/objective/types/updateObjective.dto";
+import { DeleteObjectiveResDTO } from "@/features/objective/types/deleteObjective.dto";
 const { objective } = prisma;
 
 /**
@@ -77,14 +82,13 @@ export async function PUT(
     );
   }
 
-  const { title, createdAt, description, finishedAt, failedAt } =
-    (await request.json()) as {
-      title: string;
-      description?: string;
-      createdAt: string;
-      finishedAt?: string;
-      failedAt?: string;
-    };
+  const {
+    title,
+    createdAt,
+    description,
+    finishedAt,
+    failedAt,
+  }: UpdateObjectiveReqDTO = await request.json();
 
   let updated;
 
@@ -103,7 +107,7 @@ export async function PUT(
     console.error("PUT /objective/{id} Error: ", e);
     return NextResponse.json({ error: "Not Found" }, { status: 404 });
   }
-  return NextResponse.json({ data: updated });
+  return NextResponse.json<UpdateObjectiveResDTO>({ data: updated });
 }
 
 export async function DELETE(
@@ -118,8 +122,9 @@ export async function DELETE(
     );
   }
 
+  let deleted: Objective;
   try {
-    await objective.delete({
+    deleted = await objective.delete({
       where: { id },
     });
   } catch (e) {
@@ -127,5 +132,8 @@ export async function DELETE(
     return NextResponse.json({ error: "Not Found" }, { status: 404 });
   }
 
-  return new Response(null, { status: 204 });
+  return NextResponse.json<DeleteObjectiveResDTO>(
+    { data: { id: deleted.id } },
+    { status: 404 },
+  );
 }

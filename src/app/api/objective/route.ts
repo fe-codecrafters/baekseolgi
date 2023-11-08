@@ -1,19 +1,20 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/app/api/_base";
+import {
+  CreateObjectiveReqDTO,
+  CreateObjectiveResDTO,
+} from "@/features/objective/types/createObjective.dto";
 const { objective } = prisma;
 
 export async function POST(request: NextRequest) {
-  // TODO: need type
-  const { userId, title, createdAt, description, finishedAt, failedAt } =
-    (await request.json()) as {
-      userId: number;
-      objectiveId: number;
-      title: string;
-      description?: string;
-      createdAt: string;
-      finishedAt?: string;
-      failedAt?: string;
-    };
+  const {
+    userId,
+    title,
+    createdAt,
+    description,
+    finishedAt,
+    failedAt,
+  }: CreateObjectiveReqDTO = await request.json();
 
   let created;
   try {
@@ -32,5 +33,8 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Not Found" }, { status: 404 });
   }
 
-  return NextResponse.json({ data: created }, { status: 201 });
+  return NextResponse.json<CreateObjectiveResDTO>(
+    { data: created },
+    { status: 201 },
+  );
 }

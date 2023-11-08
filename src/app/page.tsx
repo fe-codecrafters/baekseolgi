@@ -95,7 +95,8 @@ export default function Home() {
         selectedYear={selectedYear}
         selectedMonth={selectedMonth}
       />
-      <Objective />
+      {/* TODO: Objective Id 전역 상태로 바뀌면 적용 */}
+      <Objective id={1} />
       {!isLoading && data && (
         <Calendar
           selectedYear={selectedYear}
