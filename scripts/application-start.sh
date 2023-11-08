@@ -10,7 +10,7 @@ pm2 describe 100seolgi-app > /dev/null
 RUNNING=$?
 
 if [ "${RUNNING}" -ne 0 ]; then
-  pm2 start "pnpm run start" --name 100seolgi-app -- start -p 8080
+  pm2 start "pnpm run start" --name 100seolgi-app
 else
   pm2 reload 100seolgi-app
 fi;
