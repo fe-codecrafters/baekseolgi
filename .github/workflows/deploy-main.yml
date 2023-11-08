@@ -33,7 +33,6 @@
           run: |
             pnpm install
             pnpm build
-            rm -r node_modules
 
         - name: AWS CodeDeploy
           uses: sourcetoad/aws-codedeploy-action@v1
