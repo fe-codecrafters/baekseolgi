@@ -18,7 +18,7 @@ const Modal = () => {
 
   const dateNum =
     typeof date === "number" ? date : new Date(date.createdAt).getDate();
-  const getDate = new Date(year, month - 1, new Date(date.createdAt).getDate());
+  const getDate = new Date(year, month - 1, dateNum);
   const seolgis = useGetSeolgi({ seolgiName: "SeolgiIcon" }).data;
   const [seolgiId, setSeolgiId] = useState<number>(0);
   const [title, setTitle] = useState<string>("");
