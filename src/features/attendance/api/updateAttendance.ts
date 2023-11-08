@@ -5,7 +5,6 @@ import {
   UpdateAttendanceParams,
   UpdateAttendanceResDTO,
 } from "../types/updateAttendance.dto";
-import { DailyAttendance } from "@prisma/client";
 import { MonthlyAttendance } from "../types/getAttendance.dto";
 import { toast } from "react-toastify";
 
@@ -65,7 +64,7 @@ export const useUpdateAttendance = (queryKey: AttendanceKeysValue) => {
       queryClient.refetchQueries({
         queryKey,
       });
-      toast.error("출석을 변경했어요.");
+      toast.success("출석을 변경했어요.");
     },
     onError: (_, __, context) => {
       if (context?.previousAttendance) {

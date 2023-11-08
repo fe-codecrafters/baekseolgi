@@ -15,7 +15,10 @@ import { RootState } from "@/redux/store";
 const Modal = () => {
   const dispatch = useDispatch();
   const { year, month, date } = useSelector((state: RootState) => state.date);
-  const getDate = new Date(year, month - 1, date);
+
+  const dateNum =
+    typeof date === "number" ? date : new Date(date.createdAt).getDate();
+  const getDate = new Date(year, month - 1, new Date(date.createdAt).getDate());
   const seolgis = useGetSeolgi({ seolgiName: "SeolgiIcon" }).data;
   const [seolgiId, setSeolgiId] = useState<number>(0);
   const [title, setTitle] = useState<string>("");
@@ -64,7 +67,8 @@ const Modal = () => {
           <div className="relative">
             <div className="flex items-center justify-center gap-3">
               <h2 className="text-center text-base leading-9 tracking-tight text-primary-black md:text-2xl md:font-bold">
-                {month}월 {date}일 {format(date, "eee", { locale: ko })}요일
+                {month}월 {dateNum}일 {format(dateNum, "eee", { locale: ko })}
+                요일
               </h2>
               <button>
                 <EditIcon />

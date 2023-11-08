@@ -27,7 +27,7 @@ export default function CalendarPage() {
   return (
     <>
       <CalendarHeader />
-      <Objective />
+      <Objective id={1} />
       {isSuccess ? (
         <>
           <Calendar monthData={data.attendance} type={"month"} />

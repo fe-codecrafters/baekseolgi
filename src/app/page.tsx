@@ -50,7 +50,7 @@ export default function Home() {
   return (
     <>
       <CalendarHeader />
-      <Objective />
+      <Objective id={1} />
       {!isLoading && data && (
         <Calendar monthData={dataState.attendance} type={"week"} />
       )}
