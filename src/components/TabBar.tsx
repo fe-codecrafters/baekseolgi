@@ -10,6 +10,8 @@ import { usePathname } from "next/navigation";
  * 페이지 전환을 위한 Tab Bar 컴포넌트
  *
  */
+
+//TODO : 일정 크기 이하로 줄어들면 브라우저 너비에 맞춰져 TabBar의 너비가 조정되지 않는 문제 발견
 export default function TabBar() {
   const pathname = usePathname();
   return (

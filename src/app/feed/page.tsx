@@ -7,7 +7,6 @@ import { useMonthlyAttendances } from "@/features/attendance/api/getAttendances"
 import { useUpdateAttendance } from "@/features/attendance/api/updateAttendance";
 import { attendanceKeys } from "@/features/attendance/key";
 import { RootState } from "@/redux/store";
-import { AttendanceWithSeolgi } from "@/types/dto";
 import { useSelector } from "react-redux";
 
 export default function FeedPage() {
