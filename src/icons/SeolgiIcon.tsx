@@ -4,9 +4,9 @@ interface Props {
   type?: IconType;
   width?: number | string;
   height?: number | string;
-  bgFill?: string;
-  mouthFill?: string;
-  blushFill?: string;
+  bgFill?: string | undefined;
+  mouthFill?: string | undefined;
+  blushFill?: string | undefined;
 }
 
 export default function SeolgiIcon({

@@ -18,10 +18,6 @@ export default function Day({ day }: DayProps) {
   const { year, month } = useSelector((state: RootState) => state.date);
   const isThisMonth = year === initialDate.year && month === initialDate.month;
 
-  const bgColor = isAttendance(day)
-    ? `bg-seolgi-${day.Seolgi.color}`
-    : "bg-primary-gray";
-
   const openModalHandler = () => {
     dispatch(openModal());
     dispatch(settedDate({ date: day }));
@@ -39,11 +35,18 @@ export default function Day({ day }: DayProps) {
         {getDayLabel(day)}
       </div>
       <button
-        className={`h-[40px] w-[100%] rounded-[10px] md:h-[70px] ${bgColor}`}
+        className={`h-[40px] w-[100%] rounded-[10px] bg-primary-gray md:h-[70px]`}
         onClick={openModalHandler}
         disabled={!getDayLabel(day)}
       >
-        {isAttendance(day) ? <SeolgiIcon bgFill="transparent" /> : ""}
+        {isAttendance(day) ? (
+          <SeolgiIcon
+            bgFill={day.Seolgi.bgFill || undefined}
+            blushFill={day.Seolgi.blushFill || undefined}
+          ></SeolgiIcon>
+        ) : (
+          ""
+        )}
       </button>
     </div>
   );
