@@ -18,19 +18,14 @@ export default function Day({ day }: DayProps) {
   const { year, month } = useSelector((state: RootState) => state.date);
   const isThisMonth = year === initialDate.year && month === initialDate.month;
 
+  const bgColor = isAttendance(day)
+    ? `bg-seolgi-${day.Seolgi.color}`
+    : "bg-primary-gray";
+
   const openModalHandler = () => {
     dispatch(openModal());
     dispatch(settedDate({ date: day }));
   };
-
-  // TODO: 서버에서 가져오는 로직으로 변경 필요
-  let bgColor = "bg-primary-gray";
-  if (isAttendance(day)) {
-    if (day.seolgiId === 1) bgColor = "bg-seolgi-default";
-    if (day.seolgiId === 2) bgColor = "bg-seolgi-green";
-    if (day.seolgiId === 3) bgColor = "bg-seolgi-pink";
-    if (day.seolgiId === 4) bgColor = "bg-seolgi-yellow";
-  }
 
   return (
     <div className="flex flex-col items-center">
@@ -48,7 +43,7 @@ export default function Day({ day }: DayProps) {
         onClick={openModalHandler}
         disabled={!getDayLabel(day)}
       >
-        {isAttendance(day) && <SeolgiIcon bgFill="transparent" />}
+        {isAttendance(day) ? <SeolgiIcon bgFill="transparent" /> : ""}
       </button>
     </div>
   );

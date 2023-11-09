@@ -19,9 +19,9 @@ const config: Config = {
           white: "#FFFFFF",
         },
         seolgi: {
-          default: "#F3F3F3",
+          default: "#FFFFFF",
           pink: "#FFEBF3",
-          green: "#D5FBF3",
+          blue: "#D5FBF3",
           yellow: "#FEF2DA",
         },
       },
