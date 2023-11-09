@@ -33,6 +33,7 @@ export default function Day({ day }: DayProps) {
     dispatch(
       openModal({
         modalType: "EditModal",
+        modalContent: day,
         isOpen: true,
       }),
     );
