@@ -72,9 +72,7 @@ export default function Day({ day, type }: DayProps) {
           onClick={openModalHandler}
           disabled={!getDayLabel(day)}
         >
-          {isAttendance(day) && (
-            <SeolgiIcon bgFill="transparent" width={"auto"} height={"auto"} />
-          )}
+          {isAttendance(day) && <SeolgiIcon bgFill="transparent" />}
         </button>
       )}
     </div>
