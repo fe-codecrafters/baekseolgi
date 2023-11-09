@@ -1,19 +1,15 @@
 import { initialDate } from "@/redux/reducer/dateSlice";
 import { RootState } from "@/redux/store";
-import { DayNameType } from "@/types";
 import { useSelector } from "react-redux";
 
-interface WeekProps {
-  days: DayNameType[];
-}
-
-export default function WeekHeader({ days }: WeekProps) {
+export default function WeekHeader() {
+  const week = ["일", "월", "화", "수", "목", "금", "토"];
   const { year, month } = useSelector((state: RootState) => state.date);
   const toDay = new Date(year, month - 1, initialDate.date).getDay();
 
   return (
     <div className="mt-1 flex w-auto flex-row justify-start gap-[10px] md:gap-[16px]">
-      {days.map((day, idx) => {
+      {week.map((day, idx) => {
         return (
           <div
             key={day}

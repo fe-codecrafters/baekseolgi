@@ -1,14 +1,13 @@
 "use client";
 import Modal from "../Modal";
 import { AttendanceWithSeolgi } from "@/types/dto";
-import { DayNameType } from "@/types";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import { initialDate } from "@/redux/reducer/dateSlice";
 import Week from "./Week";
 import WeekHeader from "./WeekHeader";
 
-type DateList = (DayNameType | number | AttendanceWithSeolgi)[];
+type DateList = (number | AttendanceWithSeolgi)[];
 
 interface CalendarProps {
   monthData?: AttendanceWithSeolgi[];
@@ -19,8 +18,6 @@ interface CalendarProps {
 export const Calendar = ({ monthData, type }: CalendarProps) => {
   const { year, month } = useSelector((state: RootState) => state.date);
   const modalState = useSelector((state: RootState) => state.modal.isOpen);
-
-  const days: DayNameType[] = ["일", "월", "화", "수", "목", "금", "토"];
 
   const monthStart = new Date(year, month - 1, 1);
   const monthEnd = new Date(year, month, 0);
@@ -62,7 +59,7 @@ export const Calendar = ({ monthData, type }: CalendarProps) => {
 
   return (
     <div className="flex flex-col items-center justify-start gap-[18px] md:gap-[20px]">
-      <WeekHeader days={days} />
+      <WeekHeader />
       {weeks.map((week, idx) => (
         <Week key={`${year}Y-${month}M-${idx}W`} week={week} type={"date"} />
       ))}
