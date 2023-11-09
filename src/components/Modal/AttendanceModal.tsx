@@ -35,7 +35,7 @@ const AttendanceModal = () => {
       createdAt: getStartOfDayInTimeZone(getDate, timeZone),
     });
 
-    handleModalClose();
+    dispatch(closeModal());
   };
 
   const handleChange: ChangeEventHandler<HTMLInputElement> = (e) => {
@@ -44,10 +44,6 @@ const AttendanceModal = () => {
 
   const handleSelectSeolgi = (id: number) => {
     setSeolgiId(id);
-  };
-
-  const handleModalClose = () => {
-    dispatch(closeModal());
   };
 
   return (
@@ -65,7 +61,7 @@ const AttendanceModal = () => {
         </div>
         <button
           className="absolute left-[260px] top-[6px] md:left-[520px] md:top-[6px]"
-          onClick={handleModalClose}
+          onClick={() => dispatch(closeModal())}
         >
           <CloseIcon />
         </button>

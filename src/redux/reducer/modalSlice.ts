@@ -3,7 +3,24 @@ import { createSlice } from "@reduxjs/toolkit";
 export const initialState = {
   modalType: "",
   isOpen: false,
-  modalContent: {},
+  modalContent: {
+    id: 1,
+    title: "",
+    createdAt: "",
+    updatedAt: "",
+    objectiveId: 1,
+    seolgiId: 1,
+    userId: 1,
+    status: "",
+    Seolgi: {
+      bgFill: "#F3F3F3",
+      blushFill: "#F3F3F3",
+      color: "white",
+      createdAt: "",
+      id: 1,
+      name: "",
+    },
+  },
 };
 
 const modalSlice = createSlice({
