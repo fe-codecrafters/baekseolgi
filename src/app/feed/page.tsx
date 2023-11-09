@@ -7,6 +7,7 @@ import { useMonthlyAttendances } from "@/features/attendance/api/getAttendances"
 import { useUpdateAttendance } from "@/features/attendance/api/updateAttendance";
 import { attendanceKeys } from "@/features/attendance/key";
 import { RootState } from "@/redux/store";
+import { AttendanceWithSeolgi } from "@/types/dto";
 import { useSelector } from "react-redux";
 
 export default function FeedPage() {
@@ -20,6 +21,7 @@ export default function FeedPage() {
     objectiveId: 1,
   });
   const { isLoading, data, isSuccess } = useMonthlyAttendances(RQKey);
+
   const updateAttendanceMutation = useUpdateAttendance(RQKey);
   const deleteAttendanceMutation = useDeleteAttendance(RQKey);
 
@@ -72,7 +74,7 @@ export default function FeedPage() {
                     seolgi={el.Seolgi}
                     placeholder="Calendar 페이지 placeholder"
                     required
-                    date={new Date(data.year, data.month - 1, el.id)}
+                    date={new Date(el.createdAt)}
                     defaultValue={el.title}
                     editAttendance={editAttendance}
                     deleteAttendance={deleteAttendance}
