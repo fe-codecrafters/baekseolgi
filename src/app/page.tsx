@@ -4,16 +4,12 @@ import { useState } from "react";
 import { Objective } from "@/components/Objective";
 import { Calendar } from "@/components/Calendar/Calendar";
 import SeolgiIcon from "@/icons/SeolgiIcon";
-import { useSelector } from "react-redux";
 import { useMonthlyAttendances } from "@/features/attendance/api/getAttendances";
 import { attendanceKeys } from "@/features/attendance/key";
 import LoadingIndicator from "@/components/LoadingIndicator";
-import { RootState } from "@/redux/store";
 import { initialDate } from "@/redux/reducer/dateSlice";
 
 export default function Home() {
-  const dataState = useSelector((state: RootState) => state.data);
-
   const RQKey = attendanceKeys.month({
     year: initialDate.year,
     month: initialDate.month,
@@ -41,7 +37,7 @@ export default function Home() {
       <CalendarHeader />
       <Objective id={1} />
       {!isLoading && data && (
-        <Calendar monthData={dataState.attendance} type={"week"} />
+        <Calendar monthData={data.attendance} type={"week"} />
       )}
       <div className="flex h-[400px] flex-col items-center justify-between gap-[30px]">
         <div className="relative flex h-[120px] w-[400px] items-center justify-center rounded-2xl border-[1px] bg-primary-white p-4 text-primary-black shadow-lg">
@@ -49,7 +45,7 @@ export default function Home() {
           {data && data.attendance.length > 0 ? (
             <p className="text-2xl font-bold">
               {seolgiSay === "month"
-                ? `${dataState.month}월의 설기 개수는 ${dataState.attendance.length}
+                ? `${data.month}월의 설기 개수는 ${data.attendance.length}
               개입니다!`
                 : seolgiSay === "week"
                 ? `이번 주의 설기 개수는 0개 입니다!`

@@ -6,6 +6,7 @@ import { RootState } from "@/redux/store";
 import { initialDate } from "@/redux/reducer/dateSlice";
 import Week from "./Week";
 import WeekHeader from "./WeekHeader";
+import { dateNum } from "@/util/dayHelper";
 
 type DateList = (number | AttendanceWithSeolgi)[];
 
@@ -54,14 +55,18 @@ export const Calendar = ({ monthData, type }: CalendarProps) => {
 
   // Weekly Calendar라면 오늘 날짜가 포함된 주만 남기기
   if (type === "week") {
-    weeks = weeks.filter((week) => week.includes(initialDate.date));
+    weeks = weeks.filter((week) => {
+      return week.some((day) => {
+        return dateNum(day) === initialDate.date;
+      });
+    });
   }
 
   return (
     <div className="flex flex-col items-center justify-start gap-[18px] md:gap-[20px]">
       <WeekHeader />
       {weeks.map((week, idx) => (
-        <Week key={`${year}Y-${month}M-${idx}W`} week={week} type={"date"} />
+        <Week key={`${year}Y-${month}M-${idx}W`} week={week} />
       ))}
       {modalState === true ? <Modal /> : ""}
     </div>
