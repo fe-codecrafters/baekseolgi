@@ -7,6 +7,7 @@ import Providers from "./providers";
 import Loading from "./loading";
 import { Suspense } from "react";
 import Toast from "@/components/Toast/Toast";
+import GlobalModal from "@/components/Modal/GlobalModal";
 const DEV = process.env.NODE_ENV === "development";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -41,6 +42,7 @@ export default function RootLayout({
           <Header />
           <main className="mx-auto flex h-screen w-full flex-col items-center gap-[20px] md:gap-[40px]">
             <Suspense fallback={<Loading />}>{children}</Suspense>
+            <GlobalModal />
           </main>
           <TabBar />
         </Providers>

@@ -1,5 +1,5 @@
 "use client";
-import Modal from "../Modal";
+import Modal from "../Modal/AttendanceModal";
 import { AttendanceWithSeolgi } from "@/types/dto";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
@@ -68,7 +68,6 @@ export const Calendar = ({ monthData, type }: CalendarProps) => {
       {weeks.map((week, idx) => (
         <Week key={`${year}Y-${month}M-${idx}W`} week={week} />
       ))}
-      {modalState === true ? <Modal /> : ""}
     </div>
   );
 };

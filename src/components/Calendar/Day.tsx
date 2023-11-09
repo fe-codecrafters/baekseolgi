@@ -18,9 +18,24 @@ export default function Day({ day }: DayProps) {
   const { year, month } = useSelector((state: RootState) => state.date);
   const isThisMonth = year === initialDate.year && month === initialDate.month;
 
-  const openModalHandler = () => {
-    dispatch(openModal());
+  const openCreateModalHandler = () => {
+    dispatch(
+      openModal({
+        modalType: "AttendanceModal",
+        isOpen: true,
+      }),
+    );
     dispatch(settedDate({ date: day }));
+  };
+
+  const openEditModalHandler = () => {
+    console.log(day);
+    dispatch(
+      openModal({
+        modalType: "EditModal",
+        isOpen: true,
+      }),
+    );
   };
 
   return (
@@ -34,20 +49,22 @@ export default function Day({ day }: DayProps) {
       >
         {getDayLabel(day)}
       </div>
-      <button
-        className={`h-[40px] w-[100%] rounded-[10px] bg-primary-gray md:h-[70px]`}
-        onClick={openModalHandler}
-        disabled={!getDayLabel(day)}
-      >
-        {isAttendance(day) ? (
+      {isAttendance(day) ? (
+        <button
+          className={`h-[40px] w-[100%] rounded-[10px] bg-primary-gray md:h-[70px]`}
+          onClick={openEditModalHandler}
+        >
           <SeolgiIcon
             bgFill={day.Seolgi.bgFill || undefined}
             blushFill={day.Seolgi.blushFill || undefined}
           ></SeolgiIcon>
-        ) : (
-          ""
-        )}
-      </button>
+        </button>
+      ) : (
+        <button
+          className={`h-[40px] w-[100%] rounded-[10px] bg-primary-gray md:h-[70px]`}
+          onClick={openCreateModalHandler}
+        ></button>
+      )}
     </div>
   );
 }
