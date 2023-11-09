@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import { initialDate } from "@/redux/reducer/dateSlice";
 import Week from "./Week";
+import WeekHeader from "./WeekHeader";
 
 type DateList = (DayNameType | number | AttendanceWithSeolgi)[];
 
@@ -61,7 +62,7 @@ export const Calendar = ({ monthData, type }: CalendarProps) => {
 
   return (
     <div className="flex flex-col items-center justify-start gap-[18px] md:gap-[20px]">
-      <Week week={days} type={"day"} />
+      <WeekHeader days={days} />
       {weeks.map((week, idx) => (
         <Week key={`${year}Y-${month}M-${idx}W`} week={week} type={"date"} />
       ))}
