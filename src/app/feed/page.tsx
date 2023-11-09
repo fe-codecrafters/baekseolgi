@@ -54,6 +54,7 @@ export default function FeedPage() {
 
   if (isLoading) return <LoadingIndicator></LoadingIndicator>;
 
+  //TODO: 렌더링 순서가 이상하게 들어오고 있음. 확인해야 함.
   return (
     <>
       <div className="flex flex-col items-center justify-center">
