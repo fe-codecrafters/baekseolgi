@@ -4,16 +4,14 @@ import { useState } from "react";
 import { Objective } from "@/components/Objective";
 import { Calendar } from "@/components/Calendar/Calendar";
 import SeolgiIcon from "@/icons/SeolgiIcon";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { useMonthlyAttendances } from "@/features/attendance/api/getAttendances";
 import { attendanceKeys } from "@/features/attendance/key";
 import LoadingIndicator from "@/components/LoadingIndicator";
 import { RootState } from "@/redux/store";
-import { settedData } from "@/redux/reducer/getDataSlice";
 import { initialDate } from "@/redux/reducer/dateSlice";
 
 export default function Home() {
-  const dispatch = useDispatch();
   const dataState = useSelector((state: RootState) => state.data);
 
   const RQKey = attendanceKeys.month({
@@ -25,15 +23,6 @@ export default function Home() {
   });
 
   const { isLoading, data } = useMonthlyAttendances(RQKey);
-
-  dispatch(
-    settedData({
-      year: data?.year,
-      month: data?.month,
-      objective: data?.objective,
-      attendance: data?.attendance,
-    }),
-  );
 
   const seolgiSize = {
     objective: "w-[250px] h-[250px]",
@@ -88,7 +77,7 @@ export default function Home() {
           }}
           onAnimationEnd={() => setEffect(false)}
         >
-          <SeolgiIcon width="auto" height="auto" />
+          <SeolgiIcon />
         </button>
       </div>
     </>
