@@ -19,6 +19,7 @@ export const Header = () => {
   //redux의 userId를 null로 비우고 login 페이지로 redirect
   const handleGoLogin = () => {
     dispatch(settedUser({ userId: null }));
+    localStorage.removeItem("reduxState");
     router.push("/login");
   };
 

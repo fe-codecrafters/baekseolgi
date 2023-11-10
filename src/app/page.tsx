@@ -1,6 +1,6 @@
 "use client";
 import { CalendarHeader } from "@/components/Calendar/CalendarHeader";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Objective } from "@/components/Objective";
 import { Calendar } from "@/components/Calendar/Calendar";
 import SeolgiIcon from "@/icons/SeolgiIcon";
@@ -8,8 +8,21 @@ import { useMonthlyAttendances } from "@/features/attendance/api/getAttendances"
 import { attendanceKeys } from "@/features/attendance/key";
 import LoadingIndicator from "@/components/LoadingIndicator";
 import { initialDate } from "@/redux/reducer/dateSlice";
+import { RootState } from "@/redux/store";
+import { useSelector } from "react-redux";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
+  const router = useRouter();
+  const { userId } = useSelector((state: RootState) => state.user);
+
+  useEffect(() => {
+    // userId가 null인 경우 로그인 페이지로 이동
+    if (userId === null) {
+      router.push("/login");
+    }
+  }, [userId, router]);
+
   const RQKey = attendanceKeys.month({
     year: initialDate.year,
     month: initialDate.month,
