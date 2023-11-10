@@ -4,14 +4,24 @@ import LogInIcon from "@/icons/LogInIcon";
 import LogOutIcon from "@/icons/LogOutIcon";
 import SeolgiHeaderIcon from "@/icons/SeolgiHeaderIcon";
 import UserIcon from "@/icons/UserIcon";
+import { settedUser } from "@/redux/reducer/userSlice";
 import { RootState } from "@/redux/store";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useSelector, useDispatch } from "react-redux";
 
 export const Header = () => {
   const pathname = usePathname();
+  const dispatch = useDispatch();
+  const router = useRouter();
   const { userId } = useSelector((state: RootState) => state.user);
+
+  //redux의 userId를 null로 비우고 login 페이지로 redirect
+  const handleGoLogin = () => {
+    dispatch(settedUser({ userId: null }));
+    router.push("/login");
+  };
+
   return (
     <header
       className={`sticky top-0 z-40 mb-5 w-full border-b border-primary-darkGray bg-primary-white ${
@@ -36,9 +46,9 @@ export const Header = () => {
                 <UserIcon />
               </Link>
             </div>
-            <Link href="/login">
+            <button onClick={handleGoLogin}>
               <LogOutIcon />
-            </Link>
+            </button>
           </div>
         ) : (
           <div className={`flex items-center justify-center overflow-hidden`}>
