@@ -6,11 +6,11 @@ source /home/ec2-user/.bash_profile
 export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm 
   
-pm2 describe 100seolgi-app > /dev/null
+pm2 describe 100seolgi-server > /dev/null
 RUNNING=$?
 
 if [ "${RUNNING}" -ne 0 ]; then
-  pm2 start "pnpm run start" --name 100seolgi-app
+  pm2 start ecosystem.config.js
 else
-  pm2 reload 100seolgi-app
+  pm2 reload 100seolgi-server
 fi;
