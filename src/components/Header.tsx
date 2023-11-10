@@ -13,7 +13,11 @@ export const Header = () => {
   const pathname = usePathname();
   const { userId } = useSelector((state: RootState) => state.user);
   return (
-    <header className="sticky top-0 z-40 mb-5 w-full border-b border-primary-darkGray bg-primary-white">
+    <header
+      className={`sticky top-0 z-40 mb-5 w-full border-b border-primary-darkGray bg-primary-white ${
+        pathname === "/login" && "hidden"
+      }`}
+    >
       <div className="flex w-full items-center justify-between px-[30px] py-[16px]">
         <Link href="/">
           <SeolgiHeaderIcon />

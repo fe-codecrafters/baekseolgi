@@ -16,7 +16,11 @@ export default function TabBar() {
   const pathname = usePathname();
   return (
     <>
-      <nav className="fixed bottom-0 z-40 mt-[68px] flex w-full flex-row border-t-[1px] border-primary-darkGray bg-primary-white py-1.5 md:hidden">
+      <nav
+        className={`fixed bottom-0 z-40 mt-[68px] flex w-full flex-row border-t-[1px] border-primary-darkGray bg-primary-white py-1.5 md:hidden  ${
+          pathname === "/login" && "hidden"
+        }`}
+      >
         <Link
           href="/calendar"
           className={`group flex grow flex-col items-center justify-center  ${
