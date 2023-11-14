@@ -10,21 +10,60 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-/// 사용자 역할 (사용자, 어드민)
+/// 사용자 역할 (사용자, 어드민, 테스트, 게스트)
+/// 사용자: 일반 사용자
 enum Role {
   USER
   ADMIN
+  TEST
+  GUEST
 }
 
 /// 애플리케이션 사용자
 model User {
-  id              Int               @id @default(autoincrement())
-  createdAt       DateTime          @default(now())
-  email           String            @unique
-  name            String?
-  role            Role              @default(USER)
-  Objective       Objective[]
-  DailyAttendance DailyAttendance[]
+  id               Int                @id @default(autoincrement())
+  username         String
+  Objective        Objective[]
+  DailyAttendance  DailyAttendance[]
+  UserProfile      UserProfile[]
+  UserAuthPassword UserAuthPassword[]
+  UserAuthSocial   UserAuthSocial[]
+}
+
+model UserProfile {
+  id          Int      @id @default(autoincrement())
+  email       String   @unique
+  name        String?
+  imageUrl    String?
+  description String?
+  role        Role     @default(USER)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  User        User?    @relation(fields: [userId], references: [id])
+  userId      Int?
+}
+
+model UserAuthPassword {
+  id        Int      @id @default(autoincrement())
+  password  String
+  salt      String
+  updatedAt DateTime @updatedAt
+  User      User?    @relation(fields: [userId], references: [id])
+  userId    Int?
+}
+
+enum UserAuthSocialType {
+  KAKAO
+  GOOGLE
+}
+
+model UserAuthSocial {
+  id          Int                @id @default(autoincrement())
+  type        UserAuthSocialType
+  socialId    String
+  accessToken String
+  User        User?              @relation(fields: [userId], references: [id])
+  userId      Int?
 }
 
 /// 목표의 달성 상태 (달성, 진행중, 실패)
