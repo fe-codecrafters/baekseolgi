@@ -34,17 +34,34 @@ async function main() {
     ],
   });
 
-  const testSeolgi = await prisma.user.upsert({
-    where: { email: "kimploo@gmail.com" },
-    update: {},
-    create: {
-      email: "kimploo@gmail.com",
-      name: "테스트설기",
+  const testSeolgi = await prisma.user.create({
+    data: {
+      username: "testUser",
       Objective: {
         create: {
           id: 1,
           title: "100설기 매일 들어오기",
           description: "",
+        },
+      },
+      UserProfile: {
+        create: {
+          email: "kimploo@gmail.com",
+          name: "테스트설기",
+          imageUrl: "",
+        },
+      },
+      UserAuthPassword: {
+        create: {
+          password: "testPassword",
+          salt: "salt",
+        },
+      },
+      UserAuthSocial: {
+        create: {
+          type: "KAKAO",
+          socialId: "socialId",
+          accessToken: "accessToken",
         },
       },
     },
