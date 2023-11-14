@@ -9,7 +9,7 @@ export const ObjectiveProgressBar = ({ count }) => {
           현재까지 {count} / 100 설기
         </div>
         <div className="h-[20px] w-[20px] md:h-[30px] md:w-[30px]">
-          <SeolgiIcon width={"auto"} height={"auto"} />
+          <SeolgiIcon />
         </div>
       </div>
       <div className="mt-[10px] flex h-[20px] w-[100%] overflow-hidden rounded-full bg-primary-gray md:h-[28px]">

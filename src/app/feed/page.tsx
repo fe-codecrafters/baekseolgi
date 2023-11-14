@@ -20,6 +20,7 @@ export default function FeedPage() {
     objectiveId: 1,
   });
   const { isLoading, data, isSuccess } = useMonthlyAttendances(RQKey);
+
   const updateAttendanceMutation = useUpdateAttendance(RQKey);
   const deleteAttendanceMutation = useDeleteAttendance(RQKey);
 
@@ -53,6 +54,7 @@ export default function FeedPage() {
 
   if (isLoading) return <LoadingIndicator></LoadingIndicator>;
 
+  //TODO: 렌더링 순서가 이상하게 들어오고 있음. 확인해야 함.
   return (
     <>
       <div className="flex flex-col items-center justify-center">
@@ -72,7 +74,7 @@ export default function FeedPage() {
                     seolgi={el.Seolgi}
                     placeholder="Calendar 페이지 placeholder"
                     required
-                    date={new Date(data.year, data.month - 1, el.id)}
+                    date={new Date(el.createdAt)}
                     defaultValue={el.title}
                     editAttendance={editAttendance}
                     deleteAttendance={deleteAttendance}

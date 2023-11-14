@@ -1,13 +1,14 @@
 "use client";
-import Modal from "../Modal";
+import Modal from "../Modal/AttendanceModal";
 import { AttendanceWithSeolgi } from "@/types/dto";
-import { DayNameType } from "@/types";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import { initialDate } from "@/redux/reducer/dateSlice";
 import Week from "./Week";
+import WeekHeader from "./WeekHeader";
+import { dateNum } from "@/util/dayHelper";
 
-type DateList = (DayNameType | number | AttendanceWithSeolgi)[];
+type DateList = (number | AttendanceWithSeolgi)[];
 
 interface CalendarProps {
   monthData?: AttendanceWithSeolgi[];
@@ -18,8 +19,6 @@ interface CalendarProps {
 export const Calendar = ({ monthData, type }: CalendarProps) => {
   const { year, month } = useSelector((state: RootState) => state.date);
   const modalState = useSelector((state: RootState) => state.modal.isOpen);
-
-  const days: DayNameType[] = ["일", "월", "화", "수", "목", "금", "토"];
 
   const monthStart = new Date(year, month - 1, 1);
   const monthEnd = new Date(year, month, 0);
@@ -56,16 +55,19 @@ export const Calendar = ({ monthData, type }: CalendarProps) => {
 
   // Weekly Calendar라면 오늘 날짜가 포함된 주만 남기기
   if (type === "week") {
-    weeks = weeks.filter((week) => week.includes(initialDate.date));
+    weeks = weeks.filter((week) => {
+      return week.some((day) => {
+        return dateNum(day) === initialDate.date;
+      });
+    });
   }
 
   return (
     <div className="flex flex-col items-center justify-start gap-[18px] md:gap-[20px]">
-      <Week week={days} type={"day"} />
+      <WeekHeader />
       {weeks.map((week, idx) => (
-        <Week key={`${year}Y-${month}M-${idx}W`} week={week} type={"date"} />
+        <Week key={`${year}Y-${month}M-${idx}W`} week={week} />
       ))}
-      {modalState === true ? <Modal /> : ""}
     </div>
   );
 };
