@@ -2,7 +2,8 @@ import { configureStore } from "@reduxjs/toolkit";
 import rootReducer from "./reducer";
 
 // 저장된 상태를 불러와서 초기 상태로 설정
-const rawState = localStorage.getItem("reduxState");
+const rawState =
+  typeof window === "undefined" ? "{}" : localStorage.getItem("reduxState");
 const persistedState = rawState ? JSON.parse(rawState) : {};
 
 const store = configureStore({

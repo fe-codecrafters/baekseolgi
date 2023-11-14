@@ -8,6 +8,9 @@ import { useRouter } from "next/navigation";
 import { ChangeEventHandler, FormEventHandler, useState } from "react";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
+import { signIn, signOut, useSession } from "next-auth/react";
+
+const DEV = process.env.NODE_ENV === "development";
 
 export default function LoginModal() {
   const dispatch = useDispatch();
@@ -31,6 +34,7 @@ export default function LoginModal() {
       userId === process.env.NEXT_PUBLIC_USER_NAME &&
       password === process.env.NEXT_PUBLIC_PASSWORD
     ) {
+      signIn();
       dispatch(settedUser({ userId: 1 }));
       router.push("/");
     } else {
@@ -99,6 +103,7 @@ export default function LoginModal() {
             <Google />
             <span className="flex-1">Google 로그인</span>
           </button>
+          {DEV && <button onClick={() => signOut()}>sign out</button>}
         </div>
       </div>
     </div>

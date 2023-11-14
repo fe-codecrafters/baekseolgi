@@ -9,17 +9,33 @@ import { ReactQueryStreamedHydration } from "@tanstack/react-query-next-experime
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { queryClient } from "@/lib/react-query";
 import { Provider as ReduxProvider } from "react-redux";
+import { SessionProvider } from "next-auth/react";
 import store from "@/redux/store";
+import { Session } from "next-auth";
+import { addDays } from "date-fns";
+
+interface MySession extends Session {}
+
+const session: MySession = {
+  user: {
+    name: null,
+    email: null,
+    image: null,
+  },
+  expires: addDays(new Date(), 1).toISOString(),
+};
 
 export default function Providers({ children }: { children: ReactNode }) {
   const [newQueryClient] = useState(() => queryClient);
 
   return (
-    <QueryClientProvider client={newQueryClient}>
-      <ReduxProvider store={store}>
-        <ReactQueryStreamedHydration>{children}</ReactQueryStreamedHydration>
-        <ReactQueryDevtools initialIsOpen={false} />
-      </ReduxProvider>
-    </QueryClientProvider>
+    <SessionProvider session={session}>
+      <QueryClientProvider client={newQueryClient}>
+        <ReduxProvider store={store}>
+          <ReactQueryStreamedHydration>{children}</ReactQueryStreamedHydration>
+          <ReactQueryDevtools initialIsOpen={false} />
+        </ReduxProvider>
+      </QueryClientProvider>
+    </SessionProvider>
   );
 }
