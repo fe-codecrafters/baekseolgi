@@ -21,13 +21,13 @@ enum Role {
 
 /// 애플리케이션 사용자
 model User {
-  id               Int                @id @default(autoincrement())
+  id               Int               @id @default(autoincrement())
   username         String
   Objective        Objective[]
   DailyAttendance  DailyAttendance[]
-  UserProfile      UserProfile[]
-  UserAuthPassword UserAuthPassword[]
-  UserAuthSocial   UserAuthSocial[]
+  UserProfile      UserProfile?
+  UserAuthPassword UserAuthPassword?
+  UserAuthSocial   UserAuthSocial?
 }
 
 model UserProfile {
@@ -39,8 +39,8 @@ model UserProfile {
   role        Role     @default(USER)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
-  User        User?    @relation(fields: [userId], references: [id])
-  userId      Int?
+  User        User     @relation(fields: [userId], references: [id])
+  userId      Int      @unique
 }
 
 model UserAuthPassword {
@@ -48,8 +48,8 @@ model UserAuthPassword {
   password  String
   salt      String
   updatedAt DateTime @updatedAt
-  User      User?    @relation(fields: [userId], references: [id])
-  userId    Int?
+  User      User     @relation(fields: [userId], references: [id])
+  userId    Int      @unique
 }
 
 enum UserAuthSocialType {
@@ -63,7 +63,7 @@ model UserAuthSocial {
   socialId    String
   accessToken String
   User        User?              @relation(fields: [userId], references: [id])
-  userId      Int?
+  userId      Int                @unique
 }
 
 /// 목표의 달성 상태 (달성, 진행중, 실패)
