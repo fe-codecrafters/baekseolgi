@@ -25,12 +25,15 @@ export const Calendar = ({ monthData, type }: CalendarProps) => {
 
   // 비어있는 날짜도 Day 컴포넌트로 표시해줘야하므로 0으로 채워넣기
   const dates: DateList = [];
+  let lastDayIndex
+
   for (let i = 0; i < monthStart.getDay(); i++) {
     dates.push(0);
   }
   for (let i = 1; i <= monthEnd.getDate(); i++) {
     dates.push(i);
   }
+  lastDayIndex = dates.length-1
   while (dates.length % 7 !== 0) {
     dates.push(0);
   }
@@ -44,6 +47,9 @@ export const Calendar = ({ monthData, type }: CalendarProps) => {
         dates[idx] = attendance;
       }
     });
+    for (let i = lastDayIndex + 1; i < dates.length; i++) {
+      if (dates[i] !== 0) dates[i] = 0
+    }
   }
 
   // 날짜들을 7개로 끊어 주 단위로 나누기

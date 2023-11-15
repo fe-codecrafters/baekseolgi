@@ -52,7 +52,11 @@ export const MonthlyProgressBar = ({ data = null }) => {
             }
             key={"MPB-" + color + idx}
           >
+<<<<<<< Updated upstream
             <SeolgiIcon bgFill="transparent" />
+=======
+            <SeolgiIcon width={"100%"} height={"100%"} bgFill="transparent" />
+>>>>>>> Stashed changes
           </div>
         ))}
       </div>
