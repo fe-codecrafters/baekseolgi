@@ -16,25 +16,39 @@ const handler = NextAuth({
     },
 
     async signIn({ user, account }) {
-      // const duplicate = await prisma.user.findFirst({
-      //   where: { email: user.email! },
-      // });
+      if (!user) {
+        return false;
+      }
 
-      // if (!duplicate) {
-      //   try {
-      //     await prisma.user.create({
-      //       data: {
-      //         email: user.email!,
-      //         profile: user?.image!,
-      //         username: user.name!,
-      //         id: account?.providerAccountId,
-      //       },
-      //     });
-      //   } catch (e) {
-      //     console.error(e);
-      //   }
-      //   return true;
-      // }
+      console.log("singIn", user, account);
+      const kakaoId = user.id;
+      const duplicate = await prisma.user.findFirst({
+        where: {
+          UserAuthSocial: {
+            socialId: kakaoId,
+          },
+        },
+      });
+
+      if (!duplicate) {
+        try {
+          await prisma.user.create({
+            data: {
+              username: user.name!,
+              UserAuthSocial: {
+                create: {
+                  socialId: kakaoId,
+                  accessToken: String(account?.access_token),
+                  type: "KAKAO",
+                },
+              },
+            },
+          });
+        } catch (e) {
+          console.error(e);
+        }
+        return true;
+      }
 
       return true;
     },

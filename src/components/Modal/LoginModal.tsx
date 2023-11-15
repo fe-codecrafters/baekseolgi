@@ -28,18 +28,31 @@ export default function LoginModal() {
 
   //userId와 password가 일치하면 redux에 userId를 저장하고 메인 화면으로 redirect
   //여기는 user CRUD가 나오면 로직 수정될 예정
-  const handleSubmit: FormEventHandler = (e) => {
+  const handleSubmit: FormEventHandler = async (e) => {
     e.preventDefault();
     if (
       userId === process.env.NEXT_PUBLIC_USER_NAME &&
       password === process.env.NEXT_PUBLIC_PASSWORD
     ) {
-      signIn();
+      // TODO: custom auth
+      // const result = await signIn("credential", {
+      //   redirect: true,
+      //   callbackUrl: "/",
+      // });
       dispatch(settedUser({ userId: 1 }));
       router.push("/");
     } else {
       toast.error("로그인이 실패했어요 😢");
     }
+  };
+
+  const handleKakaoSubmit: FormEventHandler = async (e) => {
+    e.preventDefault();
+    const result = await signIn("kakao", {
+      redirect: true,
+      callbackUrl: "/",
+    });
+    console.log("handleKakaoSubmit result: ", result);
   };
 
   return (
@@ -88,10 +101,13 @@ export default function LoginModal() {
         <div className="text-sm text-primary-darkGray">
           SNS 계정으로 로그인 하기
         </div>
-        <div className="flex flex-col space-y-4">
+        <form className="flex flex-col space-y-4" onSubmit={handleKakaoSubmit}>
           <button
-            type="button"
+            type="submit"
             className="flex h-[35px] w-[300px] items-center rounded-md bg-amber-300 px-6 text-sm focus:bg-amber-400 md:h-[40px] md:w-[350px] md:text-base"
+            // onClick={() =>
+            //   signIn("kakao", { redirect: true, callbackUrl: "/" })
+            // }
           >
             <Kakao />
             <span className="flex-1">카카오 로그인</span>
@@ -104,7 +120,7 @@ export default function LoginModal() {
             <span className="flex-1">Google 로그인</span>
           </button>
           {DEV && <button onClick={() => signOut()}>sign out</button>}
-        </div>
+        </form>
       </div>
     </div>
   );
