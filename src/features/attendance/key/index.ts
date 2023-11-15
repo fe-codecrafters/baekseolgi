@@ -1,7 +1,7 @@
 // REF: https://tkdodo.eu/blog/effective-react-query-keys
 export interface AttendanceKeyParam {
   userId: number;
-  objectiveId: number;
+  objectiveId?: number;
 }
 
 export interface OneAttendanceKeyParam {
