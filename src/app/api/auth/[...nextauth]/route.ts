@@ -51,7 +51,17 @@ const handler = NextAuth({
       return true;
     },
 
-    async session({ session, token, user }) {
+    async session({ session, token }) {
+      console.log("session callback", session, token);
+      const currentUser = await prisma.user.findFirstOrThrow({
+        where: {
+          UserAuthSocial: {
+            socialId: token.sub,
+          },
+        },
+      });
+      session.user.id = currentUser?.id;
+      session.user.kakaoId = Number(token.sub);
       return session;
     },
   },
