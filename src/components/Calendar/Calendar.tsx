@@ -2,8 +2,8 @@
 import Modal from "../Modal/AttendanceModal";
 import { AttendanceWithSeolgi } from "@/types/dto";
 import { useSelector } from "react-redux";
-import { RootState } from "@/redux/store";
-import { initialDate } from "@/redux/reducer/dateSlice";
+import { RootState } from "@/app/redux/store";
+import { initialDate } from "@/app/redux/reducer/dateSlice";
 import Week from "./Week";
 import WeekHeader from "./WeekHeader";
 import { dateNum } from "@/util/dayHelper";

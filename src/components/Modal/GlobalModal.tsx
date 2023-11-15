@@ -1,10 +1,9 @@
 "use client";
-
-import { RootState } from "@/redux/store";
+import { RootState } from "@/app/redux/store";
 import { useSelector, useDispatch } from "react-redux";
 import AttendanceModal from "./AttendanceModal";
 import AttendanceEditModal from "./AttendanceEditModal";
-import { closeModal } from "@/redux/reducer/modalSlice";
+import { closeModal } from "@/app/redux/reducer/modalSlice";
 
 const MODAL_TYPES = {
   AttendanceModal: "AttendanceModal",

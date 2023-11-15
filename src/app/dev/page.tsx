@@ -4,8 +4,8 @@ import { useState } from "react";
 import LoadingIndicator from "@/components/LoadingIndicator";
 import Modal from "@/components/Modal/AttendanceModal";
 import { useDispatch, useSelector } from "react-redux";
-import { openModal } from "@/redux/reducer/modalSlice";
-import { RootState } from "@/redux/store";
+import { openModal } from "@/app/redux/reducer/modalSlice";
+import { RootState } from "@/app/redux/store";
 
 const DEV = process.env.NODE_ENV === "development";
 

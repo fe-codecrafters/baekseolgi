@@ -7,21 +7,16 @@ import SeolgiIcon from "@/icons/SeolgiIcon";
 import { useMonthlyAttendances } from "@/features/attendance/api/getAttendances";
 import { attendanceKeys } from "@/features/attendance/key";
 import LoadingIndicator from "@/components/LoadingIndicator";
-import { initialDate } from "@/redux/reducer/dateSlice";
-import { RootState } from "@/redux/store";
-import { useSelector } from "react-redux";
+import { initialDate } from "@/app/redux/reducer/dateSlice";
+import { RootState } from "@/app/redux/store";
+import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 export default function Home() {
+  const { data: session, status } = useSession();
   const router = useRouter();
-  const { userId } = useSelector((state: RootState) => state.user);
-
-  useEffect(() => {
-    // userId가 null인 경우 로그인 페이지로 이동
-    if (userId === null) {
-      router.push("/login");
-    }
-  }, [userId, router]);
+  console.log("root page", session, status);
 
   const RQKey = attendanceKeys.month({
     year: initialDate.year,
@@ -44,6 +39,10 @@ export default function Home() {
   const [effect, setEffect] = useState(false);
 
   if (isLoading) return <LoadingIndicator></LoadingIndicator>;
+  if (status === "unauthenticated") {
+    console.log("unauthenticated");
+    router.push("/login");
+  }
 
   return (
     <>
