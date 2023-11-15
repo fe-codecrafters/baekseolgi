@@ -55,16 +55,10 @@ export default function Day({ day }: DayProps) {
           className={`h-[40px] w-[100%] rounded-[10px] bg-primary-gray md:h-[70px]`}
           onClick={openEditModalHandler}
         >
-<<<<<<< Updated upstream
           <SeolgiIcon
             bgFill={day.Seolgi.bgFill || undefined}
             blushFill={day.Seolgi.blushFill || undefined}
           ></SeolgiIcon>
-=======
-          {isAttendance(day) && (
-            <SeolgiIcon bgFill="transparent" width={"100%"} height={"100%"} />
-          )}
->>>>>>> Stashed changes
         </button>
       ) : (
         <button

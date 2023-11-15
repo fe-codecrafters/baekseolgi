@@ -1,31 +1,41 @@
 import SeolgiIcon from "@/icons/SeolgiIcon";
+import { attendanceKeys } from "@/features/attendance/key";
+import { useMonthlyAttendances } from "@/features/attendance/api/getAttendances";
+import { useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
 
-export const MonthlyProgressBar = ({ data = null }) => {
-  //fake data
-  // data = {
-  //   dayCount: 31,
-  //   1: 5,
-  //   2: 12,
-  //   3: 3,
-  // }
-
-  // TODO: API에서 잘 전달해주면 그냥 보여주기만 하는 역할로 추후에 변경
+export const MonthlyProgressBar = () => {
   const bgColors = {
     1: "bg-seolgi-default",
-    2: "bg-seolgi-green",
+    2: "bg-seolgi-blue",
     3: "bg-seolgi-pink",
     blank: "bg-primary-gray",
   };
 
-  const colors = [];
+  const dateState = useSelector((state: RootState) => state.date);
 
-  if (data) {
+  const RQKey = attendanceKeys.month({
+    year: dateState.year,
+    month: dateState.month,
+    // TODO: userId, objectiveId도 데이터 확인할 수 있어야
+    userId: 1,
+    objectiveId: 1,
+  });
+
+  const { isLoading, data, isSuccess } = useMonthlyAttendances(RQKey);
+
+  type monthDataType = { dayCount: number, 1?: number, 2?: number, 3?: number }
+  const monthData:monthDataType = { dayCount : new Date(dateState.year, dateState.month, 0).getDate() }
+  data?.attendance.forEach(el => monthData[el.seolgiId] ? monthData[el.seolgiId] += 1 : monthData[el.seolgiId] = 1)
+
+  const colors = [];
+  if (monthData) {
     let seolgiCount = 0;
-    for (const key in data) {
-      seolgiCount += key;
-      for (let i = 0; i < data[key]; i++) colors.push(key);
+    for (const key in monthData) {
+      seolgiCount += Number(key);
+      for (let i = 0; i < monthData[key]; i++) colors.push(key);
     }
-    for (let i = 0; i < data.dayCount - seolgiCount; i++) {
+    for (let i = 0; i < monthData.dayCount - seolgiCount; i++) {
       colors.push("transparent");
     }
   }
@@ -52,11 +62,7 @@ export const MonthlyProgressBar = ({ data = null }) => {
             }
             key={"MPB-" + color + idx}
           >
-<<<<<<< Updated upstream
             <SeolgiIcon bgFill="transparent" />
-=======
-            <SeolgiIcon width={"100%"} height={"100%"} bgFill="transparent" />
->>>>>>> Stashed changes
           </div>
         ))}
       </div>

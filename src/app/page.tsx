@@ -86,11 +86,7 @@ export default function Home() {
           }}
           onAnimationEnd={() => setEffect(false)}
         >
-<<<<<<< Updated upstream
           <SeolgiIcon />
-=======
-          <SeolgiIcon width="100%" height="100%" />
->>>>>>> Stashed changes
         </button>
       </div>
     </>
