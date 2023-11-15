@@ -2,8 +2,8 @@ export default function DevBlogIcon() {
   return (
     <div className="flex h-[16px] w-[16px] justify-center md:h-[30px] md:w-[30px]">
       <svg
-        width="auto"
-        height="auto"
+        width="100%"
+        height="100%"
         viewBox="0 0 16 13"
         fill="none"
         stroke="white"

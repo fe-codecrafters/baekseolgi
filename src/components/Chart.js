@@ -52,8 +52,8 @@ export default function Chart() {
       <div className="mb-[50px] ml-[-50px] mt-[-180px] h-[136px] w-[440px] scale-x-[0.59] scale-y-[0.82] md:mb-[80px] md:ml-[80px] md:mt-[-200px] md:scale-100">
         <svg
           className="fill-none stroke-primary-darkGray"
-          width="auto"
-          height="auto"
+          width="100%"
+          height="100%"
         >
           <polyline
             points={monthDatasToChartPoints}
