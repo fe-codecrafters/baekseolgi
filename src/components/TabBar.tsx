@@ -53,11 +53,13 @@ export default function TabBar() {
           href="/feed"
           className={`group flex grow flex-col items-center justify-center  ${
             pathname === "/feed"
-              ? "stroke-black stroke-2 font-extrabold text-black"
+              ? "stroke-black stroke-[0.4px] font-extrabold text-black"
               : "text-primary-darkGray"
           }`}
         >
-          <FeedIcon></FeedIcon>
+          <div className={pathname === "/feed" ? 'mt-[-1.5px] mb-[-1.5px] border-black border-[1.5px]' : ''}>
+            <FeedIcon></FeedIcon>
+          </div>
           <span className="text-sm group-active:text-primary-black md:text-base">
             피드
           </span>
