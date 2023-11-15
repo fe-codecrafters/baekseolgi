@@ -32,7 +32,7 @@ export default function CalendarPage() {
         <>
           <Calendar monthData={data.attendance} type={"month"} />
 
-          <ObjectiveProgressBar count={data.attendance.length} />
+          <ObjectiveProgressBar monthData={data.attendance} />
         </>
       ) : (
         // 데이터 없을 때는 전부다 회색으로 보이게 처리
