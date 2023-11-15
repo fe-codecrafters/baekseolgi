@@ -6,21 +6,14 @@ import SeolgiHeaderIcon from "@/icons/SeolgiHeaderIcon";
 import UserIcon from "@/icons/UserIcon";
 import { RootState } from "@/app/redux/store";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
-import { useSelector, useDispatch } from "react-redux";
+import { usePathname } from "next/navigation";
+import { useSelector } from "react-redux";
+import { signOut, useSession } from "next-auth/react";
 
 // TODO : Warning: Expected server HTML to contain a matching <div> in <div>. 해결 필요
 export const Header = () => {
+  const { status } = useSession();
   const pathname = usePathname();
-  const router = useRouter();
-  const { userId } = useSelector((state: RootState) => state.user);
-
-  //redux의 userId를 null로 비우고 login 페이지로 redirect
-  const handleGoLogin = () => {
-    // dispatch(settedUser(initialUser));
-    localStorage.removeItem("reduxState");
-    router.push("/login");
-  };
 
   const headerDefaultCN = `sticky top-0 z-40 mb-5 w-full border-b border-primary-darkGray bg-primary-white`;
   const headerCN =
@@ -32,7 +25,7 @@ export const Header = () => {
         <Link href="/">
           <SeolgiHeaderIcon />
         </Link>
-        {userId !== null ? (
+        {status === "authenticated" ? (
           <div className="flex items-end gap-[10px]">
             <div
               className={`flex h-[24px] w-[24px] items-center justify-center overflow-hidden rounded-full bg-primary-lightGray pt-[4px]`}
@@ -46,7 +39,7 @@ export const Header = () => {
                 <UserIcon />
               </Link>
             </div>
-            <button onClick={handleGoLogin}>
+            <button onClick={() => signOut()}>
               <LogOutIcon />
             </button>
           </div>

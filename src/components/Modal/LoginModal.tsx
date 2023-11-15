@@ -3,10 +3,7 @@
 import LoginLogo from "@/icons/LoginLogo";
 import Google from "@/icons/SocialLogo/Google";
 import Kakao from "@/icons/SocialLogo/Kakao";
-import { useRouter } from "next/navigation";
 import { ChangeEventHandler, FormEventHandler, useState } from "react";
-import { useDispatch } from "react-redux";
-import { toast } from "react-toastify";
 import { signIn, signOut } from "next-auth/react";
 
 const DEV = process.env.NODE_ENV === "development";
