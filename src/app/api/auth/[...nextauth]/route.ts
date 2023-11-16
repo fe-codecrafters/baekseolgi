@@ -21,13 +21,18 @@ const handler = NextAuth({
 
       console.log("singIn", user, account);
       const kakaoId = user.id;
-      const duplicate = await prisma.user.findFirst({
-        where: {
-          UserAuthSocial: {
-            socialId: kakaoId,
+      let duplicate;
+      try {
+        duplicate = await prisma.user.findFirst({
+          where: {
+            UserAuthSocial: {
+              socialId: kakaoId,
+            },
           },
-        },
-      });
+        });
+      } catch (e) {
+        console.error(e);
+      }
 
       if (!duplicate) {
         try {
@@ -60,6 +65,7 @@ const handler = NextAuth({
           },
         },
       });
+
       session.user.id = currentUser?.id;
       session.user.kakaoId = Number(token.sub);
       return session;
