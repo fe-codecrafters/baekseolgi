@@ -1,7 +1,7 @@
 import ArrowIcon from "@/icons/ArrowIcon";
-import { RootState } from "@/redux/store";
+import { RootState } from "@/app/redux/store";
 import { useSelector, useDispatch } from "react-redux";
-import { settedYear, settedMonth } from "@/redux/reducer/dateSlice";
+import { settedYear, settedMonth } from "@/app/redux/reducer/dateSlice";
 
 export function CalendarHeader() {
   const dispatch = useDispatch();

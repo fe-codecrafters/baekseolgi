@@ -1,7 +1,7 @@
 import SeolgiIconS from "@/icons/AttendanceInput/SeolgiIconS";
 import CloseIcon from "@/icons/CloseIcon";
-import { closeModal } from "@/redux/reducer/modalSlice";
-import { RootState } from "@/redux/store";
+import { closeModal } from "@/app/redux/reducer/modalSlice";
+import { RootState } from "@/app/redux/store";
 import { format } from "date-fns";
 import { ChangeEventHandler, FormEventHandler, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";

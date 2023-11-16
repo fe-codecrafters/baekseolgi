@@ -63,6 +63,21 @@ export async function GET(
   const objectiveId = searchParams.get("objectiveId")
     ? Number(searchParams.get("objectiveId"))
     : undefined;
+  // REF: https://docs.github.com/ko/rest/issues/issues?apiVersion=2022-11-28#list-issues-assigned-to-the-authenticated-user
+  const sort = searchParams.get("sort")
+    ? String(searchParams.get("sort"))
+    : "id";
+  const direction = searchParams.get("direction")
+    ? String(searchParams.get("direction"))
+    : "asc";
+
+  if (!userId) {
+    return NextResponse.json(
+      { error: "Bad request: check your param" },
+      { status: 400 },
+    );
+  }
+
   const date = parse(`${year}-${month}`, "yyyy-MM", new Date());
   const startDate = startOfMonth(date);
   const endDate = endOfMonth(date);
@@ -81,7 +96,7 @@ export async function GET(
         objectiveId,
       },
       orderBy: {
-        id: "asc",
+        [sort]: direction,
       },
       include: {
         Seolgi: true,

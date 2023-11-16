@@ -1,7 +1,7 @@
 import SeolgiIcon from "@/icons/SeolgiIcon";
-import { initialDate, settedDate } from "@/redux/reducer/dateSlice";
-import { openModal } from "@/redux/reducer/modalSlice";
-import { RootState } from "@/redux/store";
+import { initialDate, settedDate } from "@/app/redux/reducer/dateSlice";
+import { openModal } from "@/app/redux/reducer/modalSlice";
+import { RootState } from "@/app/redux/store";
 import { AttendanceWithSeolgi } from "@/types/dto";
 import { dateNum, getDayLabel, isAttendance } from "@/util/dayHelper";
 import { useSelector, useDispatch } from "react-redux";

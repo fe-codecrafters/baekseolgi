@@ -8,7 +8,7 @@ import { attendanceKeys } from "@/features/attendance/key";
 import { useMonthlyAttendances } from "@/features/attendance/api/getAttendances";
 import LoadingIndicator from "@/components/LoadingIndicator";
 import { useSelector } from "react-redux";
-import { RootState } from "@/redux/store";
+import { RootState } from "@/app/redux/store";
 
 export default function CalendarPage() {
   const dateState = useSelector((state: RootState) => state.date);
