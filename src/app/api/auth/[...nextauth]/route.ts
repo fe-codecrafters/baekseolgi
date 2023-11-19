@@ -32,6 +32,7 @@ const handler = NextAuth({
         });
       } catch (e) {
         console.error(e);
+        return false;
       }
 
       if (!duplicate) {
@@ -50,6 +51,7 @@ const handler = NextAuth({
           });
         } catch (e) {
           console.error(e);
+          return false;
         }
       }
 
