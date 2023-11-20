@@ -57,7 +57,13 @@ export default function TabBar() {
               : "text-primary-darkGray"
           }`}
         >
-          <div className={pathname === "/feed" ? 'mt-[-1.5px] mb-[-1.5px] border-black border-[1.5px]' : ''}>
+          <div
+            className={
+              pathname === "/feed"
+                ? "my-[-1.5px] border-[1.5px] border-black"
+                : ""
+            }
+          >
             <FeedIcon></FeedIcon>
           </div>
           <span className="text-sm group-active:text-primary-black md:text-base">

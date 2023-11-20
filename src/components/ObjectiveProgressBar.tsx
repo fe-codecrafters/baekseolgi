@@ -1,7 +1,9 @@
 import SeolgiIcon from "@/icons/SeolgiIcon";
 
 export const ObjectiveProgressBar = ({ monthData }) => {
-  const countArr:[number?] = monthData.map(data => new Date(data.createdAt).getDate()).reduce((acc,cur) => acc.includes(cur) ? acc : [...acc, cur],[])
+  const countArr: [number?] = monthData
+    .map((data) => new Date(data.createdAt).getDate())
+    .reduce((acc, cur) => (acc.includes(cur) ? acc : [...acc, cur]), []);
 
   return (
     <div className="mb-[84px] w-[340px] md:w-[586px] ">
