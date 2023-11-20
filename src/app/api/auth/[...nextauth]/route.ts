@@ -1,11 +1,50 @@
-import NextAuth from "next-auth";
+import NextAuth, { User } from "next-auth";
+import CredentialsProvider from "next-auth/providers/credentials";
 import KakaoProvider from "next-auth/providers/kakao";
 import { PrismaClient } from "@prisma/client";
 import axios from "axios";
 const prisma = new PrismaClient();
 
 const handler = NextAuth({
+  pages: {
+    signIn: "/login",
+  },
   providers: [
+    CredentialsProvider({
+      name: "credentials",
+      credentials: {
+        username: { label: "Username", type: "text", placeholder: "jsmith" },
+        password: { label: "Password", type: "password" },
+      },
+      async authorize(credentials) {
+        console.log("authorize?");
+        if (!credentials) return null;
+
+        const testUser = await prisma.user.findUnique({
+          where: {
+            id: 1,
+          },
+          include: {
+            UserAuthPassword: true,
+            UserProfile: true,
+          },
+        });
+
+        // If no error and we have user data, return it
+        if (testUser) {
+          const res: User = {
+            id: String(testUser.id),
+            name: testUser?.username,
+            email: testUser.UserProfile?.email,
+            image: testUser.UserProfile?.imageUrl,
+          };
+
+          return res;
+        }
+        // Return null if user data could not be retrieved
+        return null;
+      },
+    }),
     KakaoProvider({
       // 앱 설정 > 앱 키 > REST API 키
       clientId: process.env.AUTH_KAKAO_ID!,
@@ -19,39 +58,43 @@ const handler = NextAuth({
         return false;
       }
 
-      console.log("singIn", user, account);
-      const kakaoId = user.id;
-      let duplicate;
-      try {
-        duplicate = await prisma.user.findFirst({
-          where: {
-            UserAuthSocial: {
-              socialId: kakaoId,
-            },
-          },
-        });
-      } catch (e) {
-        console.error(e);
-        return false;
-      }
-
-      if (!duplicate) {
+      if (account?.type === "credentials") {
+        return true;
+      } else if (account?.type === "oauth") {
+        // TODO: provider가 많아지면 로직 추가 필요
+        const kakaoId = user.id;
+        let duplicate;
         try {
-          await prisma.user.create({
-            data: {
-              username: user.name!,
+          duplicate = await prisma.user.findFirst({
+            where: {
               UserAuthSocial: {
-                create: {
-                  socialId: kakaoId,
-                  accessToken: String(account?.access_token),
-                  type: "KAKAO",
-                },
+                socialId: kakaoId,
               },
             },
           });
         } catch (e) {
           console.error(e);
           return false;
+        }
+
+        if (!duplicate) {
+          try {
+            await prisma.user.create({
+              data: {
+                username: user.name!,
+                UserAuthSocial: {
+                  create: {
+                    socialId: kakaoId,
+                    accessToken: String(account?.access_token),
+                    type: "KAKAO",
+                  },
+                },
+              },
+            });
+          } catch (e) {
+            console.error(e);
+            return false;
+          }
         }
       }
 

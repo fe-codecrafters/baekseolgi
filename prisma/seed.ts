@@ -36,6 +36,7 @@ async function main() {
 
   const testSeolgi = await prisma.user.create({
     data: {
+      id: 1,
       username: "testUser",
       Objective: {
         create: {
