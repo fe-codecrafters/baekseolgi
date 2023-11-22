@@ -10,8 +10,11 @@ import FeedbackIcon from "@/icons/FeedbackIcon";
 import SeolgiFigure from "@/icons/SeolgiFigure";
 import { useState } from "react";
 const DEV = process.env.NODE_ENV === "development";
+import { useSession } from "next-auth/react";
 
 export default function MyPage() {
+  const { data: session, status } = useSession();
+  console.log(session)
   const date = new Date();
   const today = {
     year: date.getFullYear(),
@@ -35,14 +38,14 @@ export default function MyPage() {
             닉네임
           </div>
           <div className="mb-[20px] flex items-center gap-[16px] text-[16px] md:text-[24px]">
-            설기#2546
+            {status === 'authenticated' ? session.user.name :'null'}
             <EditIcon />
           </div>
           <div className="text-[14px] text-primary-darkGray md:text-[20px]">
             연결된 계정
           </div>
           <div className="flex items-center gap-[16px] text-[16px] md:text-[24px]">
-            seolgi2566@gmail.com
+            {status === 'authenticated' ? session.user.email :'null'}
             <EditIcon />
           </div>
         </div>

@@ -12,7 +12,7 @@ import { signOut, useSession } from "next-auth/react";
 
 // TODO : Warning: Expected server HTML to contain a matching <div> in <div>. 해결 필요
 export const Header = () => {
-  const { status } = useSession();
+  const { data: session, status } = useSession();
   const pathname = usePathname();
 
   const headerDefaultCN = `sticky top-0 z-40 mb-5 w-full border-b border-primary-darkGray bg-primary-white`;
@@ -36,7 +36,7 @@ export const Header = () => {
                   pathname === "/my-page" ? "stroke-primary-darkGray" : ""
                 }`}
               >
-                <UserIcon />
+                {session.user.image ? <img src={session.user.image} /> : <UserIcon />}
               </Link>
             </div>
             <button onClick={() => signOut()}>
