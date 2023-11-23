@@ -1,7 +1,19 @@
+export enum AttendanceKeySort {
+  ID = "id",
+  CREATEDAT = "createdAt",
+}
+
+export enum AttendanceKeyDirection {
+  ASC = "asc",
+  DESC = "desc",
+}
+
 // REF: https://tkdodo.eu/blog/effective-react-query-keys
 export interface AttendanceKeyParam {
   userId: number;
   objectiveId?: number;
+  sort?: AttendanceKeySort;
+  direction?: AttendanceKeyDirection;
 }
 
 export interface OneAttendanceKeyParam {
@@ -28,8 +40,19 @@ export const attendanceKeys = {
   day: ({ date, userId, objectiveId }: DailyAttendanceKeyParam) =>
     ["attendance", "day", { date, userId, objectiveId }] as const,
   // weekly: ["attendance"] as const,
-  month: ({ year, month, userId, objectiveId }: MonthlyAttendanceKeyParam) =>
-    ["attendance", "month", { year, month, userId, objectiveId }] as const,
+  month: ({
+    year,
+    month,
+    userId,
+    objectiveId,
+    sort,
+    direction,
+  }: MonthlyAttendanceKeyParam) =>
+    [
+      "attendance",
+      "month",
+      { year, month, userId, objectiveId, sort, direction },
+    ] as const,
   year: ({ year, userId, objectiveId }: YearlyAttendanceKeyParam) =>
     ["attendance", "year", { year, userId, objectiveId }] as const,
 };

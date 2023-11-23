@@ -65,6 +65,8 @@ export const getMonthlyAttendances = async ({
   month,
   userId,
   objectiveId,
+  sort,
+  direction,
 }: GetMonthlyAttendanceParams) => {
   const res = await axios.get<GetMonthlyAttendanceResDTO>(
     `/api/attendance/month/${year}/${month}`,
@@ -72,6 +74,8 @@ export const getMonthlyAttendances = async ({
       params: {
         userId,
         objectiveId,
+        sort,
+        direction,
       },
     },
   );
@@ -81,11 +85,26 @@ export const getMonthlyAttendances = async ({
 export const useMonthlyAttendances = ([
   ,
   ,
-  { year, month, userId, objectiveId },
+  { year, month, userId, objectiveId, sort, direction },
 ]: MonthlyAttendanceKey) => {
   return useQuery({
-    queryKey: attendanceKeys.month({ year, month, userId, objectiveId }),
-    queryFn: () => getMonthlyAttendances({ year, month, userId, objectiveId }),
+    queryKey: attendanceKeys.month({
+      year,
+      month,
+      userId,
+      objectiveId,
+      sort,
+      direction,
+    }),
+    queryFn: () =>
+      getMonthlyAttendances({
+        year,
+        month,
+        userId,
+        objectiveId,
+        sort,
+        direction,
+      }),
   });
 };
 
