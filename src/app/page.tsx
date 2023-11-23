@@ -14,7 +14,6 @@ import { useSession } from "next-auth/react";
 export default function Home() {
   const { data: session, status } = useSession();
   const router = useRouter();
-  console.log("root page", session, status);
 
   const RQKey = attendanceKeys.month({
     year: initialDate.year,

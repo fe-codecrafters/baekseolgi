@@ -2,10 +2,10 @@
 import { AttendanceWithSeolgi } from "@/types/dto";
 import { useSelector } from "react-redux";
 import { RootState } from "@/app/redux/store";
-import { initialDate } from "@/app/redux/reducer/dateSlice";
 import Week from "./Week";
 import WeekHeader from "./WeekHeader";
-import { dateNum } from "@/util/dayHelper";
+import { currentWeek, foundWeekIndex } from "@/util/dayHelper";
+import WeekIndex from "./WeekIndex";
 
 type DateList = (number | AttendanceWithSeolgi)[];
 
@@ -52,27 +52,23 @@ export const Calendar = ({ monthData, type }: CalendarProps) => {
   }
 
   // 날짜들을 7개로 끊어 주 단위로 나누기
-  let weeks: DateList[] = [];
+  const weeks: DateList[] = [];
   const datesCopy = [...dates];
   while (datesCopy.length > 0) {
     weeks.push(datesCopy.splice(0, 7));
   }
 
-  // Weekly Calendar라면 오늘 날짜가 포함된 주만 남기기
-  if (type === "week") {
-    weeks = weeks.filter((week) => {
-      return week.some((day) => {
-        return dateNum(day) === initialDate.date;
-      });
-    });
-  }
+  const weekView = type === "week" ? currentWeek(weeks) : weeks;
 
   return (
-    <div className="flex flex-col items-center justify-start gap-[18px] md:gap-[20px]">
-      <WeekHeader />
-      {weeks.map((week, idx) => (
-        <Week key={`${year}Y-${month}M-${idx}W`} week={week} />
-      ))}
+    <div>
+      <div className="flex flex-col items-center justify-start gap-[18px] md:gap-[20px]">
+        <WeekHeader />
+        {weekView.map((week, idx) => (
+          <Week key={`${year}Y-${month}M-${idx}W`} week={week} />
+        ))}
+      </div>
+      {type === "week" && <WeekIndex found={foundWeekIndex(weeks)} />}
     </div>
   );
 };
