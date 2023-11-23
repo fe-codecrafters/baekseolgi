@@ -57,10 +57,10 @@ export default function Home() {
                 ? `${data.month}월의 설기 개수는 ${data.attendance.length}
               개입니다!`
                 : seolgiSay === "week"
-                ? `이번 주의 설기 개수는 0개 입니다!`
-                : seolgiSay === "objective"
-                ? `이번 목표의 설기 개수는 10개 입니다!`
-                : null}
+                  ? `이번 주의 설기 개수는 0개 입니다!`
+                  : seolgiSay === "objective"
+                    ? `이번 목표의 설기 개수는 10개 입니다!`
+                    : null}
             </p>
           ) : (
             <p className="text-[16px] font-bold md:text-2xl">
@@ -76,10 +76,10 @@ export default function Home() {
             seolgiSay === "objective"
               ? setSeolgiSay("month")
               : seolgiSay === "month"
-              ? setSeolgiSay("week")
-              : seolgiSay === "week"
-              ? setSeolgiSay("objective")
-              : null;
+                ? setSeolgiSay("week")
+                : seolgiSay === "week"
+                  ? setSeolgiSay("objective")
+                  : null;
             setEffect(true);
           }}
           onAnimationEnd={() => setEffect(false)}

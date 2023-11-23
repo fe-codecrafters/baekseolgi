@@ -24,9 +24,15 @@ export const MonthlyProgressBar = () => {
 
   const { isLoading, data, isSuccess } = useMonthlyAttendances(RQKey);
 
-  type monthDataType = { dayCount: number, 1?: number, 2?: number, 3?: number }
-  const monthData:monthDataType = { dayCount : new Date(dateState.year, dateState.month, 0).getDate() }
-  data?.attendance.forEach(el => monthData[el.seolgiId] ? monthData[el.seolgiId] += 1 : monthData[el.seolgiId] = 1)
+  type monthDataType = { dayCount: number; 1?: number; 2?: number; 3?: number };
+  const monthData: monthDataType = {
+    dayCount: new Date(dateState.year, dateState.month, 0).getDate(),
+  };
+  data?.attendance.forEach((el) =>
+    monthData[el.seolgiId]
+      ? (monthData[el.seolgiId] += 1)
+      : (monthData[el.seolgiId] = 1),
+  );
 
   const colors = [];
   if (monthData) {

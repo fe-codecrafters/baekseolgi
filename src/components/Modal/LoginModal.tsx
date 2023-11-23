@@ -1,9 +1,13 @@
 "use client";
-
 import LoginLogo from "@/icons/LoginLogo";
 import Google from "@/icons/SocialLogo/Google";
 import Kakao from "@/icons/SocialLogo/Kakao";
-import { ChangeEventHandler, FormEventHandler, useState } from "react";
+import {
+  ChangeEventHandler,
+  FormEventHandler,
+  MouseEventHandler,
+  useState,
+} from "react";
 import { signIn, signOut } from "next-auth/react";
 
 const DEV = process.env.NODE_ENV === "development";
@@ -20,29 +24,19 @@ export default function LoginModal() {
     setPassword(e.target.value);
   };
 
-  //userId와 password가 일치하면 redux에 userId를 저장하고 메인 화면으로 redirect
-  //여기는 user CRUD가 나오면 로직 수정될 예정
-  // const handleSubmit: FormEventHandler = async (e) => {
-  //   e.preventDefault();
-  //   if (
-  //     userId === process.env.NEXT_PUBLIC_USER_NAME &&
-  //     password === process.env.NEXT_PUBLIC_PASSWORD
-  //   ) {
-  //     // TODO: custom auth
-  //     // const result = await signIn("credential", {
-  //     //   redirect: true,
-  //     //   callbackUrl: "/",
-  //     // });
-  //     dispatch(settedUser({ userId: 1 }));
-  //     router.push("/");
-  //   } else {
-  //     toast.error("로그인이 실패했어요 😢");
-  //   }
-  // };
-
   const handleKakaoSubmit: FormEventHandler = async (e) => {
     e.preventDefault();
     signIn("kakao", {
+      redirect: true,
+      callbackUrl: "/",
+    });
+  };
+
+  const handleGuestClick: MouseEventHandler = async (e) => {
+    e.preventDefault();
+    signIn("credentials", {
+      username: "testUser",
+      password: "testPassword",
       redirect: true,
       callbackUrl: "/",
     });
@@ -99,17 +93,17 @@ export default function LoginModal() {
         <form className="flex flex-col space-y-4" onSubmit={handleKakaoSubmit}>
           <button
             type="submit"
+            name="kakao-submit"
             className="flex h-[35px] w-[300px] items-center rounded-md bg-amber-300 px-6 text-sm focus:bg-amber-400 md:h-[40px] md:w-[350px] md:text-base"
-            // onClick={() =>
-            //   signIn("kakao", { redirect: true, callbackUrl: "/" })
-            // }
           >
             <Kakao />
             <span className="flex-1">카카오 로그인</span>
           </button>
+
           {DEV && (
             <button
               type="button"
+              name="google-submit"
               className="flex h-[35px] w-[300px] items-center rounded-md border-[1px] px-6 text-sm focus:bg-slate-50 md:h-[40px] md:w-[350px] md:text-base"
             >
               <Google />
@@ -118,9 +112,21 @@ export default function LoginModal() {
           )}
           {DEV && (
             <button
+              type="button"
+              name="guest-submit"
+              onClick={handleGuestClick}
+              className="flex h-[35px] w-[300px] items-center rounded-md border-[1px] px-6 text-sm focus:bg-slate-50 md:h-[40px] md:w-[350px] md:text-base"
+            >
+              <span className="flex-1">구경하기</span>
+            </button>
+          )}
+          {DEV && (
+            <button
+              type="button"
+              name="guest-submit"
               onClick={() => {
                 console.log("signOut Client");
-                signOut({ callbackUrl: "/" });
+                signOut();
               }}
             >
               sign out

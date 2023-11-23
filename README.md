@@ -15,7 +15,7 @@
 - 개발용 DB 설정이 필요합니다.
   - DB 연결
     - postgresql 서버와 연결할 수 있습니다. (개발진은 Supabase 사용)
-    - `.env.dev`를 생성하고 `.env.example`를 참고하여 Postgresql URL을 입력하여 본인의 데이터베이스 서버를 사용할 수도 있습니다.
+    - `.env.development.local`를 생성하고 `.env.example`를 참고하여 Postgresql URL을 입력하여 본인의 데이터베이스 서버를 사용할 수도 있습니다.
   - DB 초기 세팅 및 시딩
     - `pnpm db-dev-reset`: 기존 스키마와 데이터를 삭제하고 DB 스키마를 `prisma/schema.prisma`와 동일하게 변경 및 시드 데이터를 생성합니다.
       - 기존에 생성했던 데이터가 모두 삭제되기 때문에 새로운 DB를 초기 세팅하는 경우에만 사용합니다.
@@ -25,3 +25,4 @@
   
   - 린트
     - `pnpm lint`: Eslint, Prettier로 코드 스타일링을 점검합니다.
+    
