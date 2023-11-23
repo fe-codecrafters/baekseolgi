@@ -1,6 +1,6 @@
 "use client";
 import { CalendarHeader } from "@/components/Calendar/CalendarHeader";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Objective } from "@/components/Objective";
 import { Calendar } from "@/components/Calendar/Calendar";
 import SeolgiIcon from "@/icons/SeolgiIcon";
@@ -8,8 +8,6 @@ import { useMonthlyAttendances } from "@/features/attendance/api/getAttendances"
 import { attendanceKeys } from "@/features/attendance/key";
 import LoadingIndicator from "@/components/LoadingIndicator";
 import { initialDate } from "@/app/redux/reducer/dateSlice";
-import { RootState } from "@/app/redux/store";
-import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 
@@ -46,16 +44,16 @@ export default function Home() {
 
   return (
     <>
-      <CalendarHeader />
+      <CalendarHeader type="main" />
       <Objective id={1} />
       {!isLoading && data && (
         <Calendar monthData={data.attendance} type={"week"} />
       )}
-      <div className="flex h-[250px] md:h-[400px] flex-col items-center justify-between gap-[30px] mt-[40px]">
-        <div className="relative flex h-[90px] md:h-[120px] w-[280px] md:w-[400px] items-center justify-center rounded-2xl border-[1px] bg-primary-white p-4 text-primary-black shadow-lg">
+      <div className="mt-[40px] flex h-[250px] flex-col items-center justify-between gap-[30px] md:h-[400px]">
+        <div className="relative flex h-[90px] w-[280px] items-center justify-center rounded-2xl border-[1px] bg-primary-white p-4 text-primary-black shadow-lg md:h-[120px] md:w-[400px]">
           <div className="absolute bottom-[-9px] left-1/2 h-4 w-4 -translate-x-1/2 -rotate-45 border-b-[1px] border-l-[1px] bg-primary-white"></div>
           {data && data.attendance.length > 0 ? (
-            <p className="text-[16px] md:text-2xl font-bold">
+            <p className="text-[16px] font-bold md:text-2xl">
               {seolgiSay === "month"
                 ? `${data.month}월의 설기 개수는 ${data.attendance.length}
               개입니다!`
@@ -66,7 +64,9 @@ export default function Home() {
                 : null}
             </p>
           ) : (
-            <p className="text-[16px] md:text-2xl font-bold">이 달에는 설기가 없어요!</p>
+            <p className="text-[16px] font-bold md:text-2xl">
+              이 달에는 설기가 없어요!
+            </p>
           )}
         </div>
         <button
