@@ -4,7 +4,7 @@ export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || pr
 source /home/ec2-user/.bash_profile
 
 cd /var/frontend/
-  
+
 # Check if the node_modules directory exists
 if [ -d "node_modules/" ]; then
   # If it exists, remove it

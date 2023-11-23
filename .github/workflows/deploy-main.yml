@@ -28,6 +28,11 @@
           with:
             file-name: .env.production.local
             ENV_DATABASE_URL: ${{ secrets.DATABASE_URL }}
+            ENV_AUTH_KAKAO_ID: ${{ secrets.AUTH_KAKAO_ID }}
+            ENV_AUTH_KAKAO_SECRET: ${{ secrets.AUTH_KAKAO_SECRET }}
+            ENV_AUTH_KAKAO_ADMIN_KEY: ${{ secrets.AUTH_KAKAO_ADMIN_KEY }}
+            ENV_NEXTAUTH_URL: https://100seolgi.click 
+            ENV_NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}
 
         - name: "Build project"
           run: |
