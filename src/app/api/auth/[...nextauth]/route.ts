@@ -2,12 +2,13 @@ import NextAuth, { User } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import KakaoProvider from "next-auth/providers/kakao";
 import { PrismaClient } from "@prisma/client";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
+import { axiosErrorHandler } from "../../util/axios";
 const prisma = new PrismaClient();
 
 const handler = NextAuth({
   pages: {
-    signIn: "/login",
+    signIn: "/auth/signin",
   },
   providers: [
     CredentialsProvider({
@@ -123,9 +124,10 @@ const handler = NextAuth({
   },
   events: {
     // TODO: bearer 토큰으로 로그아웃 시키는게 바람직, 아직 bearer 토큰 저장 로직이 정해지지 않아서 보류
+    // TODO: (가능한지 모르겠다..) 어떤 provider 유저인지 확인하여 카카오 로그아웃인 경우에만 아래 로직 진행 가능?
     async signOut({ token }) {
-      try {
-        await axios.post(
+      await axios
+        .post(
           "https://kapi.kakao.com/v1/user/logout",
           {
             target_id_type: "user_id",
@@ -137,11 +139,11 @@ const handler = NextAuth({
               Authorization: `KakaoAK ${process.env.AUTH_KAKAO_ADMIN_KEY}`,
             },
           },
-        );
-      } catch (e) {
-        console.error("[AUTH] logout event error", e);
-      }
-      console.log("logout event success");
+        )
+        .catch((e) => {
+          console.log("[NEXT_AUTH SIGNOUT EVENT ERROR]");
+          axiosErrorHandler(e);
+        });
     },
   },
   session: {

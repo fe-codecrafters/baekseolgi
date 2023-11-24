@@ -36,10 +36,6 @@ export default function Home() {
   const [effect, setEffect] = useState(false);
 
   if (isLoading) return <LoadingIndicator></LoadingIndicator>;
-  if (status === "unauthenticated") {
-    console.log("unauthenticated");
-    router.push("/login");
-  }
 
   return (
     <>
