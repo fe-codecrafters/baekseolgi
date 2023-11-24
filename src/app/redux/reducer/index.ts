@@ -1,4 +1,4 @@
-import { combineReducers } from "redux";
+import { combineReducers } from "@reduxjs/toolkit";
 import modalReducer from "@/app/redux/reducer/modalSlice";
 import dateReducer from "@/app/redux/reducer/dateSlice";
 import dataReducer from "@/app/redux/reducer/getDataSlice";

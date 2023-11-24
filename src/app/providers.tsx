@@ -14,20 +14,20 @@ import { addDays } from "date-fns";
 import { Provider } from "react-redux";
 import store from "@/app/redux/store";
 
-interface MySession extends Session {}
-
 export function ReduxProvider({ children }: { children: ReactNode }) {
   return <Provider store={store}>{children}</Provider>;
 }
 
 export default function Providers({ children }: { children: ReactNode }) {
   const [newQueryClient] = useState(() => queryClient);
-  const session: MySession = {
+  const session: Session = {
     user: {
+      id: 1,
       name: null,
       email: null,
       image: null,
     },
+    // TODO: 이거 왜 꼭 설정해야 하는지 정확히 모르겠음
     expires: addDays(new Date(), 1).toISOString(),
   };
 

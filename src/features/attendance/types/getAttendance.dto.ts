@@ -1,5 +1,6 @@
 import { DailyAttendance } from "@prisma/client";
 import { AttendanceWithSeolgi, DefaultResDTO } from "@/types/dto";
+import { AttendanceKeyDirection, AttendanceKeySort } from "../key";
 
 export interface GetOneAttendanceParams {
   id: number;
@@ -19,6 +20,8 @@ export type GetDailyAttendanceResDTO = DefaultResDTO<DailyAttendance[]>;
 export interface GetMonthlyAttendanceParams {
   userId: number;
   objectiveId?: number;
+  sort?: AttendanceKeySort;
+  direction?: AttendanceKeyDirection;
   year: number;
   month: number;
 }

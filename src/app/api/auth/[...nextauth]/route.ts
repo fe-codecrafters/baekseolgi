@@ -111,9 +111,14 @@ const handler = NextAuth({
         },
       });
 
-      session.user.id = currentUser?.id;
-      session.user.kakaoId = Number(token.sub);
-      return session;
+      return {
+        ...session,
+        user: {
+          ...session.user,
+          id: currentUser?.id,
+          kakaoId: Number(token.sub),
+        },
+      };
     },
   },
   events: {
