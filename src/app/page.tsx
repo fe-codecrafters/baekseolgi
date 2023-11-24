@@ -1,6 +1,6 @@
 "use client";
 import { CalendarHeader } from "@/components/Calendar/CalendarHeader";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Objective } from "@/components/Objective";
 import { Calendar } from "@/components/Calendar/Calendar";
 import SeolgiIcon from "@/icons/SeolgiIcon";
@@ -8,15 +8,12 @@ import { useMonthlyAttendances } from "@/features/attendance/api/getAttendances"
 import { attendanceKeys } from "@/features/attendance/key";
 import LoadingIndicator from "@/components/LoadingIndicator";
 import { initialDate } from "@/app/redux/reducer/dateSlice";
-import { RootState } from "@/app/redux/store";
-import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 
 export default function Home() {
   const { data: session, status } = useSession();
   const router = useRouter();
-  console.log("root page", session, status);
 
   const RQKey = attendanceKeys.month({
     year: initialDate.year,
@@ -46,7 +43,7 @@ export default function Home() {
 
   return (
     <>
-      <CalendarHeader />
+      <CalendarHeader type="main" />
       <Objective id={1} />
       {!isLoading && data && (
         <Calendar monthData={data.attendance} type={"week"} />

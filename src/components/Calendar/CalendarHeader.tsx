@@ -3,7 +3,11 @@ import { RootState } from "@/app/redux/store";
 import { useSelector, useDispatch } from "react-redux";
 import { settedYear, settedMonth } from "@/app/redux/reducer/dateSlice";
 
-export function CalendarHeader() {
+interface CalendarHeaderProps {
+  type?: string;
+}
+
+export function CalendarHeader({ type }: CalendarHeaderProps) {
   const dispatch = useDispatch();
   const dateState = useSelector((state: RootState) => state.date);
 
@@ -27,19 +31,23 @@ export function CalendarHeader() {
 
   return (
     <div className="flex text-[24px] font-semibold md:text-[32px]">
-      <button
-        onClick={toPrevMonth}
-        className="mr-[34px] fill-primary-gray active:fill-primary-black md:mr-[48px]"
-      >
-        <ArrowIcon direction="left" />
-      </button>
+      {!type && (
+        <button
+          onClick={toPrevMonth}
+          className="mr-[34px] fill-primary-gray active:fill-primary-black md:mr-[48px]"
+        >
+          <ArrowIcon direction="left" />
+        </button>
+      )}
       <div className="font-semibold">{`${dateState.year}년 ${dateState.month}월`}</div>
-      <button
-        onClick={toNextMonth}
-        className="ml-[34px] fill-primary-gray active:fill-primary-black md:ml-[48px]"
-      >
-        <ArrowIcon direction="right" />
-      </button>
+      {!type && (
+        <button
+          onClick={toNextMonth}
+          className="ml-[34px] fill-primary-gray active:fill-primary-black md:ml-[48px]"
+        >
+          <ArrowIcon direction="right" />
+        </button>
+      )}
     </div>
   );
 }
