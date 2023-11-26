@@ -3,9 +3,9 @@ import { withAuth } from "next-auth/middleware";
 export default withAuth(
   function middleware(req) {
     // HTTP Req Logger
-    const { ip, geo, method, url } = req;
-    console.log(method, url, new Date().toISOString());
-    console.log("ip: ", req.ip, "geo: ", req.geo);
+    const { ip, geo, method, nextUrl } = req;
+    console.log(new Date().toISOString(), method, nextUrl.href);
+    console.log("ip: ", ip, "geo: ", geo);
   },
   {
     callbacks: {
