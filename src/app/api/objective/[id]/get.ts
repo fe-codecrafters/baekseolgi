@@ -12,8 +12,6 @@ export async function _GET(
 ) {
   const session = await getServerSession();
   const token = await getToken({ req, secret });
-
-  console.log(token);
   if (!session || !token) {
     return NextResponse.json({ error: "Not Authorized" }, { status: 401 });
   }
@@ -39,7 +37,7 @@ export async function _GET(
       return NextResponse.json({ error: "Not Found" }, { status: 404 });
     }
 
-    if (newObjective.userId !== id) {
+    if (newObjective.userId !== token.userId) {
       console.error(
         "/objective/{id} Error: Objective가 User의 소유가 아닙니다.",
       );

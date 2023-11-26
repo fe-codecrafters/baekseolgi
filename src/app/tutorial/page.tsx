@@ -1,10 +1,28 @@
 "use client";
+
+import { createObjective } from "@/features/objective/api/createObjective";
 import SeolgiFigure from "@/icons/SeolgiFigure";
-import { useState } from "react";
-const DEV = process.env.NODE_ENV === "development";
+import { FormEvent } from "react";
+
+import LoadingIndicator from "@/components/LoadingIndicator";
+import { useSession } from "next-auth/react";
 
 export default function TutorialPage() {
-  const [inputValue] = useState(DEV ? "tutorial page" : "");
+  const { data: session, status } = useSession();
+  if (status === "unauthenticated") {
+    return <LoadingIndicator></LoadingIndicator>;
+  }
+
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    console.log(formData.get("objective"));
+    createObjective({
+      userId: Number(session?.user.id),
+      title: formData.get("objective")?.toString(),
+      createdAt: new Date().toISOString(),
+    });
+  };
 
   return (
     <div className="mx-auto flex h-screen w-full flex-col items-center justify-between gap-[20px] md:gap-[40px]">
@@ -15,15 +33,15 @@ export default function TutorialPage() {
         </p>
         <form
           className="grid w-full grid-cols-1 justify-items-center gap-y-8"
-          action="#"
           method="POST"
+          onSubmit={handleSubmit}
         >
           <div className="h-[50px] w-[600px]">
             <input
               id="objective"
               name="objective"
               type="text"
-              defaultValue={inputValue}
+              // defaultValue={inputValue}
               required
               className="block h-[40px] w-[300px] rounded-md border-0 py-1.5 pl-5 text-center text-gray-900 shadow-sm ring ring-inset ring-gray-200 placeholder:text-gray-400 focus:outline-none focus:ring focus:ring-gray-300 md:h-[60px] md:w-[600px] md:text-xl md:leading-6"
             />

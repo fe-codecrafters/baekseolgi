@@ -102,6 +102,46 @@ const handler = NextAuth({
       return true;
     },
 
+    async jwt({ token, account, profile }) {
+      // Persist the OAuth access_token and or the user id to the token right after signin
+      console.log("jwt callback", token, account, profile);
+      if (token.name === "testUser") {
+        return {
+          ...token,
+          userId: 1,
+        };
+      }
+
+      const currentUser = await prisma.user.findFirstOrThrow({
+        where: {
+          UserAuthSocial: {
+            socialId: token.sub,
+          },
+        },
+        include: {
+          Objective: {
+            select: {
+              id: true,
+            },
+            where: {
+              status: {
+                equals: "ACTIVE",
+              },
+            },
+            orderBy: {
+              createdAt: "desc",
+            },
+          },
+        },
+      });
+
+      return {
+        ...token,
+        userId: currentUser.id,
+        activeObjectiveId: Number(currentUser.Objective[0].id),
+      };
+    },
+
     async session({ session, token }) {
       console.log("session callback", session, token);
       if (session.user.name === "testUser") {
@@ -144,7 +184,7 @@ const handler = NextAuth({
           ...session.user,
           id: currentUser?.id,
           kakaoId: Number(token.sub),
-          activeObjectiveId: Number(currentUser.Objective[0]),
+          activeObjectiveId: Number(currentUser.Objective[0].id),
         },
       };
     },
