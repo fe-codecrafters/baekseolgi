@@ -8,6 +8,7 @@ declare module "next-auth" {
     user: {
       id: number;
       kakaoId?: number;
+      activeObjectiveId: number;
     } & DefaultSession["user"];
   }
 }

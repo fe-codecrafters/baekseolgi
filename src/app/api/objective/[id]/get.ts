@@ -4,7 +4,6 @@ import prisma from "@/app/api/_base";
 import { getServerSession } from "next-auth";
 import { getToken } from "next-auth/jwt";
 const secret = process.env.NEXTAUTH_SECRET;
-
 const { objective, user } = prisma;
 
 export async function _GET(
@@ -16,21 +15,6 @@ export async function _GET(
 
   console.log(token);
   if (!session || !token) {
-    return NextResponse.json({ error: "Not Authorized" }, { status: 401 });
-  }
-
-  const currentUser = await user
-    .findFirstOrThrow({
-      where: {
-        UserAuthSocial: {
-          socialId: token.sub,
-        },
-      },
-    })
-    .catch((e) => console.error(e));
-
-  console.log(currentUser);
-  if (!currentUser) {
     return NextResponse.json({ error: "Not Authorized" }, { status: 401 });
   }
 
@@ -55,7 +39,7 @@ export async function _GET(
       return NextResponse.json({ error: "Not Found" }, { status: 404 });
     }
 
-    if (newObjective.userId !== currentUser?.id) {
+    if (newObjective.userId !== id) {
       console.error(
         "/objective/{id} Error: Objective가 User의 소유가 아닙니다.",
       );

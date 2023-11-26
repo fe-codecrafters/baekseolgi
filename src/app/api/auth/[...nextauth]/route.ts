@@ -18,20 +18,20 @@ const handler = NextAuth({
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
-        console.log("authorize?");
         if (!credentials) return null;
 
-        const testUser = await prisma.user.findUnique({
-          where: {
-            id: 1,
-          },
-          include: {
-            UserAuthPassword: true,
-            UserProfile: true,
-          },
-        });
+        const testUser = await prisma.user
+          .findUnique({
+            where: {
+              id: 1,
+            },
+            include: {
+              UserAuthPassword: true,
+              UserProfile: true,
+            },
+          })
+          .catch(console.error);
 
-        // If no error and we have user data, return it
         if (testUser) {
           const res: User = {
             id: String(testUser.id),
@@ -104,10 +104,36 @@ const handler = NextAuth({
 
     async session({ session, token }) {
       console.log("session callback", session, token);
+      if (session.user.name === "testUser") {
+        return {
+          ...session,
+          user: {
+            ...session.user,
+            id: 1,
+            activeObjectiveId: 1,
+          },
+        };
+      }
+
       const currentUser = await prisma.user.findFirstOrThrow({
         where: {
           UserAuthSocial: {
             socialId: token.sub,
+          },
+        },
+        include: {
+          Objective: {
+            select: {
+              id: true,
+            },
+            where: {
+              status: {
+                equals: "ACTIVE",
+              },
+            },
+            orderBy: {
+              createdAt: "desc",
+            },
           },
         },
       });
@@ -118,6 +144,7 @@ const handler = NextAuth({
           ...session.user,
           id: currentUser?.id,
           kakaoId: Number(token.sub),
+          activeObjectiveId: Number(currentUser.Objective[0]),
         },
       };
     },
