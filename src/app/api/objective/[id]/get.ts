@@ -37,9 +37,11 @@ export async function _GET(
       return NextResponse.json({ error: "Not Found" }, { status: 404 });
     }
 
-    if (newObjective.userId !== token.userId) {
+    if (newObjective.userId !== Number(token.userId)) {
+      console.log(newObjective.userId, Number(token.userId));
       console.error(
-        "/objective/{id} Error: Objective가 User의 소유가 아닙니다.",
+        req.nextUrl.pathname,
+        "Objective가 User의 소유가 아닙니다.",
       );
       return NextResponse.json({ error: "Bad Request" }, { status: 400 });
     }
