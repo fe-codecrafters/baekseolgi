@@ -4,7 +4,10 @@ import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/app/api/_base";
 import { GetMonthlyAttendanceResDTO } from "@/features/attendance/types/getAttendance.dto";
 import { AttendanceWithSeolgi } from "@/types/dto";
+import { getServerSession } from "next-auth";
+import { getToken } from "next-auth/jwt";
 const { dailyAttendance, objective } = prisma;
+const secret = process.env.NEXTAUTH_SECRET;
 
 /**
  * @swagger
@@ -40,11 +43,14 @@ const { dailyAttendance, objective } = prisma;
  *         description: Not found
  */
 export async function GET(
-  request: NextRequest,
+  req: NextRequest,
   { params: { year, month } }: { params: { year: string; month: string } },
 ) {
-  const searchParams = request.nextUrl.searchParams;
-  console.log("api/month/[year]/[month]", year, month, searchParams);
+  const session = await getServerSession();
+  const token = await getToken({ req, secret });
+  if (!session || !token) {
+    return NextResponse.json({ error: "Not Authorized" }, { status: 401 });
+  }
 
   if (
     !isValid(parse(year, "yyyy", new Date())) &&
@@ -56,13 +62,15 @@ export async function GET(
     );
   }
 
+  // 파라미터가 있나? -> 토큰에 있나? -> falsy
+  const searchParams = req.nextUrl.searchParams;
   const userId =
     searchParams.get("userId") !== null
       ? Number(searchParams.get("userId"))
-      : undefined;
+      : Number(token.userId);
   const objectiveId = searchParams.get("objectiveId")
     ? Number(searchParams.get("objectiveId"))
-    : undefined;
+    : Number(token.activeObjectiveId);
   // REF: https://docs.github.com/ko/rest/issues/issues?apiVersion=2022-11-28#list-issues-assigned-to-the-authenticated-user
   const sort = searchParams.get("sort")
     ? String(searchParams.get("sort"))
@@ -113,7 +121,8 @@ export async function GET(
     return NextResponse.json({ error: "Not Found" }, { status: 404 });
   }
 
-  if (!uniqueObjective || attendances.length === 0) {
+  if (!uniqueObjective) {
+    console.error("Objective Id를 확인해 주세요.");
     return NextResponse.json({ error: "Not Found" }, { status: 404 });
   }
 
