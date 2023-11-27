@@ -56,8 +56,8 @@ export default function Day({ day }: DayProps) {
           onClick={openEditModalHandler}
         >
           <SeolgiIcon
-            bgFill={day.Seolgi.bgFill || undefined}
-            blushFill={day.Seolgi.blushFill || undefined}
+            bgFill={day.Seolgi?.bgFill || undefined}
+            blushFill={day.Seolgi?.blushFill || undefined}
           ></SeolgiIcon>
         </button>
       ) : (

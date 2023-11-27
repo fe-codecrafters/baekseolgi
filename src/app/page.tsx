@@ -19,7 +19,7 @@ export default function Home() {
   if (status === "loading") return <LoadingIndicator />;
   const activeObjectiveId = session?.user.activeObjectiveId;
 
-  if (!activeObjectiveId) router.push("/tutorial");
+  if (!activeObjectiveId) return router.push("/tutorial");
 
   const RQKey = attendanceKeys.month({
     year: initialDate.year,
