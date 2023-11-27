@@ -40,8 +40,6 @@ export default function AttendanceEditModal() {
     setSeolgiId(id);
   };
 
-  console.log(seolgiId);
-
   return (
     // edit attendance modal content
     <>

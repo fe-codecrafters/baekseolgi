@@ -19,12 +19,11 @@ export default function Home() {
   if (status === "loading") return <LoadingIndicator />;
   const activeObjectiveId = session?.user.activeObjectiveId;
 
-  if (!activeObjectiveId) router.push("/tutorial");
+  if (!activeObjectiveId) return router.push("/tutorial");
 
   const RQKey = attendanceKeys.month({
     year: initialDate.year,
     month: initialDate.month,
-    // TODO: userId, objectiveId도 데이터 확인할 수 있어야
     userId: userId!,
     objectiveId: activeObjectiveId,
   });

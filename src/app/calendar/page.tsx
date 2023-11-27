@@ -9,16 +9,27 @@ import { useMonthlyAttendances } from "@/features/attendance/api/getAttendances"
 import LoadingIndicator from "@/components/LoadingIndicator";
 import { useSelector } from "react-redux";
 import { RootState } from "@/app/redux/store";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 export default function CalendarPage() {
+  const { data: session, status } = useSession();
+  const router = useRouter();
+  if (status === "loading") return <LoadingIndicator />;
+
+  const userId = session?.user.id;
+
+  const activeObjectiveId = session?.user.activeObjectiveId;
+  if (!activeObjectiveId) return router.push("/tutorial");
+
   const dateState = useSelector((state: RootState) => state.date);
 
   const RQKey = attendanceKeys.month({
     year: dateState.year,
     month: dateState.month,
-    // TODO: userId, objectiveId도 데이터 확인할 수 있어야
-    userId: 1,
-    objectiveId: 1,
+    // 로그인이 되어있지 않으면 미들웨어에서 라우팅을 시키기 때문에 falsy가 아니라고 확신할 수 있다.
+    userId: userId!,
+    objectiveId: activeObjectiveId,
   });
   const { isLoading, data, isSuccess } = useMonthlyAttendances(RQKey);
 
@@ -27,7 +38,7 @@ export default function CalendarPage() {
   return (
     <>
       <CalendarHeader />
-      <Objective id={1} />
+      <Objective id={activeObjectiveId} />
       {isSuccess ? (
         <>
           <Calendar monthData={data.attendance} type={"month"} />

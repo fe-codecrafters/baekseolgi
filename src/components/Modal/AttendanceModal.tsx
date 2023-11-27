@@ -1,3 +1,5 @@
+"use client";
+
 import EditIcon from "@/icons/EditIcon";
 import CloseIcon from "@/icons/CloseIcon";
 import { format } from "date-fns";
@@ -11,25 +13,38 @@ import SeolgiIconS from "@/icons/AttendanceInput/SeolgiIconS";
 import { useDispatch, useSelector } from "react-redux";
 import { closeModal } from "@/app/redux/reducer/modalSlice";
 import { RootState } from "@/app/redux/store";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 const AttendanceModal = () => {
+  const { data: session, status } = useSession();
+  const router = useRouter();
+
+  const userId = session?.user.id;
+  const activeObjectiveId = session?.user.activeObjectiveId;
+  if (!activeObjectiveId) return router.push("/tutorial");
+
   const dispatch = useDispatch();
   const { year, month, date } = useSelector((state: RootState) => state.date);
   const getDate = new Date(year, month - 1, date);
   const seolgis = useGetSeolgi({ seolgiName: "SeolgiIcon" }).data;
   const [seolgiId, setSeolgiId] = useState<number>(0);
   const [title, setTitle] = useState<string>("");
-  // TODO: userId, objectiveID props로 내려받아야, 아님 전역?
   const createAttendanceMutation = useCreateAttendance(
-    attendanceKeys.month({ year, month, userId: 1, objectiveId: 1 }),
+    attendanceKeys.month({
+      year,
+      month,
+      userId: userId!,
+      objectiveId: activeObjectiveId,
+    }),
   );
 
   const handleSubmit: FormEventHandler = (e) => {
     e.preventDefault();
     const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
     createAttendanceMutation.mutate({
-      userId: 1,
-      objectiveId: 1,
+      userId: userId!,
+      objectiveId: activeObjectiveId,
       seolgiId,
       title,
       createdAt: getStartOfDayInTimeZone(getDate, timeZone),

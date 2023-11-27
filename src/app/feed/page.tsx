@@ -8,16 +8,26 @@ import { useUpdateAttendance } from "@/features/attendance/api/updateAttendance"
 import { attendanceKeys } from "@/features/attendance/key";
 import { RootState } from "@/app/redux/store";
 import { useSelector } from "react-redux";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 export default function FeedPage() {
+  const { data: session, status } = useSession();
+  const router = useRouter();
+  if (status === "loading") return <LoadingIndicator />;
+
+  const userId = session?.user.id;
+
+  const activeObjectiveId = session?.user.activeObjectiveId;
+  if (!activeObjectiveId) return router.push("/tutorial");
+
   const { year, month } = useSelector((state: RootState) => state.date);
 
   const RQKey = attendanceKeys.month({
     year: year,
     month: month,
-    // TODO: userId, objectiveId도 데이터 확인할 수 있어야
-    userId: 1,
-    objectiveId: 1,
+    userId: userId!,
+    objectiveId: activeObjectiveId,
   });
   const { isLoading, data, isSuccess } = useMonthlyAttendances(RQKey);
 
