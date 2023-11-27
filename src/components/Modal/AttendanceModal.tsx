@@ -30,7 +30,6 @@ const AttendanceModal = () => {
   const seolgis = useGetSeolgi({ seolgiName: "SeolgiIcon" }).data;
   const [seolgiId, setSeolgiId] = useState<number>(0);
   const [title, setTitle] = useState<string>("");
-  // TODO: userId, objectiveID props로 내려받아야, 아님 전역?
   const createAttendanceMutation = useCreateAttendance(
     attendanceKeys.month({
       year,

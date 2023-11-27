@@ -24,7 +24,6 @@ export default function Home() {
   const RQKey = attendanceKeys.month({
     year: initialDate.year,
     month: initialDate.month,
-    // TODO: userId, objectiveId도 데이터 확인할 수 있어야
     userId: userId!,
     objectiveId: activeObjectiveId,
   });
