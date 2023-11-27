@@ -112,33 +112,38 @@ const handler = NextAuth({
         };
       }
 
-      const currentUser = await prisma.user.findFirstOrThrow({
-        where: {
-          UserAuthSocial: {
-            socialId: token.sub,
-          },
-        },
-        include: {
-          Objective: {
-            select: {
-              id: true,
+      const currentUser = await prisma.user
+        .findFirstOrThrow({
+          where: {
+            UserAuthSocial: {
+              socialId: token.sub,
             },
-            where: {
-              status: {
-                equals: "ACTIVE",
+          },
+          include: {
+            Objective: {
+              select: {
+                id: true,
+              },
+              where: {
+                status: {
+                  equals: "ACTIVE",
+                },
+              },
+              orderBy: {
+                createdAt: "desc",
               },
             },
-            orderBy: {
-              createdAt: "desc",
-            },
           },
-        },
-      });
+        })
+        .catch(console.error);
 
       return {
         ...token,
-        userId: currentUser.id,
-        activeObjectiveId: Number(currentUser.Objective[0].id),
+        userId: currentUser?.id,
+        activeObjectiveId:
+          currentUser?.Objective.length === 0
+            ? undefined
+            : Number(currentUser.Objective[0].id),
       };
     },
 
@@ -155,28 +160,30 @@ const handler = NextAuth({
         };
       }
 
-      const currentUser = await prisma.user.findFirstOrThrow({
-        where: {
-          UserAuthSocial: {
-            socialId: token.sub,
-          },
-        },
-        include: {
-          Objective: {
-            select: {
-              id: true,
+      const currentUser = await prisma.user
+        .findFirstOrThrow({
+          where: {
+            UserAuthSocial: {
+              socialId: token.sub,
             },
-            where: {
-              status: {
-                equals: "ACTIVE",
+          },
+          include: {
+            Objective: {
+              select: {
+                id: true,
+              },
+              where: {
+                status: {
+                  equals: "ACTIVE",
+                },
+              },
+              orderBy: {
+                createdAt: "desc",
               },
             },
-            orderBy: {
-              createdAt: "desc",
-            },
           },
-        },
-      });
+        })
+        .catch(console.error);
 
       return {
         ...session,
@@ -184,7 +191,10 @@ const handler = NextAuth({
           ...session.user,
           id: currentUser?.id,
           kakaoId: Number(token.sub),
-          activeObjectiveId: Number(currentUser.Objective[0].id),
+          activeObjectiveId:
+            currentUser?.Objective.length === 0
+              ? undefined
+              : Number(currentUser.Objective[0].id),
         },
       };
     },
