@@ -36,7 +36,12 @@ export const Header = () => {
                 }`}
               >
                 {session.user.image ? (
-                  <Image src={session.user.image} alt="user profile" />
+                  <img
+                    src={session.user.image}
+                    width={24}
+                    height={24}
+                    alt="user profile"
+                  />
                 ) : (
                   <UserIcon />
                 )}
