@@ -30,6 +30,7 @@ export type MonthlyAttendance = {
   year: number;
   month: number;
   objective?: string;
+  objectiveId?: number;
   attendance: AttendanceWithSeolgi[];
 };
 
