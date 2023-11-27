@@ -6,12 +6,15 @@ import { FormEvent } from "react";
 
 import LoadingIndicator from "@/components/LoadingIndicator";
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 export default function TutorialPage() {
   const { data: session, status } = useSession();
   if (status === "unauthenticated") {
     return <LoadingIndicator></LoadingIndicator>;
   }
+
+  const router = useRouter();
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -21,6 +24,8 @@ export default function TutorialPage() {
       userId: Number(session?.user.id),
       title: formData.get("objective")?.toString(),
       createdAt: new Date().toISOString(),
+    }).then(() => {
+      router.push("/");
     });
   };
 

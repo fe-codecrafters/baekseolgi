@@ -10,16 +10,13 @@ import { RootState } from "@/app/redux/store";
 import { useSelector } from "react-redux";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { TutorialButton } from "@/components/TutorialButton";
 
 export default function FeedPage() {
   const { data: session, status } = useSession();
-  const router = useRouter();
   if (status === "loading") return <LoadingIndicator />;
 
   const userId = session?.user.id;
-
-  const activeObjectiveId = session?.user.activeObjectiveId;
-  if (!activeObjectiveId) return router.push("/tutorial");
 
   const { year, month } = useSelector((state: RootState) => state.date);
 
@@ -27,7 +24,6 @@ export default function FeedPage() {
     year: year,
     month: month,
     userId: userId!,
-    objectiveId: activeObjectiveId,
   });
   const { isLoading, data, isSuccess } = useMonthlyAttendances(RQKey);
 
@@ -49,7 +45,9 @@ export default function FeedPage() {
     });
   };
 
-  if (isLoading) {
+  if (isLoading) return <LoadingIndicator></LoadingIndicator>;
+
+  if (!data) {
     return (
       <>
         <div className="flex flex-col items-center justify-center">
@@ -62,7 +60,16 @@ export default function FeedPage() {
     );
   }
 
-  if (isLoading) return <LoadingIndicator></LoadingIndicator>;
+  if (!data.objectiveId) {
+    return (
+      <>
+        <div className="flex flex-col items-center justify-center">
+          <CalendarHeader />
+          <TutorialButton />
+        </div>
+      </>
+    );
+  }
 
   //TODO: 렌더링 순서가 이상하게 들어오고 있음. 확인해야 함.
   return (

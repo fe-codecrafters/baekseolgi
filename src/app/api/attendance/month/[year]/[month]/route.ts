@@ -68,7 +68,7 @@ export async function GET(
     searchParams.get("userId") !== null
       ? Number(searchParams.get("userId"))
       : Number(token.userId);
-  const objectiveId = searchParams.get("objectiveId")
+  let objectiveId = searchParams.get("objectiveId")
     ? Number(searchParams.get("objectiveId"))
     : Number(token.activeObjectiveId);
   // REF: https://docs.github.com/ko/rest/issues/issues?apiVersion=2022-11-28#list-issues-assigned-to-the-authenticated-user
@@ -78,6 +78,28 @@ export async function GET(
   const direction = searchParams.get("direction")
     ? String(searchParams.get("direction"))
     : "asc";
+
+  if (!objectiveId) {
+    try {
+      const current = await objective.findFirstOrThrow({
+        where: {
+          userId,
+          status: "ACTIVE",
+        },
+        orderBy: {
+          createdAt: "desc",
+        },
+      });
+
+      objectiveId = current.id;
+    } catch (e) {
+      console.error(
+        req.nextUrl.pathname,
+        "currentObjective findFirst Error:",
+        e,
+      );
+    }
+  }
 
   if (!userId) {
     return NextResponse.json(
@@ -91,7 +113,6 @@ export async function GET(
   const endDate = endOfMonth(date);
 
   let attendances: AttendanceWithSeolgi[];
-  let uniqueObjective: Objective | null;
 
   try {
     attendances = await dailyAttendance.findMany({
@@ -110,27 +131,30 @@ export async function GET(
         Seolgi: true,
       },
     });
-
-    uniqueObjective = await objective.findUnique({
-      where: {
-        id: objectiveId,
-      },
-    });
   } catch (e) {
     console.error("/attendance/month/{year}/{month} Error: ", e);
     return NextResponse.json({ error: "Not Found" }, { status: 404 });
   }
 
-  if (!uniqueObjective) {
-    console.error("Objective Id를 확인해 주세요.");
-    return NextResponse.json({ error: "Not Found" }, { status: 404 });
-  }
+  const uniqueObjective = await objective
+    .findUnique({
+      where: {
+        id: objectiveId,
+      },
+    })
+    .catch((e) => console.error(req.nextUrl.href, "No Unique Objective", e));
+
+  // if (!uniqueObjective) {
+  //   console.error("Objective Id를 확인해 주세요.");
+  //   return NextResponse.json({ error: "Not Found" }, { status: 404 });
+  // }
 
   return NextResponse.json<GetMonthlyAttendanceResDTO>({
     data: {
       year: Number(year),
       month: Number(month),
-      objective: uniqueObjective.title,
+      objective: uniqueObjective?.title,
+      objectiveId: uniqueObjective?.id,
       attendance: attendances,
     },
   });
