@@ -5,10 +5,9 @@ export interface CreateObjectiveParams extends CreateObjectiveReqDTO {}
 
 export interface CreateObjectiveReqDTO {
   userId: number;
-  objectiveId: number;
   title: string;
-  description?: string;
   createdAt: string;
+  description?: string;
   finishedAt?: string;
   failedAt?: string;
 }

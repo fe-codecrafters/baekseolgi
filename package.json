@@ -7,6 +7,7 @@
     "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
   },
   "scripts": {
+    "postinstall": "prisma generate",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
@@ -42,7 +43,7 @@
     "dotenv-cli": "^7.3.0",
     "eslint": "8.49.0",
     "eslint-config-next": "13.5.2",
-    "next": "13.5.2",
+    "next": "14.0.3",
     "next-auth": "^4.24.5",
     "next-contentlayer": "^0.3.4",
     "pino": "^8.16.2",

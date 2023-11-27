@@ -7,68 +7,9 @@ import {
 } from "@/features/objective/types/updateObjective.dto";
 import { DeleteObjectiveResDTO } from "@/features/objective/types/deleteObjective.dto";
 const { objective } = prisma;
+import { _GET } from "./get";
 
-/**
- * @swagger
- * /attendance/{id}:
- *  get:
- *    summary: Get attendance for a specific id
- *    parameters:
- *      - name: date
- *        in: path
- *        description: attendance ID
- *        required: true
- *        schema:
- *          type: int64
- *    responses:
- *      '200':
- *        description: Successful response
- *        content:
- *          application/json:
- *            schema:
- *              type: object
- *              properties:
- *                data:
- *                  type: array
- *                  items:
- *                    $ref: '#/components/schemas/Attendance'
- *      '400':
- *        description: Bad request
- *      '404':
- *        description: Not found
- */
-export async function GET(
-  request: NextRequest,
-  { params }: { params: { id: string } },
-) {
-  console.log(params);
-  const id = Number(params.id);
-  if (!id) {
-    return NextResponse.json(
-      { error: "Bad request: check your path param" },
-      { status: 400 },
-    );
-  }
-
-  let newObjective: Objective | null;
-
-  try {
-    newObjective = await objective.findUnique({
-      where: {
-        id,
-      },
-    });
-
-    if (!newObjective) {
-      return NextResponse.json({ error: "Not Found" }, { status: 404 });
-    }
-  } catch (e) {
-    console.error("/objective/{id} Error: ", e);
-    return NextResponse.json({ error: "Not Found" }, { status: 404 });
-  }
-
-  return NextResponse.json({ data: newObjective });
-}
+export const GET = _GET;
 
 export async function PUT(
   request: NextRequest,

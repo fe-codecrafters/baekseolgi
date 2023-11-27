@@ -23,6 +23,7 @@ export default function Providers({ children }: { children: ReactNode }) {
   const session: Session = {
     user: {
       id: 1,
+      activeObjectiveId: 1,
       name: null,
       email: null,
       image: null,

@@ -14,13 +14,19 @@ import { useSession } from "next-auth/react";
 export default function Home() {
   const { data: session, status } = useSession();
   const router = useRouter();
+  const userId = session?.user.id;
+
+  if (status === "loading") return <LoadingIndicator />;
+  const activeObjectiveId = session?.user.activeObjectiveId;
+
+  if (!activeObjectiveId) router.push("/tutorial");
 
   const RQKey = attendanceKeys.month({
     year: initialDate.year,
     month: initialDate.month,
     // TODO: userId, objectiveId도 데이터 확인할 수 있어야
-    userId: 1,
-    objectiveId: 1,
+    userId: userId!,
+    objectiveId: activeObjectiveId,
   });
 
   const { isLoading, data } = useMonthlyAttendances(RQKey);
@@ -35,16 +41,15 @@ export default function Home() {
   const [seolgiSay, setSeolgiSay] = useState<SeolgiSizeKey>("objective");
   const [effect, setEffect] = useState(false);
 
-  if (isLoading) return <LoadingIndicator></LoadingIndicator>;
-  if (status === "unauthenticated") {
-    console.log("unauthenticated");
-    router.push("/login");
+  if (!userId || !activeObjectiveId) {
+    return <LoadingIndicator></LoadingIndicator>;
   }
+  if (isLoading) return <LoadingIndicator></LoadingIndicator>;
 
   return (
     <>
       <CalendarHeader type="main" />
-      <Objective id={1} />
+      <Objective id={activeObjectiveId} />
       {!isLoading && data && (
         <Calendar monthData={data.attendance} type={"week"} />
       )}

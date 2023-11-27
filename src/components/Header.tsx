@@ -4,11 +4,10 @@ import LogInIcon from "@/icons/LogInIcon";
 import LogOutIcon from "@/icons/LogOutIcon";
 import SeolgiHeaderIcon from "@/icons/SeolgiHeaderIcon";
 import UserIcon from "@/icons/UserIcon";
-import { RootState } from "@/app/redux/store";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useSelector } from "react-redux";
 import { signOut, useSession } from "next-auth/react";
+import Image from "next/image";
 
 // TODO : Warning: Expected server HTML to contain a matching <div> in <div>. 해결 필요
 export const Header = () => {
@@ -36,7 +35,11 @@ export const Header = () => {
                   pathname === "/my-page" ? "stroke-primary-darkGray" : ""
                 }`}
               >
-                {session.user.image ? <img src={session.user.image} /> : <UserIcon />}
+                {session.user.image ? (
+                  <Image src={session.user.image} alt="user profile" />
+                ) : (
+                  <UserIcon />
+                )}
               </Link>
             </div>
             <button onClick={() => signOut()}>

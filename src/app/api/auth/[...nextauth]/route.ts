@@ -2,12 +2,13 @@ import NextAuth, { User } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import KakaoProvider from "next-auth/providers/kakao";
 import { PrismaClient } from "@prisma/client";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
+import { axiosErrorHandler } from "../../util/axios";
 const prisma = new PrismaClient();
 
 const handler = NextAuth({
   pages: {
-    signIn: "/login",
+    signIn: "/auth/signin",
   },
   providers: [
     CredentialsProvider({
@@ -17,20 +18,20 @@ const handler = NextAuth({
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
-        console.log("authorize?");
         if (!credentials) return null;
 
-        const testUser = await prisma.user.findUnique({
-          where: {
-            id: 1,
-          },
-          include: {
-            UserAuthPassword: true,
-            UserProfile: true,
-          },
-        });
+        const testUser = await prisma.user
+          .findUnique({
+            where: {
+              id: 1,
+            },
+            include: {
+              UserAuthPassword: true,
+              UserProfile: true,
+            },
+          })
+          .catch(console.error);
 
-        // If no error and we have user data, return it
         if (testUser) {
           const res: User = {
             id: String(testUser.id),
@@ -101,12 +102,78 @@ const handler = NextAuth({
       return true;
     },
 
-    async session({ session, token }) {
-      console.log("session callback", session, token);
+    async jwt({ token, account, profile }) {
+      // Persist the OAuth access_token and or the user id to the token right after signin
+      console.log("jwt callback", token, account, profile);
+      if (token.name === "testUser") {
+        return {
+          ...token,
+          userId: 1,
+        };
+      }
+
       const currentUser = await prisma.user.findFirstOrThrow({
         where: {
           UserAuthSocial: {
             socialId: token.sub,
+          },
+        },
+        include: {
+          Objective: {
+            select: {
+              id: true,
+            },
+            where: {
+              status: {
+                equals: "ACTIVE",
+              },
+            },
+            orderBy: {
+              createdAt: "desc",
+            },
+          },
+        },
+      });
+
+      return {
+        ...token,
+        userId: currentUser.id,
+        activeObjectiveId: Number(currentUser.Objective[0].id),
+      };
+    },
+
+    async session({ session, token }) {
+      console.log("session callback", session, token);
+      if (session.user.name === "testUser") {
+        return {
+          ...session,
+          user: {
+            ...session.user,
+            id: 1,
+            activeObjectiveId: 1,
+          },
+        };
+      }
+
+      const currentUser = await prisma.user.findFirstOrThrow({
+        where: {
+          UserAuthSocial: {
+            socialId: token.sub,
+          },
+        },
+        include: {
+          Objective: {
+            select: {
+              id: true,
+            },
+            where: {
+              status: {
+                equals: "ACTIVE",
+              },
+            },
+            orderBy: {
+              createdAt: "desc",
+            },
           },
         },
       });
@@ -117,15 +184,17 @@ const handler = NextAuth({
           ...session.user,
           id: currentUser?.id,
           kakaoId: Number(token.sub),
+          activeObjectiveId: Number(currentUser.Objective[0].id),
         },
       };
     },
   },
   events: {
     // TODO: bearer 토큰으로 로그아웃 시키는게 바람직, 아직 bearer 토큰 저장 로직이 정해지지 않아서 보류
+    // TODO: (가능한지 모르겠다..) 어떤 provider 유저인지 확인하여 카카오 로그아웃인 경우에만 아래 로직 진행 가능?
     async signOut({ token }) {
-      try {
-        await axios.post(
+      await axios
+        .post(
           "https://kapi.kakao.com/v1/user/logout",
           {
             target_id_type: "user_id",
@@ -137,11 +206,11 @@ const handler = NextAuth({
               Authorization: `KakaoAK ${process.env.AUTH_KAKAO_ADMIN_KEY}`,
             },
           },
-        );
-      } catch (e) {
-        console.error("[AUTH] logout event error", e);
-      }
-      console.log("logout event success");
+        )
+        .catch((e) => {
+          console.log("[NEXT_AUTH SIGNOUT EVENT ERROR]");
+          axiosErrorHandler(e);
+        });
     },
   },
   session: {
