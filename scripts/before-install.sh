@@ -7,8 +7,10 @@ export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || pr
 
 nvm install 20
 npm install -g pnpm
+npm install -g prisma
 npm install -g pm2
 
 ln -sf $(which npm) /usr/local/bin/npm
 ln -sf $(which node) /usr/local/bin/node
+ln -sf $(which prisma) /usr/local/bin/prisma
 ln -sf $(which pm2) /usr/local/bin/pm2
