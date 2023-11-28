@@ -98,6 +98,16 @@ export default function LoginModal() {
         <div className="text-sm text-primary-darkGray">
           SNS 계정으로 로그인 하기
         </div>
+        {DEV && (
+          <button
+            type="button"
+            name="guest-submit"
+            onClick={handleGuestClick}
+            className="flex h-[35px] w-[300px] items-center rounded-md border-[1px] px-6 text-sm focus:bg-slate-50 md:h-[40px] md:w-[350px] md:text-base"
+          >
+            <span className="flex-1">구경하기</span>
+          </button>
+        )}
         <form className="flex flex-col space-y-4" onSubmit={handleKakaoSubmit}>
           <button
             type="submit"
