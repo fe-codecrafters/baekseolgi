@@ -82,6 +82,14 @@ export default function LoginModal() {
             </div>
           </div>
         )}
+        <button
+          type="button"
+          name="guest-submit"
+          onClick={handleGuestClick}
+          className="flex h-[35px] w-[300px] items-center rounded-md border-[1px] px-6 text-sm focus:bg-slate-50 md:h-[40px] md:w-[350px] md:text-base"
+        >
+          <span className="flex-1">구경하기</span>
+        </button>
         <div className="w-full border-b border-gray-300 text-center text-sm leading-[0.1em]">
           <span className="bg-primary-white px-3 text-primary-darkGray">
             또는
@@ -110,16 +118,7 @@ export default function LoginModal() {
               <span className="flex-1">Google 로그인</span>
             </button>
           )}
-          {DEV && (
-            <button
-              type="button"
-              name="guest-submit"
-              onClick={handleGuestClick}
-              className="flex h-[35px] w-[300px] items-center rounded-md border-[1px] px-6 text-sm focus:bg-slate-50 md:h-[40px] md:w-[350px] md:text-base"
-            >
-              <span className="flex-1">구경하기</span>
-            </button>
-          )}
+
           {DEV && (
             <button
               type="button"
