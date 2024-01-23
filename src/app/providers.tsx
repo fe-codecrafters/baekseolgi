@@ -36,7 +36,7 @@ export default function Providers({ children }: { children: ReactNode }) {
     <SessionProvider session={session}>
       <QueryClientProvider client={newQueryClient}>
         <ReduxProvider>
-          <ReactQueryStreamedHydration>{children}</ReactQueryStreamedHydration>
+          {children}
           <ReactQueryDevtools initialIsOpen={false} />
         </ReduxProvider>
       </QueryClientProvider>
