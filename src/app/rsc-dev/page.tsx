@@ -14,8 +14,10 @@ export default async function RscDev() {
   // TIL: next-auth의 클라이언트 메서드, Redux, React-Query는 심플하게 - 서버 컴포넌트에서 사용하지 못한다!
   // 서버 컴포트트에서 React-Query는 쓰는 방법이 있긴 하다. https://tanstack.com/query/latest/docs/react/guides/advanced-ssr
 
-  // const dateState = useSelector((state: RootState) => state.date);
   // const { data: session, status } = useSession();
+  // Next - Auth는 다른 메서드가 있음
+
+  // const dateState = useSelector((state: RootState) => state.date);
 
   // const RQKey = attendanceKeys.month({
   //   year: 2024,
