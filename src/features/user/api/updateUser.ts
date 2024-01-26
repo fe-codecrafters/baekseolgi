@@ -5,7 +5,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { User } from "@prisma/client";
 import { toast } from "react-toastify";
 
-export const updateUser = async ({ data }: UpdateUserParams) => {
+export const updateUser = async (data: UpdateUserParams) => {
   const res = await axios.put<UpdateUserResDTO>(`/api/user/${data.id}`, data);
   return res.data.data;
 };
@@ -14,7 +14,7 @@ export const useUpdateUser = (queryKey: OneUserKeysValue) => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    onMutate: async ({ data }) => {
+    onMutate: async (data) => {
       await queryClient.cancelQueries({
         queryKey,
       });

@@ -2,6 +2,7 @@
 import EditIcon from "@/icons/EditIcon";
 import { User } from "@prisma/client";
 import { ChangeEventHandler, MouseEventHandler, useState } from "react";
+import { toast } from "react-toastify";
 
 interface Props {
   name: string;
@@ -9,7 +10,7 @@ interface Props {
   id?: string;
   type?: string;
   value?: string;
-  userId: number;
+  userId: number | undefined;
   defaultValue?: string | number | readonly string[] | undefined;
   placeholder: string;
   required: boolean;
@@ -24,7 +25,7 @@ export default function MyPageInput({
   id = "",
   type = "text",
   required = false,
-  value = "",
+  value,
   userId,
   placeholder = "",
   disabled = false,
@@ -42,10 +43,16 @@ export default function MyPageInput({
   // editNickname 아니고 editNickname
   const handleEdit: MouseEventHandler = (e) => {
     e.preventDefault();
-    if (canEdit && editNickname) {
+    console.log(userId, nickname);
+    if (canEdit && editNickname && userId && nickname) {
       editNickname({ id: userId, username: nickname });
+      setEdit(false);
+    } else if (!canEdit) {
+      setEdit(true);
+    } else {
+      toast.error("닉네임을 입력해주세요");
+      setEdit(false);
     }
-    setEdit(!canEdit);
   };
 
   const defaultCN =
@@ -68,7 +75,7 @@ export default function MyPageInput({
             type={type}
             name={name}
             id={id}
-            onChange={onChange}
+            onChange={handleChange}
             value={nickname}
             placeholder={canEdit ? placeholder : "닉네임을 수정하세요."}
             required={required}

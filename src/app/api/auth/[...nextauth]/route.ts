@@ -1,9 +1,10 @@
 import NextAuth, { User } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import KakaoProvider from "next-auth/providers/kakao";
-import { PrismaClient } from "@prisma/client";
+import { ObjectiveStatus, PrismaClient } from "@prisma/client";
 import axios, { AxiosError } from "axios";
 import { axiosErrorHandler } from "../../util/axios";
+import { addDays } from "date-fns";
 const prisma = new PrismaClient();
 
 const handler = NextAuth({
@@ -28,6 +29,7 @@ const handler = NextAuth({
             include: {
               UserAuthPassword: true,
               UserProfile: true,
+              UserAuthSocial: true,
             },
           })
           .catch(console.error);
@@ -105,7 +107,7 @@ const handler = NextAuth({
     async jwt({ token, account, profile }) {
       // Persist the OAuth access_token and or the user id to the token right after signin
       console.log("jwt callback", token, account, profile);
-      if (token.name === "testUser") {
+      if (token.sub === "1") {
         return {
           ...token,
           userId: 1,
@@ -157,7 +159,7 @@ const handler = NextAuth({
 
     async session({ session, token }) {
       console.log("session callback", session, token);
-      if (session.user.id === 1) {
+      if (token.sub === "1") {
         return {
           ...session,
           user: {
@@ -165,7 +167,7 @@ const handler = NextAuth({
             id: 1,
             activeObjectiveId: 1,
           },
-          expires: new Date(0).toISOString(),
+          expires: addDays(new Date(), 7).toISOString(),
         };
       }
 
@@ -184,7 +186,7 @@ const handler = NextAuth({
               },
               where: {
                 status: {
-                  equals: "ACTIVE",
+                  equals: ObjectiveStatus.ACTIVE,
                 },
               },
               orderBy: {
@@ -218,7 +220,6 @@ const handler = NextAuth({
               ? undefined
               : Number(currentUser.Objective[0].id),
         },
-        expires: new Date(0).toISOString(),
       };
     },
   },
