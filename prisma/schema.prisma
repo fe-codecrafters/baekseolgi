@@ -61,7 +61,7 @@ model UserAuthSocial {
   id          Int                @id @default(autoincrement())
   type        UserAuthSocialType
   socialId    String
-  accessToken String
+  accessToken String            @unique
   User        User?              @relation(fields: [userId], references: [id])
   userId      Int                @unique
 }

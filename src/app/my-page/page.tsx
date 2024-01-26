@@ -11,10 +11,18 @@ import SeolgiFigure from "@/icons/SeolgiFigure";
 import { useState } from "react";
 const DEV = process.env.NODE_ENV === "development";
 import { useSession } from "next-auth/react";
+import MyPageInput from "@/components/MyPage/MyPageInput";
+import { useUpdateUser } from "@/features/user/api/updateUser";
+import { userKeys } from "@/features/user/key";
+import { User } from "@prisma/client";
+import { redirect } from "next/navigation";
 
 export default function MyPage() {
   const { data: session, status } = useSession();
-  // console.log(session);
+  if (status === "unauthenticated") {
+    return redirect("/404");
+  }
+
   const date = new Date();
   const today = {
     year: date.getFullYear(),
@@ -26,6 +34,16 @@ export default function MyPage() {
   const [selectedYear, setSelectedYear] = useState(today.year);
   const [selectedMonth, setSelectedMonth] = useState(today.month);
 
+  const RQKey = userKeys.id({
+    id: Number(session?.user.id),
+  });
+
+  const { data, isSuccess, mutate } = useUpdateUser(RQKey);
+
+  const editNickname = ({ id, username }: User) => {
+    mutate({ data: { id, username } });
+  };
+
   return (
     <div className="mx-auto flex min-h-screen w-full max-w-screen-md flex-col items-center gap-[24px] py-[30px] md:gap-[40px] md:py-[60px]">
       <div>
@@ -33,7 +51,17 @@ export default function MyPage() {
       </div>
       <div>
         <div className="mb-[16px] text-[16px] md:text-[24px]">내 정보</div>
-        <div className="flex h-[150px] w-[340px] flex-col justify-center rounded-[20px] border px-[20px] md:h-[200px] md:w-[600px] md:px-[40px]">
+        <div className="flex w-[340px] flex-col justify-center rounded-[20px] border px-[20px] md:w-[600px] md:px-[40px]">
+          <MyPageInput
+            label="닉네임"
+            id="MyPageNicknameInput"
+            name="MyPageNicknameInput"
+            placeholder="변경할 닉네임을 적고 오른쪽 변경 아이콘을 누르세요."
+            required={true}
+            userId={session?.user.id}
+            value={session?.user.name}
+            editNickname={editNickname}
+          ></MyPageInput>
           <div className="text-[14px] text-primary-darkGray md:text-[20px]">
             닉네임
           </div>

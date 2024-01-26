@@ -112,8 +112,9 @@ const handler = NextAuth({
         };
       }
 
-      const currentUser = await prisma.user
-        .findFirstOrThrow({
+      let currentUser;
+      try {
+        currentUser = await prisma.user.findFirst({
           where: {
             UserAuthSocial: {
               socialId: token.sub,
@@ -134,8 +135,15 @@ const handler = NextAuth({
               },
             },
           },
-        })
-        .catch(console.error);
+        });
+      } catch (e) {
+        console.error(e);
+        return { ...token };
+      }
+
+      if (!currentUser) {
+        return { ...token };
+      }
 
       return {
         ...token,
@@ -149,7 +157,7 @@ const handler = NextAuth({
 
     async session({ session, token }) {
       console.log("session callback", session, token);
-      if (session.user.name === "testUser") {
+      if (session.user.id === 1) {
         return {
           ...session,
           user: {
@@ -157,11 +165,13 @@ const handler = NextAuth({
             id: 1,
             activeObjectiveId: 1,
           },
+          expires: new Date(0).toISOString(),
         };
       }
 
-      const currentUser = await prisma.user
-        .findFirstOrThrow({
+      let currentUser;
+      try {
+        currentUser = await prisma.user.findFirstOrThrow({
           where: {
             UserAuthSocial: {
               socialId: token.sub,
@@ -182,8 +192,20 @@ const handler = NextAuth({
               },
             },
           },
-        })
-        .catch(console.error);
+        });
+      } catch (e) {
+        console.error(e);
+        return {
+          ...token,
+          user: {
+            ...session.user,
+            id: -1,
+            kakaoId: -1,
+            activeObjectiveId: -1,
+          },
+          expires: new Date(0).toISOString(),
+        };
+      }
 
       return {
         ...session,
@@ -196,6 +218,7 @@ const handler = NextAuth({
               ? undefined
               : Number(currentUser.Objective[0].id),
         },
+        expires: new Date(0).toISOString(),
       };
     },
   },

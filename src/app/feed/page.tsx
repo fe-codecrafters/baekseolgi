@@ -9,7 +9,6 @@ import { attendanceKeys } from "@/features/attendance/key";
 import { RootState } from "@/app/redux/store";
 import { useSelector } from "react-redux";
 import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
 import { TutorialButton } from "@/components/TutorialButton";
 
 export default function FeedPage() {
