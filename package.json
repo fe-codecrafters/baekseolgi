@@ -26,6 +26,7 @@
     "db-generate": "prisma generate"
   },
   "dependencies": {
+    "@ducanh2912/next-pwa": "^10.2.2",
     "@prisma/client": "^5.3.1",
     "@reduxjs/toolkit": "^1.9.7",
     "@tailwindcss/typography": "^0.5.10",
@@ -66,6 +67,7 @@
     "prettier": "^3.0.3",
     "prisma": "^5.3.1",
     "ts-node": "^10.9.1",
-    "typescript": "5.2.2"
+    "typescript": "5.2.2",
+    "webpack": "^5.90.0"
   }
 }
