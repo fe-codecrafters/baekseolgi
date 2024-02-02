@@ -1,5 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/no-var-requires
-const { withContentlayer } = require("next-contentlayer");
+const withPWA = require("@ducanh2912/next-pwa").default({
+  dest: "public",
+});
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -12,4 +14,4 @@ const nextConfig = {
   swcMinify: false,
 };
 
-module.exports = withContentlayer(nextConfig);
+module.exports = withPWA(nextConfig);
