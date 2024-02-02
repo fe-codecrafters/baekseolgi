@@ -49,16 +49,18 @@ export const useCreateAttendance = (queryKey: AttendanceKeysValue) => {
 
       return { previousAttendance };
     },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey });
-      toast.success("출석이 성공했어요!");
-      // TODO: add notification
-    },
     onError: (e, v, c) => {
       if (c?.previousAttendance) {
         queryClient.setQueryData(queryKey, c.previousAttendance);
       }
-      toast.error("출석이 실패했어요 😢");
+    },
+    onSettled: (n, e) => {
+      if (e) {
+        toast.error("출석이 실패했어요 😢");
+      } else {
+        queryClient.invalidateQueries({ queryKey });
+        toast.success("출석이 성공했어요!");
+      }
     },
     mutationFn: createAttendance,
   });

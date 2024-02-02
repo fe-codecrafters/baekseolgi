@@ -17,10 +17,8 @@ import { User } from "@prisma/client";
 import { redirect } from "next/navigation";
 
 export default function MyPage() {
-  const { data: session, status } = useSession();
-  if (status === "unauthenticated") {
-    return redirect("/not-found");
-  }
+  const { data: session, status, update } = useSession();
+  if (status === "unauthenticated") return redirect("/not-found");
 
   const date = new Date();
   const today = {
@@ -30,7 +28,7 @@ export default function MyPage() {
     day: date.getDay(),
   };
 
-  const [selectedMonth, setSelectedMonth] = useState(today.month);
+  const [selectedMonth] = useState(today.month);
 
   const RQKey = userKeys.id({
     id: Number(session?.user.id),
@@ -40,11 +38,13 @@ export default function MyPage() {
 
   const editNickname = ({ id, username }: User) => {
     mutate({ id, username });
+    if (session && session.user) {
+      update({
+        ...session.user,
+        name: username,
+      });
+    }
   };
-
-  if (status === "loading") {
-    return <div></div>;
-  }
 
   return (
     <div className="mx-auto flex min-h-screen w-full max-w-screen-md flex-col items-center gap-[24px] py-[30px] md:gap-[40px] md:py-[60px]">
