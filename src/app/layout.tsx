@@ -15,16 +15,18 @@ const description = "100일간 목표 달성을 위해 매일매일 기록하세
 const url = DEV ? "http://localhost:3000" : "https://100seolgi.click";
 
 export const metadata: Metadata = {
-  title,
-  description,
+  title: title,
+  description: description,
+  generator: "Next.js",
+  manifest: "/manifest.json",
+  keywords: ["nextjs", "nextjs13", "next13", "pwa", "next-pwa"],
+  icons: [
+    { rel: "apple-touch-icon", url: "icons/icon-128x128.png" },
+    { rel: "icon", url: "icons/icon-128x128.png" },
+  ],
   metadataBase: new URL(url),
   openGraph: {
-    title,
-    description,
-    url,
-    siteName: title,
-    locale: "ko_KR",
-    type: "website",
+    images: '/og-image.png',
   },
 };
 
