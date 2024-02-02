@@ -108,6 +108,10 @@ export const useMonthlyAttendances = ([
   });
 };
 
+export const getAllAttendances = () => {};
+
+export const useAllAttendances = () => {};
+
 // TODO
 export const getYearlyAttendances = () => {};
 // TODO
