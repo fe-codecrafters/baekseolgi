@@ -1,9 +1,10 @@
 import NextAuth, { User } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import KakaoProvider from "next-auth/providers/kakao";
-import { PrismaClient } from "@prisma/client";
+import { ObjectiveStatus, PrismaClient } from "@prisma/client";
 import axios, { AxiosError } from "axios";
 import { axiosErrorHandler } from "../../util/axios";
+import { addDays } from "date-fns";
 const prisma = new PrismaClient();
 
 const handler = NextAuth({
@@ -28,6 +29,7 @@ const handler = NextAuth({
             include: {
               UserAuthPassword: true,
               UserProfile: true,
+              UserAuthSocial: true,
             },
           })
           .catch(console.error);
@@ -105,15 +107,16 @@ const handler = NextAuth({
     async jwt({ token, account, profile }) {
       // Persist the OAuth access_token and or the user id to the token right after signin
       console.log("jwt callback", token, account, profile);
-      if (token.name === "testUser") {
+      if (token.sub === "1") {
         return {
           ...token,
           userId: 1,
         };
       }
 
-      const currentUser = await prisma.user
-        .findFirstOrThrow({
+      let currentUser;
+      try {
+        currentUser = await prisma.user.findFirst({
           where: {
             UserAuthSocial: {
               socialId: token.sub,
@@ -134,8 +137,15 @@ const handler = NextAuth({
               },
             },
           },
-        })
-        .catch(console.error);
+        });
+      } catch (e) {
+        console.error(e);
+        return { ...token };
+      }
+
+      if (!currentUser) {
+        return { ...token };
+      }
 
       return {
         ...token,
@@ -149,7 +159,7 @@ const handler = NextAuth({
 
     async session({ session, token }) {
       console.log("session callback", session, token);
-      if (session.user.name === "testUser") {
+      if (token.sub === "1") {
         return {
           ...session,
           user: {
@@ -157,11 +167,13 @@ const handler = NextAuth({
             id: 1,
             activeObjectiveId: 1,
           },
+          expires: addDays(new Date(), 7).toISOString(),
         };
       }
 
-      const currentUser = await prisma.user
-        .findFirstOrThrow({
+      let currentUser;
+      try {
+        currentUser = await prisma.user.findFirstOrThrow({
           where: {
             UserAuthSocial: {
               socialId: token.sub,
@@ -174,7 +186,7 @@ const handler = NextAuth({
               },
               where: {
                 status: {
-                  equals: "ACTIVE",
+                  equals: ObjectiveStatus.ACTIVE,
                 },
               },
               orderBy: {
@@ -182,8 +194,20 @@ const handler = NextAuth({
               },
             },
           },
-        })
-        .catch(console.error);
+        });
+      } catch (e) {
+        console.error(e);
+        return {
+          ...token,
+          user: {
+            ...session.user,
+            id: -1,
+            kakaoId: -1,
+            activeObjectiveId: -1,
+          },
+          expires: new Date(0).toISOString(),
+        };
+      }
 
       return {
         ...session,

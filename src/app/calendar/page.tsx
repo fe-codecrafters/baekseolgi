@@ -1,5 +1,4 @@
 "use client";
-
 import { Calendar } from "@/components/Calendar/Calendar";
 import { ObjectiveProgressBar } from "@/components/ObjectiveProgressBar";
 import { CalendarHeader } from "@/components/Calendar/CalendarHeader";

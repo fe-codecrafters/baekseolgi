@@ -1,11 +1,7 @@
 "use client";
-import Chart from "@/components/Chart";
-import { useState } from "react";
-import LoadingIndicator from "@/components/LoadingIndicator";
-import Modal from "@/components/Modal/AttendanceModal";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { openModal } from "@/app/redux/reducer/modalSlice";
-import { RootState } from "@/app/redux/store";
+import MyPageInput from "@/components/MyPage/MyPageInput";
 
 const DEV = process.env.NODE_ENV === "development";
 
@@ -37,6 +33,7 @@ export default function Dev() {
       <div>
         <button onClick={handleOpenEditModal}>에딧 모달 열기</button>
         <button onClick={handleOpenBasicModal}>기본 모달 열기</button>
+        <MyPageInput label="MyPageInput 테스트"></MyPageInput>
       </div>
     </div>
   );

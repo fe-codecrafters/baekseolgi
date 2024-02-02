@@ -4,7 +4,7 @@ import prisma from "@/app/api/_base";
 import { getServerSession } from "next-auth";
 import { getToken } from "next-auth/jwt";
 const secret = process.env.NEXTAUTH_SECRET;
-const { objective, user } = prisma;
+const { objective } = prisma;
 
 export async function _GET(
   req: NextRequest,

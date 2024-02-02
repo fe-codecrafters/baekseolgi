@@ -1,4 +1,3 @@
-import { Objective } from "@prisma/client";
 import { endOfMonth, isValid, parse, startOfMonth } from "date-fns";
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/app/api/_base";
