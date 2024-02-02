@@ -16,7 +16,7 @@ export default function CalendarPage() {
   if (status === "loading") return <LoadingIndicator />;
 
   const userId = session?.user.id;
-
+  const activeObjectiveId = session?.user.activeObjectiveId;
   const dateState = useSelector((state: RootState) => state.date);
 
   const RQKey = attendanceKeys.month({
@@ -24,6 +24,7 @@ export default function CalendarPage() {
     month: dateState.month,
     // 로그인이 되어있지 않으면 미들웨어에서 라우팅을 시키기 때문에 falsy가 아니라고 확신할 수 있다.
     userId: userId!,
+    objectiveId: activeObjectiveId,
   });
   const { isLoading, data, isSuccess } = useMonthlyAttendances(RQKey);
 
@@ -40,7 +41,6 @@ export default function CalendarPage() {
       {isSuccess ? (
         <>
           <Calendar monthData={data.attendance} type={"month"} />
-
           <ObjectiveProgressBar monthData={data.attendance} />
         </>
       ) : (
