@@ -34,7 +34,7 @@ async function main() {
     ],
   });
 
-  const testSeolgi = await prisma.user.create({
+  const testUser = await prisma.user.create({
     data: {
       id: 1,
       username: "testUser",
@@ -77,7 +77,7 @@ async function main() {
         updatedAt: new Date("2023-09-05T14:01:56"),
         seolgiId: 1,
         objectiveId: 1,
-        userId: testSeolgi.id,
+        userId: testUser.id,
       },
       {
         title: "100설기 들어옴 - 9월 - 2",
@@ -86,7 +86,7 @@ async function main() {
         updatedAt: new Date("2023-09-07T14:01:56"),
         seolgiId: 1,
         objectiveId: 1,
-        userId: testSeolgi.id,
+        userId: testUser.id,
       },
       {
         title: "100설기 들어옴 - 9월 - 3",
@@ -95,7 +95,7 @@ async function main() {
         updatedAt: new Date("2023-09-08T14:01:56"),
         seolgiId: 3,
         objectiveId: 1,
-        userId: testSeolgi.id,
+        userId: testUser.id,
       },
       {
         title: "100설기 들어옴 - 9월 - 4",
@@ -104,7 +104,7 @@ async function main() {
         updatedAt: new Date("2023-09-09T14:01:56"),
         seolgiId: 2,
         objectiveId: 1,
-        userId: testSeolgi.id,
+        userId: testUser.id,
       },
       {
         title: "100설기 들어옴 - 9월 - 5",
@@ -113,7 +113,7 @@ async function main() {
         updatedAt: new Date("2023-09-11T14:01:56"),
         seolgiId: 2,
         objectiveId: 1,
-        userId: testSeolgi.id,
+        userId: testUser.id,
       },
       {
         title: "100설기 들어옴 - 1",
@@ -122,7 +122,7 @@ async function main() {
         updatedAt: new Date("2023-10-05T14:01:56"),
         seolgiId: 1,
         objectiveId: 1,
-        userId: testSeolgi.id,
+        userId: testUser.id,
       },
       {
         title: "100설기 들어옴 - 2",
@@ -131,7 +131,7 @@ async function main() {
         updatedAt: new Date("2023-10-07T14:01:56"),
         seolgiId: 1,
         objectiveId: 1,
-        userId: testSeolgi.id,
+        userId: testUser.id,
       },
       {
         title: "100설기 들어옴 - 3",
@@ -140,7 +140,7 @@ async function main() {
         updatedAt: new Date("2023-10-08T14:01:56"),
         seolgiId: 3,
         objectiveId: 1,
-        userId: testSeolgi.id,
+        userId: testUser.id,
       },
       {
         title: "100설기 들어옴 - 4",
@@ -149,7 +149,7 @@ async function main() {
         updatedAt: new Date("2023-10-09T14:01:56"),
         seolgiId: 2,
         objectiveId: 1,
-        userId: testSeolgi.id,
+        userId: testUser.id,
       },
       {
         title: "100설기 들어옴 - 5",
@@ -158,7 +158,7 @@ async function main() {
         updatedAt: new Date("2023-10-11T14:01:56"),
         seolgiId: 2,
         objectiveId: 1,
-        userId: testSeolgi.id,
+        userId: testUser.id,
       },
       {
         title: "100설기 들어옴 - 6",
@@ -167,7 +167,7 @@ async function main() {
         updatedAt: new Date("2023-10-23T14:01:56"),
         seolgiId: 2,
         objectiveId: 1,
-        userId: testSeolgi.id,
+        userId: testUser.id,
       },
       {
         title: "100설기 들어옴 - 11월 - 0",
@@ -176,7 +176,7 @@ async function main() {
         updatedAt: new Date("2023-11-04T14:01:56"),
         seolgiId: 1,
         objectiveId: 1,
-        userId: testSeolgi.id,
+        userId: testUser.id,
       },
       {
         title: "100설기 들어옴 - 11월 - 1",
@@ -185,7 +185,7 @@ async function main() {
         updatedAt: new Date("2023-11-05T14:01:56"),
         seolgiId: 1,
         objectiveId: 1,
-        userId: testSeolgi.id,
+        userId: testUser.id,
       },
       {
         title: "100설기 들어옴 - 11월 - 2",
@@ -194,7 +194,7 @@ async function main() {
         updatedAt: new Date("2023-11-07T14:01:56"),
         seolgiId: 1,
         objectiveId: 1,
-        userId: testSeolgi.id,
+        userId: testUser.id,
       },
       {
         title: "100설기 들어옴 - 11월 - 3",
@@ -203,7 +203,7 @@ async function main() {
         updatedAt: new Date("2023-11-08T14:01:56"),
         seolgiId: 3,
         objectiveId: 1,
-        userId: testSeolgi.id,
+        userId: testUser.id,
       },
       {
         title: "100설기 들어옴 - 11월 - 4",
@@ -212,7 +212,7 @@ async function main() {
         updatedAt: new Date("2023-11-09T14:01:56"),
         seolgiId: 2,
         objectiveId: 1,
-        userId: testSeolgi.id,
+        userId: testUser.id,
       },
       {
         title: "100설기 들어옴 - 11월 - 5",
@@ -221,11 +221,56 @@ async function main() {
         updatedAt: new Date("2023-11-11T14:01:56"),
         seolgiId: 2,
         objectiveId: 1,
-        userId: testSeolgi.id,
+        userId: testUser.id,
+      },
+      {
+        title: "100설기 들어옴 - 02월 - 1",
+        status: "PRESENT",
+        createdAt: new Date("2024-02-05T14:01:56"),
+        updatedAt: new Date("2023-11-05T14:01:56"),
+        seolgiId: 1,
+        objectiveId: 1,
+        userId: testUser.id,
+      },
+      {
+        title: "100설기 들어옴 - 02월 - 2",
+        status: "PRESENT",
+        createdAt: new Date("2023-11-06T15:01:56"),
+        updatedAt: new Date("2024-02-07T14:01:56"),
+        seolgiId: 1,
+        objectiveId: 1,
+        userId: testUser.id,
+      },
+      {
+        title: "100설기 들어옴 - 02월 - 3",
+        status: "PRESENT",
+        createdAt: new Date("2024-02-07T15:01:56"),
+        updatedAt: new Date("2024-02-08T14:01:56"),
+        seolgiId: 3,
+        objectiveId: 1,
+        userId: testUser.id,
+      },
+      {
+        title: "100설기 들어옴 - 02월 - 4",
+        status: "PRESENT",
+        createdAt: new Date("2024-02-08T15:01:56"),
+        updatedAt: new Date("2024-02-09T14:01:56"),
+        seolgiId: 2,
+        objectiveId: 1,
+        userId: testUser.id,
+      },
+      {
+        title: "100설기 들어옴 - 02월 - 5",
+        status: "PRESENT",
+        createdAt: new Date("2024-02-10T15:01:56"),
+        updatedAt: new Date("2024-02-11T14:01:56"),
+        seolgiId: 2,
+        objectiveId: 1,
+        userId: testUser.id,
       },
     ],
   });
-  console.log({ Seolgis, testSeolgi, attendances });
+  console.log({ Seolgis, testUser, attendances });
 }
 main()
   .then(async () => {

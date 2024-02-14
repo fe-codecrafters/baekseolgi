@@ -25,7 +25,6 @@
     "db-prod-client": "dotenv -e .env.production.local prisma studio",
     "db-generate": "prisma generate",
     "cypress": "cypress open"
-
   },
   "dependencies": {
     "@prisma/client": "^5.3.1",

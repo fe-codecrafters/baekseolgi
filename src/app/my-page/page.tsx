@@ -17,6 +17,7 @@ import { User } from "@prisma/client";
 import { redirect } from "next/navigation";
 
 export default function MyPage() {
+  // next-auth의 context
   const { data: session, status, update } = useSession();
   if (status === "unauthenticated") return redirect("/not-found");
 
@@ -34,6 +35,7 @@ export default function MyPage() {
     id: Number(session?.user.id),
   });
 
+  // react-query의 context
   const { mutate } = useUpdateUser(RQKey);
 
   const editNickname = ({ id, username }: User) => {
