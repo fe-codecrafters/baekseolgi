@@ -23,7 +23,9 @@
     "db-prod-reset": "dotenv -e .env.production.local prisma migrate reset",
     "db-prod-deploy": "dotenv -e .env.production.local prisma migrate deploy",
     "db-prod-client": "dotenv -e .env.production.local prisma studio",
-    "db-generate": "prisma generate"
+    "db-generate": "prisma generate",
+    "cypress": "cypress open"
+
   },
   "dependencies": {
     "@prisma/client": "^5.3.1",
@@ -59,6 +61,7 @@
     "@tanstack/eslint-plugin-query": "^5.0.5",
     "@typescript-eslint/eslint-plugin": "^6.7.5",
     "@typescript-eslint/parser": "^6.7.5",
+    "cypress": "^13.6.3",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-jsx-a11y": "^6.7.1",
     "eslint-plugin-prettier": "^5.0.1",
